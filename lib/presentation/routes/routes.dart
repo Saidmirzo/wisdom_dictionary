@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_exercise/presentation/pages/main_page.dart';
+import 'package:morningmagic/presentation/pages/main_page.dart';
 
 class Routes {
   static const mainPage = '/';
