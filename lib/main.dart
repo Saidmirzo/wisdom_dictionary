@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
 
 import 'config/theme/themes.dart';
@@ -31,18 +32,25 @@ class MyApp extends StatelessWidget {
     //     systemNavigationBarIconBrightness: Brightness.dark,
     //     statusBarBrightness: Brightness.dark,
     //     statusBarIconBrightness: Brightness.dark));
-    return MaterialApp(
-      title: 'Flutter demo',
-      debugShowCheckedModeBanner: false,
-      theme: Themes.lightTheme,
-      navigatorKey: navigatorKey,
-      // supportedLocales: const <Locale>[Locale('en', '')],
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      onGenerateRoute: (setting) => Routes.generateRoutes(setting),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (BuildContext context, Widget? child) {
+        return MaterialApp(
+          title: 'Wisdom Dictionary',
+          debugShowCheckedModeBanner: false,
+          theme: Themes.lightTheme,
+          navigatorKey: navigatorKey,
+          // supportedLocales: const <Locale>[Locale('en', '')],
+          // localizationsDelegates: const [
+          //   GlobalMaterialLocalizations.delegate,
+          //   GlobalWidgetsLocalizations.delegate,
+          //   GlobalCupertinoLocalizations.delegate,
+          // ],
+          onGenerateRoute: (setting) => Routes.generateRoutes(setting),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:morningmagic/presentation/pages/main_page.dart';
+import 'package:wisdom/presentation/pages/home/view/home_page.dart';
+import 'package:wisdom/presentation/pages/spalsh/view/splash_page.dart';
 
 class Routes {
   static const mainPage = '/';
@@ -8,23 +9,21 @@ class Routes {
     try {
       final Map<String, dynamic>? args = routeSettings.arguments as Map<String, dynamic>?;
       args ?? <String, dynamic>{};
-
       switch (routeSettings.name) {
         case mainPage:
           return MaterialPageRoute(
-            builder: (_) => const MainPage(),
+            builder: (_) => HomePage(),
           );
-
         default:
           return MaterialPageRoute(
             settings: routeSettings,
-            builder: (_) => const MainPage(),
+            builder: (_) => SplashPage(),
           );
       }
     } catch (e) {
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const MainPage(),
+        builder: (_) => SplashPage(),
       );
     }
   }

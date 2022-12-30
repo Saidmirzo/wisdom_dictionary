@@ -1,4 +1,3 @@
-
 import 'package:jbaza/jbaza.dart';
 
 final locator = JbazaLocator.instance;

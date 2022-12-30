@@ -1,4 +1,4 @@
-name: morningmagic
+name: wisdom
 description: A Flutter project.
 
 publish_to: 'none'
@@ -15,12 +15,14 @@ dependencies:
   flutter_svg: ^1.1.4
   # additional features for this project
   intl: ^0.17.0
+  flutter_screenutil: ^5.5.4
+  flutter_zoom_drawer: ^2.0.0
 
   cupertino_icons: ^1.0.2
 
   # Localization
-#  flutter_localizations:
-#    sdk: flutter
+  #  flutter_localizations:
+  #    sdk: flutter
 
   # state management
   jbaza:
@@ -44,44 +46,38 @@ flutter:
     - fonts/
 
   fonts:
-    - family: Roboto
+    - family: Montserrat
       fonts:
-        - asset: fonts/Roboto-Black.ttf
+        - asset: fonts/Montserrat-Black.ttf
           weight: 900
           style: normal
-        - asset: fonts/Roboto-BlackItalic.ttf
-          weight: 900
-          style: italic
-        - asset: fonts/Roboto-Bold.ttf
+        - asset: fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+          style: normal
+        - asset: fonts/Montserrat-Bold.ttf
           weight: 700
           style: normal
-        - asset: fonts/Roboto-BoldItalic.ttf
-          weight: 700
-          style: italic
-        - asset: fonts/Roboto-Medium.ttf
+        - asset: fonts/Montserrat-SemiBold.ttf
+          weight: 600
+          style: normal
+        - asset: fonts/Montserrat-Medium.ttf
           weight: 500
           style: normal
-        - asset: fonts/Roboto-MediumItalic.ttf
+        - asset: fonts/Montserrat-MediumItalic.ttf
           weight: 500
           style: italic
-        - asset: fonts/Roboto-Regular.ttf
+        - asset: fonts/Montserrat-Regular.ttf
           weight: 400
           style: normal
-        - asset: fonts/Roboto-Italic.ttf
-          weight: 400
-          style: italic
-        - asset: fonts/Roboto-Light.ttf
+        - asset: fonts/Montserrat-Light.ttf
           weight: 300
           style: normal
-        - asset: fonts/Roboto-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: fonts/Roboto-Thin.ttf
+        - asset: fonts/Montserrat-ExtraLight.ttf
+          weight: 200
+          style: normal
+        - asset: fonts/Montserrat-Thin.ttf
           weight: 100
           style: normal
-        - asset: fonts/Roboto-ThinItalic.ttf
-          weight: 100
-          style: italic
 
   #   - family: Trajan Pro
   #     fonts:
