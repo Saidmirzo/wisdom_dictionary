@@ -267,7 +267,7 @@ packages:
       name: flutter_zoom_drawer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.1+1"
+    version: "3.0.3"
   frontend_server_client:
     dependency: transitive
     description:
@@ -389,6 +389,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  mask_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: mask_text_input_formatter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:
@@ -522,6 +529,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.0"
+  pin_code_fields:
+    dependency: "direct main"
+    description:
+      name: pin_code_fields
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.4.0"
   platform:
     dependency: transitive
     description:

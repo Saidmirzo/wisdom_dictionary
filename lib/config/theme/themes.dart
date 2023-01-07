@@ -4,6 +4,9 @@ abstract class Themes {
   const Themes._();
 
   static ThemeData get lightTheme {
-    return ThemeData();
+    return ThemeData(
+      primarySwatch: Colors.blue,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    );
   }
 }

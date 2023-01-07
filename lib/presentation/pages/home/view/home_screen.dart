@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:jbaza/jbaza.dart';
+import 'package:wisdom/presentation/pages/exercise/view/exercise_page.dart';
+import 'package:wisdom/presentation/pages/google_translator/view/google_translator_page.dart';
+import 'package:wisdom/presentation/pages/home/viewmodel/home_viewmodel.dart';
+import 'package:wisdom/presentation/pages/search/view/search_page.dart';
+import 'package:wisdom/presentation/pages/catalogs/view/catalogs_page.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_decoration.dart';
@@ -9,68 +15,56 @@ import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/assets.dart';
 import '../../../components/custom_banner.dart';
 import '../../../widgets/bottom_nav_bar.dart';
+import '../../../widgets/custom_app_bar.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends ViewModelWidget<HomeViewModel> {
+  HomeScreen({super.key});
+
+  PageController pageController = PageController();
+  late final List<Widget> pages = [
+    const Home(),
+    ExercisePage(),
+    SearchPage(),
+    CatalogsPage(),
+    GoogleTranslatorPage(),
+  ];
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  Widget build(BuildContext context, HomeViewModel viewModel) {
+    return Stack(
+      children: [
+        PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: pages,
+          onPageChanged: (index) {},
+        ),
+        HomeBottomNavBar(
+          onTap: ((index) {
+            pageController.jumpToPage(index);
+          }),
+        ),
+      ],
+    );
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class Home extends StatelessWidget {
+  const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.blue,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
-          ),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.all(5),
-          child: InkWell(
-            onTap: () => ZoomDrawer.of(context)!.toggle(),
-            child: SvgPicture.asset(
-              Assets.icons.menu,
-              height: 24.h,
-              width: 24.h,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        title: Text('Wisdom Dictionary', style: AppTextStyle.font14W500Normal),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(70.h),
-          child: Container(
-            height: 47.h,
-            margin: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
-            child: TextFormField(
-              style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
-              cursorHeight: 18.h,
-              decoration: InputDecoration(
-                prefixIcon: SvgPicture.asset(
-                  Assets.icons.searchText,
-                  height: 18.h,
-                  width: 18.h,
-                  fit: BoxFit.scaleDown,
-                ),
-                hintText: 'Qidirish',
-                border: InputBorder.none,
-                hintStyle: AppTextStyle.font12W400Normal.copyWith(
-                  color: AppColors.paleBlue.withOpacity(0.5),
-                ),
-              ),
-            ),
-          ),
-        ),
+      drawerEnableOpenDragGesture: false,
+      backgroundColor: AppColors.lightBackground,
+      appBar: CustomAppBar(
+        leadingIcon: Assets.icons.menu,
+        onTap: () => ZoomDrawer.of(context)!.toggle(),
+        isSearch: true,
+        title: 'Wisdom Dictionary',
       ),
       body: ListView(
-        padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 60.h),
+        padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 70.h),
         physics: const BouncingScrollPhysics(),
         children: [
           Container(
@@ -117,8 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      extendBody: true,
-      bottomNavigationBar: const HomeBottomNavBar(),
+      // extendBody: true,
+      // bottomNavigationBar: const HomeBottomNavBar(),
     );
   }
 }

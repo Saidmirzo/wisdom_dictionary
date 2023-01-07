@@ -19,11 +19,10 @@ class DrawerMenuItem extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(24),
+          // borderRadius: BorderRadius.circular(24),
           onTap: onTap,
           child: SizedBox(
             height: 48.h,
-            width: 246.w,
             child: Padding(
               padding: const EdgeInsets.only(left: 36),
               child: Row(

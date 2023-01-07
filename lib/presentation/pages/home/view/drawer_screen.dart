@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:wisdom/presentation/routes/routes.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
@@ -53,7 +54,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
             DrawerMenuItem(
               title: 'PRO versiya',
               imgAssets: Assets.icons.proVersion,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(Routes.profilePage),
             ),
             DrawerMenuItem(
               title: 'Shahsiy kabinet',
