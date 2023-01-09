@@ -33,7 +33,7 @@ class WordJarItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 34),
+                  padding: EdgeInsets.only(left: 34.w),
                   child: RichText(
                     text: TextSpan(
                       style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
@@ -47,7 +47,7 @@ class WordJarItem extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 20),
+                  padding: EdgeInsets.only(right: 20.w),
                   child: SizedBox(
                     height: 48.h,
                     width: 48.h,
@@ -55,7 +55,7 @@ class WordJarItem extends StatelessWidget {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () => onDelete,
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(24.r),
                         child: SvgPicture.asset(
                           Assets.icons.trash,
                           height: 24.h,

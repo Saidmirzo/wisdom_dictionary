@@ -59,22 +59,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
             DrawerMenuItem(
               title: 'Shahsiy kabinet',
               imgAssets: Assets.icons.person,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(Routes.profilePage2),
             ),
             DrawerMenuItem(
               title: 'Reklama berish',
               imgAssets: Assets.icons.giveAd,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(Routes.givingAdPage),
             ),
             DrawerMenuItem(
               title: 'Sozlamalar',
               imgAssets: Assets.icons.setting,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(Routes.settingPage),
             ),
             DrawerMenuItem(
               title: 'Qisqartmalar',
               imgAssets: Assets.icons.abbreviations,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(Routes.abbreviationPage),
             ),
             DrawerMenuItem(
               title: 'Ilovani baholash',

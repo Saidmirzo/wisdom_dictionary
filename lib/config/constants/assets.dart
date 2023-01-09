@@ -41,7 +41,7 @@ class _Icons extends _AssetsHolder {
 
   String get fontIncrease => '$basePath/font_increase.svg';
 
-  String get fontRecuse => '$basePath/font_reduce.svg';
+  String get fontReduce => '$basePath/font_reduce.svg';
 
   String get homeFilled => '$basePath/home_filled.svg';
 

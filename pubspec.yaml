@@ -19,6 +19,10 @@ dependencies:
   flutter_zoom_drawer: ^3.0.3
   mask_text_input_formatter: ^2.4.0
   pin_code_fields: ^7.4.0
+  top_snackbar_flutter: ^3.0.0+1
+  url_launcher: ^6.1.7
+  flutter_cupertino_date_picker_fork: ^1.0.7
+  numberpicker: ^2.1.1
 
   cupertino_icons: ^1.0.2
 

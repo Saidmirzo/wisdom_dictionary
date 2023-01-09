@@ -8,6 +8,7 @@ import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
+import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
 class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
@@ -17,6 +18,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   });
 
   final String phoneNumber;
+  TextEditingController editingController = TextEditingController();
 
   @override
   Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
@@ -36,7 +38,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
             children: [
               SvgPicture.asset(
                 Assets.icons.logoBlueText,
-                height: 38.h,
+                height: 52.h,
                 fit: BoxFit.scaleDown,
               ),
               Padding(
@@ -74,6 +76,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: PinCodeTextField(
+                          controller: editingController,
                           appContext: context,
                           length: 5,
                           keyboardType: TextInputType.number,
@@ -99,7 +102,13 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            if (editingController.text.length == 5) {
+                              viewModel.navigateTo(Routes.paymentPage);
+                            } else {
+                              viewModel.callBackError('Something went wrong. Please check sms code');
+                            }
+                          },
                           borderRadius: BorderRadius.circular(40.r),
                           child: Center(
                             child: Text(

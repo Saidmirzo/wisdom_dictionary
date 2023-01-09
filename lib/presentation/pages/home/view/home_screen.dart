@@ -81,29 +81,41 @@ class Home extends StatelessWidget {
             ),
           ),
           CustomBanner(
-              title: 'Grammar',
+            title: 'Grammar',
+            isInkWellEnable: true,
+            contentPadding: const EdgeInsets.symmetric(vertical: 25),
+            onTap: () {},
+            child: Center(
               child: Text(
                 'Library',
                 style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
-              )),
-          CustomBanner(
-            title: 'Farqlar',
-            child: RichText(
-              text: TextSpan(
-                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
-                text: 'lack (in) ',
-                children: [
-                  TextSpan(text: 'or', style: AppTextStyle.font16W500Italic.copyWith(color: AppColors.paleGray)),
-                  const TextSpan(text: ' lack of'),
-                ],
               ),
             ),
           ),
           CustomBanner(
-            height: 197.h,
+            title: 'Farqlar',
+            isInkWellEnable: true,
+            contentPadding: const EdgeInsets.symmetric(vertical: 25),
+            onTap: () {},
+            child: Center(
+              child: RichText(
+                text: TextSpan(
+                  style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                  text: 'lack (in) ',
+                  children: [
+                    TextSpan(text: 'or', style: AppTextStyle.font16W500Italic.copyWith(color: AppColors.paleGray)),
+                    const TextSpan(text: ' lack of'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          CustomBanner(
+            contentPadding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             title: 'Buni bilasizmi? ',
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40),
+            onTap: () {},
+            isInkWellEnable: true,
+            child: Center(
               child: Image(
                 image: AssetImage(Assets.images.diamond),
               ),

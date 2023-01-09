@@ -12,4 +12,15 @@ abstract class AppDecoration {
       color: const Color(0xFF6D8DAD).withOpacity(0.15),
     ),
   ]);
+
+  static BoxDecoration activeButtonDecor = BoxDecoration(
+    borderRadius: BorderRadius.circular(40.r),
+    color: AppColors.blue,
+  );
+
+  static BoxDecoration inactiveButtonDecor = BoxDecoration(
+    border: Border.fromBorderSide(BorderSide(color: AppColors.borderWhite, width: 1.6.w)),
+    borderRadius: BorderRadius.circular(40.r),
+    color: AppColors.white,
+  );
 }

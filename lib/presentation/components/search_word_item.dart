@@ -30,7 +30,7 @@ class SearchWordItem extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 34),
+                  padding: EdgeInsets.only(left: 34.w),
                   child: RichText(
                     text: TextSpan(
                       style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),

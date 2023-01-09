@@ -37,7 +37,7 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
             children: [
               SvgPicture.asset(
                 Assets.icons.logoBlueText,
-                height: 38.h,
+                height: 52.h,
                 fit: BoxFit.scaleDown,
               ),
               Padding(
@@ -86,7 +86,7 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                               viewModel
                                   .navigateTo(Routes.verifyPage, arg: {'number': editingController.text.toString()});
                             } else {
-                              viewModel.callBackError('Invalid number');
+                              viewModel.callBackError('Something went wrong. Please check your number');
                             }
                           }),
                           borderRadius: BorderRadius.circular(40.r),

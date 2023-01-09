@@ -31,7 +31,7 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
             children: [
               SvgPicture.asset(
                 Assets.icons.logoBlueText,
-                height: 38.h,
+                height: 52.h,
                 fit: BoxFit.scaleDown,
               ),
               Padding(
