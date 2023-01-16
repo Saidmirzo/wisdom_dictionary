@@ -15,12 +15,15 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   InputNumberPage({super.key});
 
   var maskFormatter = MaskTextInputFormatter(
-      mask: '+998(##) ### ## ##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
+      mask: '+998(##) ### ## ##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   TextEditingController editingController = TextEditingController();
 
   @override
-  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
@@ -45,7 +48,8 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: Text(
                   'Iltimos davom etish uchun raqamingizni kiriting',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                  style: AppTextStyle.font12W400Normal
+                      .copyWith(color: AppColors.darkGray),
                 ),
               ),
               Container(
@@ -54,8 +58,9 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: Column(
                   children: [
                     Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.lightBackground),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.r),
+                          color: AppColors.lightBackground),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 24.h, bottom: 12.h),
                       padding: EdgeInsets.only(left: 22.w),
@@ -64,18 +69,22 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         child: TextField(
                           controller: editingController,
                           keyboardType: TextInputType.number,
-                          style: AppTextStyle.font16W400Normal.copyWith(color: AppColors.blue),
+                          style: AppTextStyle.font16W400Normal
+                              .copyWith(color: AppColors.blue),
                           inputFormatters: [maskFormatter],
                           decoration: InputDecoration(
                             hintText: '+998(--) --- -- --',
-                            hintStyle: AppTextStyle.font16W400Normal.copyWith(color: AppColors.blue),
+                            hintStyle: AppTextStyle.font16W400Normal
+                                .copyWith(color: AppColors.blue),
                             border: InputBorder.none,
                           ),
                         ),
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.r),
+                          color: AppColors.blue),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 20.h, bottom: 12.h),
                       child: Material(
@@ -83,10 +92,12 @@ class InputNumberPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         child: InkWell(
                           onTap: (() {
                             if (editingController.text.length == 18) {
-                              viewModel
-                                  .navigateTo(Routes.verifyPage, arg: {'number': editingController.text.toString()});
+                              viewModel.navigateTo(Routes.verifyPage, arg: {
+                                'number': editingController.text.toString()
+                              });
                             } else {
-                              viewModel.callBackError('Something went wrong. Please check your number');
+                              viewModel.callBackError(
+                                  'Something went wrong. Please check your number');
                             }
                           }),
                           borderRadius: BorderRadius.circular(40.r),

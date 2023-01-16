@@ -14,7 +14,8 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   GettingProPage({super.key});
 
   @override
-  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
@@ -39,7 +40,8 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: Text(
                   'Eng yaxshi sarmoya bilimga bo\'lgan sarmoyadir!\nIshonavering siz kerakli joyga sarmoya qilmoqdasiz.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                  style: AppTextStyle.font12W400Normal
+                      .copyWith(color: AppColors.darkGray),
                 ),
               ),
               Container(
@@ -50,20 +52,24 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                     RadioListTile(
                       title: Text(
                         'Bir martalik to\'lov',
-                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font14W500Normal
+                            .copyWith(color: AppColors.darkGray),
                       ),
                       value: true,
                       groupValue: true,
                       onChanged: (value) {},
                     ),
                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.r),
+                          color: AppColors.blue),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 24.h, bottom: 12.h),
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () => viewModel.navigateTo(Routes.registrationPage),
+                          onTap: () =>
+                              viewModel.navigateTo(Routes.registrationPage),
                           borderRadius: BorderRadius.circular(40.r),
                           child: Center(
                             child: Text(
@@ -76,16 +82,19 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                     ),
                     // ignore: prefer_const_literals_to_create_immutables
                     GestureDetector(
-                      onTap: () => viewModel.navigateTo(Routes.registrationPage),
+                      onTap: () =>
+                          viewModel.navigateTo(Routes.registrationPage),
                       child: RichText(
                         text: TextSpan(
-                          style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                          style: AppTextStyle.font12W500Normal
+                              .copyWith(color: AppColors.darkGray),
                           text: 'Ro\'yhatdan o\'tganmisiz ?',
                           children: [
                             TextSpan(
                               text: ' Ro\'yhatdan o\'tish',
-                              style: AppTextStyle.font12W500Normal
-                                  .copyWith(color: AppColors.blue, decoration: TextDecoration.underline),
+                              style: AppTextStyle.font12W500Normal.copyWith(
+                                  color: AppColors.blue,
+                                  decoration: TextDecoration.underline),
                             ),
                           ],
                         ),

@@ -18,7 +18,8 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   TextEditingController editingController = TextEditingController();
 
   @override
-  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
@@ -48,7 +49,8 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       child: RichText(
                         text: TextSpan(
                             text: 'Siz ushbu dasturni atigi ',
-                            style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                            style: AppTextStyle.font12W500Normal
+                                .copyWith(color: AppColors.darkGray),
                             children: [
                               TextSpan(
                                 text: '2036 yilgacha 29 000 so\'m',
@@ -57,8 +59,10 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                                 ),
                               ),
                               TextSpan(
-                                text: ' evaziga butunlay sotib olishingiz mumkin.',
-                                style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                                text:
+                                    ' evaziga butunlay sotib olishingiz mumkin.',
+                                style: AppTextStyle.font12W500Normal
+                                    .copyWith(color: AppColors.darkGray),
                               ),
                             ]),
                         textAlign: TextAlign.center,
@@ -68,7 +72,8 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       padding: EdgeInsets.only(top: 20.h),
                       child: Text(
                         'To\'lovni Payme, Click yoki Paynet ilovalari orqali Wisdom ilovasini qidirib topib quyidagi ko\'rsatilgan hisob raqam va summani kiritgan holda ham amalga oshirishingiz mumkin!',
-                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font12W500Normal
+                            .copyWith(color: AppColors.darkGray),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -77,7 +82,8 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       child: RichText(
                         text: TextSpan(
                             text: 'Sizing hisob raqamingiz: ',
-                            style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                            style: AppTextStyle.font12W500Normal
+                                .copyWith(color: AppColors.darkGray),
                             children: [
                               TextSpan(
                                 text: '256652',
@@ -95,7 +101,8 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
               CustomBanner(
                 title: 'To\'lov turi',
                 height: 330.h,
-                contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
+                contentPadding: const EdgeInsets.only(
+                    top: 30, left: 20, right: 20, bottom: 20),
                 child: Column(
                   children: [
                     RadioListTile(
@@ -157,7 +164,9 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       },
                     ),
                     Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.r),
+                          color: AppColors.blue),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 40.h, bottom: 12.h),
                       child: Material(

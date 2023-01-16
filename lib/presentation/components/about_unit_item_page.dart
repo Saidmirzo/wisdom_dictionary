@@ -35,13 +35,15 @@ class AboutUnitItemPage extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                      style: AppTextStyle.font16W600Normal
+                          .copyWith(color: AppColors.darkGray),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.h),
                       child: Text(
                         'Guruh tuzmoq deyish uchun make a bandemas from a band deyiladi',
-                        style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
+                        style: AppTextStyle.font14W400Normal
+                            .copyWith(color: AppColors.paleGray),
                       ),
                     ),
                   ],

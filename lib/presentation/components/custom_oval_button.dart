@@ -28,7 +28,9 @@ class CustomOvalButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: isActive ? AppDecoration.activeButtonDecor : AppDecoration.inactiveButtonDecor,
+      decoration: isActive
+          ? AppDecoration.activeButtonDecor
+          : AppDecoration.inactiveButtonDecor,
       height: height ?? 45.h,
       child: Material(
         color: Colors.transparent,
@@ -43,12 +45,16 @@ class CustomOvalButton extends StatelessWidget {
                     ? Padding(
                         padding: EdgeInsets.only(right: 8.w),
                         child: SvgPicture.asset(imgAssets,
-                            height: 16.h, fit: BoxFit.scaleDown, color: isActive ? AppColors.white : AppColors.black),
+                            height: 16.h,
+                            fit: BoxFit.scaleDown,
+                            color:
+                                isActive ? AppColors.white : AppColors.black),
                       )
                     : const SizedBox.shrink(),
                 Text(
                   label,
-                  style: textStyle.copyWith(color: isActive ? AppColors.white : AppColors.black),
+                  style: textStyle.copyWith(
+                      color: isActive ? AppColors.white : AppColors.black),
                 ),
               ],
             ),

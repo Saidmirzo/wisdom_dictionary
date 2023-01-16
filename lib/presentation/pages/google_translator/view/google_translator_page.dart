@@ -12,11 +12,13 @@ import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/assets.dart';
 
-class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageViewModel> {
+class GoogleTranslatorPage
+    extends ViewModelBuilderWidget<GoogleTranslatorPageViewModel> {
   GoogleTranslatorPage({super.key});
 
   @override
-  Widget builder(BuildContext context, GoogleTranslatorPageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, GoogleTranslatorPageViewModel viewModel,
+      Widget? child) {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
       backgroundColor: AppColors.lightBackground,
@@ -34,19 +36,24 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
           child: Column(
             children: [
               Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.r), color: AppColors.white),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.r),
+                    color: AppColors.white),
                 height: 158.h,
-                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 23),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 13, horizontal: 23),
                 child: Column(
                   children: [
                     Expanded(
                       child: TextFormField(
-                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.blue),
+                        style: AppTextStyle.font14W500Normal
+                            .copyWith(color: AppColors.blue),
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration(
                           hintText: 'Uzbek',
-                          hintStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkForm),
+                          hintStyle: AppTextStyle.font14W500Normal
+                              .copyWith(color: AppColors.darkForm),
                           border: InputBorder.none,
                         ),
                       ),
@@ -56,12 +63,17 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TranslateCircleButton(onTap: () {}, iconAssets: Assets.icons.crossClose),
+                          TranslateCircleButton(
+                              onTap: () {},
+                              iconAssets: Assets.icons.crossClose),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 18.w),
-                            child: TranslateCircleButton(onTap: () {}, iconAssets: Assets.icons.microphone),
+                            child: TranslateCircleButton(
+                                onTap: () {},
+                                iconAssets: Assets.icons.microphone),
                           ),
-                          TranslateCircleButton(onTap: () {}, iconAssets: Assets.icons.sound),
+                          TranslateCircleButton(
+                              onTap: () {}, iconAssets: Assets.icons.sound),
                         ],
                       ),
                     )
@@ -70,7 +82,8 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 14),
-                decoration: AppDecoration.bannerDecor.copyWith(color: AppColors.blue),
+                decoration:
+                    AppDecoration.bannerDecor.copyWith(color: AppColors.blue),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -85,20 +98,25 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                 ),
               ),
               Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.r), color: AppColors.white),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.r),
+                    color: AppColors.white),
                 height: 158.h,
-                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 23),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 13, horizontal: 23),
                 child: Column(
                   children: [
                     Expanded(
                       child: TextFormField(
-                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.blue),
+                        style: AppTextStyle.font14W500Normal
+                            .copyWith(color: AppColors.blue),
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration(
                           hintText: 'English',
                           enabled: false,
-                          hintStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkForm),
+                          hintStyle: AppTextStyle.font14W500Normal
+                              .copyWith(color: AppColors.darkForm),
                           border: InputBorder.none,
                         ),
                       ),
@@ -108,12 +126,16 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TranslateCircleButton(onTap: () {}, iconAssets: Assets.icons.copy),
+                          TranslateCircleButton(
+                              onTap: () {}, iconAssets: Assets.icons.copy),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 18.w),
-                            child: TranslateCircleButton(onTap: () {}, iconAssets: Assets.icons.microphone),
+                            child: TranslateCircleButton(
+                                onTap: () {},
+                                iconAssets: Assets.icons.microphone),
                           ),
-                          TranslateCircleButton(onTap: () {}, iconAssets: Assets.icons.saveWord),
+                          TranslateCircleButton(
+                              onTap: () {}, iconAssets: Assets.icons.saveWord),
                         ],
                       ),
                     )
@@ -122,7 +144,8 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 14),
-                decoration: AppDecoration.bannerDecor.copyWith(color: AppColors.blue),
+                decoration:
+                    AppDecoration.bannerDecor.copyWith(color: AppColors.blue),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -131,7 +154,9 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                     child: SizedBox(
                       height: 37.h,
                       width: 91.w,
-                      child: Center(child: SvgPicture.asset(Assets.icons.changeLangTranslate)),
+                      child: Center(
+                          child: SvgPicture.asset(
+                              Assets.icons.changeLangTranslate)),
                     ),
                   ),
                 ),

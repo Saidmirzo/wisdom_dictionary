@@ -8,7 +8,8 @@ import '../../config/constants/app_colors.dart';
 import '../../config/constants/assets.dart';
 
 class TranslateCircleButton extends StatelessWidget {
-  const TranslateCircleButton({super.key, required this.onTap, required this.iconAssets});
+  const TranslateCircleButton(
+      {super.key, required this.onTap, required this.iconAssets});
 
   final Function() onTap;
   final String iconAssets;

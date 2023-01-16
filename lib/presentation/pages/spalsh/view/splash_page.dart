@@ -11,7 +11,8 @@ class SplashPage extends ViewModelBuilderWidget<SplashViewModel> {
   SplashPage({super.key});
 
   @override
-  Widget builder(BuildContext context, SplashViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, SplashViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.blue,
       body: Align(

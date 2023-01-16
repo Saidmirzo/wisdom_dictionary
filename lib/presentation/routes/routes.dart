@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wisdom/presentation/components/about_unit_item_page.dart';
 import 'package:wisdom/presentation/pages/abbreviation/abbreviation_page.dart';
-import 'package:wisdom/presentation/pages/adversitment/view/giving_ad_page.dart';
+import 'package:wisdom/presentation/pages/adversitment/giving_ad_page.dart';
 import 'package:wisdom/presentation/pages/home/view/home_page.dart';
 import 'package:wisdom/presentation/pages/profile/view/getting_pro_page.dart';
 import 'package:wisdom/presentation/pages/profile/view/input_number_page.dart';
@@ -10,7 +10,7 @@ import 'package:wisdom/presentation/pages/profile/view/profile_page.dart';
 import 'package:wisdom/presentation/pages/profile/view/verify_page.dart';
 import 'package:wisdom/presentation/pages/setting/view/setting_page.dart';
 import 'package:wisdom/presentation/pages/spalsh/view/splash_page.dart';
-import 'package:wisdom/presentation/pages/catalogs/view/grammar_page.dart';
+import 'package:wisdom/presentation/pages/grammar/view/grammar_page.dart';
 
 class Routes {
   static const mainPage = '/';
@@ -27,7 +27,8 @@ class Routes {
 
   static Route<dynamic> generateRoutes(RouteSettings routeSettings) {
     try {
-      final Map<String, dynamic>? args = routeSettings.arguments as Map<String, dynamic>?;
+      final Map<String, dynamic>? args =
+          routeSettings.arguments as Map<String, dynamic>?;
       args ?? <String, dynamic>{};
       switch (routeSettings.name) {
         case mainPage:

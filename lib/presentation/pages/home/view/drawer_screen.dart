@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:jbaza/jbaza.dart';
+import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/presentation/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:wisdom/presentation/routes/routes.dart';
+import 'package:wisdom/presentation/widgets/custom_dialog.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
 import '../../../components/drawer_menu_item.dart';
 
-class DrawerScreen extends StatefulWidget {
-  const DrawerScreen({super.key});
+class DrawerScreen extends ViewModelWidget<HomeViewModel> {
 
   @override
-  State<DrawerScreen> createState() => _DrawerScreenState();
-}
-
-class _DrawerScreenState extends State<DrawerScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, HomeViewModel viewModel) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: AppBar(
@@ -52,45 +50,64 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
             ),
             DrawerMenuItem(
-              title: 'PRO versiya',
+              title: 'Get PRO',
               imgAssets: Assets.icons.proVersion,
               onTap: () => Navigator.of(context).pushNamed(Routes.profilePage),
             ),
             DrawerMenuItem(
-              title: 'Shahsiy kabinet',
+              title: 'Profile',
               imgAssets: Assets.icons.person,
               onTap: () => Navigator.of(context).pushNamed(Routes.profilePage2),
             ),
             DrawerMenuItem(
-              title: 'Reklama berish',
+              title: 'Place advertisement',
               imgAssets: Assets.icons.giveAd,
               onTap: () => Navigator.of(context).pushNamed(Routes.givingAdPage),
             ),
             DrawerMenuItem(
-              title: 'Sozlamalar',
+              title: 'Settings',
               imgAssets: Assets.icons.setting,
               onTap: () => Navigator.of(context).pushNamed(Routes.settingPage),
             ),
             DrawerMenuItem(
-              title: 'Qisqartmalar',
+              title: 'Abbreviations',
               imgAssets: Assets.icons.abbreviations,
               onTap: () => Navigator.of(context).pushNamed(Routes.abbreviationPage),
             ),
             DrawerMenuItem(
-              title: 'Ilovani baholash',
+              title: 'Rate the app',
               imgAssets: Assets.icons.rate,
               onTap: () {},
             ),
             DrawerMenuItem(
-              title: 'Ilovani ulashish',
+              title: 'Share the app',
               imgAssets: Assets.icons.share,
               onTap: () {},
             ),
-            DrawerMenuItem(
-              title: 'Yuklab olish',
-              imgAssets: Assets.icons.download,
-              onTap: () {},
-            ),
+            // DrawerMenuItem(
+            //   title: 'Download',
+            //   imgAssets: Assets.icons.download,
+            //   onTap: () {
+            //     showCustomDialog(
+            //       context: context,
+            //       title: 'So\'zlarni yuklash',
+            //       contentText: Text(
+            //         'So\'zlarni offline qidirish uchun yuklab oling',
+            //         style: AppTextStyle.font14W400Normal.copyWith(
+            //           color: AppColors.paleGray,
+            //         ),
+            //         textAlign: TextAlign.center,
+            //       ),
+            //       positive: 'Yuklash',
+            //       onPositiveTap: () => viewModel.updateWords(),
+            //       negative: 'Bekor qilish',
+            //       onNegativeTap: () {
+            //         Navigator.pop(context);
+            //       },
+            //       icon: Assets.icons.download,
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

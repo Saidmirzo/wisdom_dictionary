@@ -114,4 +114,6 @@ class _Images extends _AssetsHolder {
   String get paynet => '$basePath/paynet_img.svg';
 
   String get diamond => '$basePath/diamond.png';
+
+  String get noInternet => '$basePath/no-wifi.png';
 }

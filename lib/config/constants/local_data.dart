@@ -25,5 +25,8 @@ List<Map<String, String>> abbreviations = [
   {'humorous': 'hazilomus tarizda ishlatiladi'},
   {'CanE': 'Kanada ingiliz tilisi'},
   {'taboo': 'haqoratomuz'},
-  {'slang': 'ma\'lum bir toifadagi odamlar tomonidan asosan og\'zaki nutqda ishlatiladigan norasmiy so\'z'},
+  {
+    'slang':
+        'ma\'lum bir toifadagi odamlar tomonidan asosan og\'zaki nutqda ishlatiladigan norasmiy so\'z'
+  },
 ];

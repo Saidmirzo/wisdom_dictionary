@@ -19,7 +19,8 @@ class CatalogButton extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       width: double.infinity,
-      decoration: AppDecoration.bannerDecor.copyWith(borderRadius: BorderRadius.circular(30.r), color: AppColors.blue),
+      decoration: AppDecoration.bannerDecor.copyWith(
+          borderRadius: BorderRadius.circular(30.r), color: AppColors.blue),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

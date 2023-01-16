@@ -23,7 +23,8 @@ class Locked extends StatelessWidget {
         child: TextButton.icon(
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r))),
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.r))),
           ),
           icon: const Icon(
             Icons.lock_outline_rounded,
@@ -42,4 +43,4 @@ class Locked extends StatelessWidget {
   }
 }
 
-// 
+//

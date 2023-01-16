@@ -14,16 +14,23 @@ class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
   final drawerController = ZoomDrawerController();
 
   @override
+  void onViewModelReady(HomeViewModel viewModel) {
+    super.onViewModelReady(viewModel);
+    viewModel.getRandomDailyWords();
+  }
+
+  @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return ZoomDrawer(
-      menuScreen: const DrawerScreen(),
+      menuScreen: DrawerScreen(),
       mainScreen: HomeScreen(),
       borderRadius: 30,
       showShadow: false,
       mainScreenTapClose: true,
+      mainScreenScale: 0.2,
       angle: 0,
       menuBackgroundColor: AppColors.lightBackground,
-      slideWidth: MediaQuery.of(context).size.width * 0.7,
+      slideWidth: MediaQuery.of(context).size.width * 0.75,
     );
   }
 

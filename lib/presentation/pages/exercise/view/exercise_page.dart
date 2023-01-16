@@ -15,7 +15,8 @@ class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
   ExercisePage({super.key});
 
   @override
-  Widget builder(BuildContext context, ExerciseViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ExerciseViewModel viewModel, Widget? child) {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
       backgroundColor: AppColors.lightBackground,
@@ -30,25 +31,78 @@ class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
         padding: const EdgeInsets.only(top: 16, bottom: 70),
         physics: const BouncingScrollPhysics(),
         children: [
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
-          WordJarItem(firstText: 'adverb', secondText: 'ravish', onDelete: () {}, onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
+          WordJarItem(
+              firstText: 'adverb',
+              secondText: 'ravish',
+              onDelete: () {},
+              onView: () {}),
         ],
       ),
       endDrawerEnableOpenDragGesture: true,
       floatingActionButton: Container(
         margin: const EdgeInsets.only(bottom: 65),
-        decoration: BoxDecoration(color: AppColors.blue, borderRadius: BorderRadius.circular(25.r)),
+        decoration: BoxDecoration(
+            color: AppColors.blue, borderRadius: BorderRadius.circular(25.r)),
         height: 40.h,
         width: 125.w,
         child: Material(
@@ -57,7 +111,8 @@ class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
             onTap: () {},
             borderRadius: BorderRadius.circular(25.r),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SvgPicture.asset(Assets.icons.exercise, height: 20.h, fit: BoxFit.scaleDown),
+              SvgPicture.asset(Assets.icons.exercise,
+                  height: 20.h, fit: BoxFit.scaleDown),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(

@@ -15,11 +15,12 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   ProfilePage({super.key});
 
   @override
-  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(
+      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Shahsiy kabinet',
+        title: 'Shaxsiy kabinet',
         onTap: () => viewModel.pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -46,7 +47,8 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                           alignment: Alignment.bottomCenter,
                           child: Text(
                             '+998(99) 005 16 73',
-                            style: AppTextStyle.font18W500Normal.copyWith(color: AppColors.blue, fontSize: 20),
+                            style: AppTextStyle.font18W500Normal
+                                .copyWith(color: AppColors.blue, fontSize: 20),
                           ),
                         ),
                       ),
@@ -60,11 +62,13 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
               ),
               CustomBanner(
                 title: 'Holat',
-                contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
+                contentPadding: const EdgeInsets.only(
+                    top: 30, left: 20, right: 20, bottom: 20),
                 child: RichText(
                   text: TextSpan(
                       text: 'Mening hozirgi holatim: ',
-                      style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleGray),
+                      style: AppTextStyle.font14W500Normal
+                          .copyWith(color: AppColors.paleGray),
                       children: const [
                         TextSpan(
                           text: '2036 yilgacha 29 000 so\'m',

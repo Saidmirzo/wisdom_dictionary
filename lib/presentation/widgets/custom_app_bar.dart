@@ -7,30 +7,45 @@ import '../../config/constants/assets.dart';
 
 // ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  CustomAppBar({super.key, required this.title, required this.onTap, this.isSearch = false, required this.leadingIcon});
+  CustomAppBar({
+    super.key,
+    required this.title,
+    required this.onTap,
+    this.isSearch = false,
+    required this.leadingIcon,
+    this.onChange,
+  });
 
   final String title;
   final Function() onTap;
+  final Function(String text)? onChange;
   final String leadingIcon;
   bool isSearch;
+  late TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    controller.addListener(() {
+      if (onChange != null && controller.text.isNotEmpty) {
+        onChange!(controller.text.trim());
+      }
+    });
+
     return AppBar(
       backgroundColor: AppColors.blue,
       shadowColor: const Color(0xFF6D8DAD).withOpacity(0.15),
       elevation: 4,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+          bottomLeft: Radius.circular(30.r),
+          bottomRight: Radius.circular(30.r),
         ),
       ),
       leading: Padding(
-        padding: const EdgeInsets.only(
-          left: 5,
-          right: 5,
-          top: 15,
+        padding: EdgeInsets.only(
+          left: 5.w,
+          right: 5.w,
+          top: 15.h,
         ),
         child: InkWell(
           onTap: () => onTap(),
@@ -44,7 +59,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       title: Padding(
-        padding: const EdgeInsets.only(top: 15),
+        padding: EdgeInsets.only(top: 15.h),
         child: Text(title, style: AppTextStyle.font14W500Normal),
       ),
       bottom: isSearch
@@ -52,11 +67,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               preferredSize: Size.fromHeight(70.h),
               child: Container(
                 height: 47.h,
-                margin: const EdgeInsets.all(14),
+                margin: EdgeInsets.all(14),
                 decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
                 child: TextFormField(
                   style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
                   cursorHeight: 18.h,
+                  controller: controller,
                   decoration: InputDecoration(
                     prefixIcon: SvgPicture.asset(
                       Assets.icons.searchText,
@@ -64,7 +80,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       width: 18.h,
                       fit: BoxFit.scaleDown,
                     ),
-                    hintText: 'Qidirish',
+                    hintText: 'Search',
                     border: InputBorder.none,
                     hintStyle: AppTextStyle.font12W400Normal.copyWith(
                       color: AppColors.paleBlue.withOpacity(0.5),
@@ -78,5 +94,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(isSearch ? 125 : 80);
+  Size get preferredSize => Size.fromHeight(isSearch ? 134.h : 86.h);
 }

@@ -23,7 +23,8 @@ class AbbreviationPage extends StatelessWidget {
         itemCount: abbreviations.length,
         itemBuilder: (BuildContext context, int index) {
           var item = abbreviations[index];
-          return AbbreviationWordItem(firstText: item.keys.first, secondText: item.values.first);
+          return AbbreviationWordItem(
+              firstText: item.keys.first, secondText: item.values.first);
         },
       ),
     );

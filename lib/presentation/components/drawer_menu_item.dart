@@ -6,7 +6,11 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 
 class DrawerMenuItem extends StatelessWidget {
-  const DrawerMenuItem({super.key, required this.title, required this.imgAssets, required this.onTap});
+  const DrawerMenuItem(
+      {super.key,
+      required this.title,
+      required this.imgAssets,
+      required this.onTap});
 
   final String imgAssets;
   final String title;
@@ -15,7 +19,7 @@ class DrawerMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.only(bottom: 10.h),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -24,7 +28,7 @@ class DrawerMenuItem extends StatelessWidget {
           child: SizedBox(
             height: 48.h,
             child: Padding(
-              padding: const EdgeInsets.only(left: 36),
+              padding: EdgeInsets.only(left: 36.w),
               child: Row(
                 children: [
                   SvgPicture.asset(
@@ -37,7 +41,8 @@ class DrawerMenuItem extends StatelessWidget {
                     padding: EdgeInsets.only(left: 12.w),
                     child: Text(
                       title,
-                      style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.blue),
+                      style: AppTextStyle.font14W500Normal
+                          .copyWith(color: AppColors.blue),
                     ),
                   )
                 ],

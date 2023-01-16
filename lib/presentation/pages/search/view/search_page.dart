@@ -26,6 +26,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
         onTap: () => ZoomDrawer.of(context)!.toggle(),
         isSearch: true,
         title: 'Qidiruvlar oynasi',
+        onChange: (text) => viewModel.searchByWord(text),
       ),
       // body: const EmptyJar(),
       body: Column(

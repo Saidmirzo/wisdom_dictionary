@@ -32,6 +32,15 @@ class CustomNumberPicker extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(33.r),
         color: const Color(0xFFECF2FF),
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFFECF2FF).withOpacity(0.38),
+            const Color(0xFFECF2FF),
+            const Color(0xFFECF2FF).withOpacity(0.38),
+          ],
+          begin: FractionalOffset.topCenter,
+          end: FractionalOffset.bottomCenter,
+        ),
       ),
       child: Stack(
         children: [
@@ -40,9 +49,10 @@ class CustomNumberPicker extends StatelessWidget {
             minValue: minValue,
             maxValue: maxValue,
             infiniteLoop: infiniteLoop,
-            textStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.lightGray),
-            selectedTextStyle:
-                AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray, fontWeight: FontWeight.w600),
+            textStyle: AppTextStyle.font14W500Normal
+                .copyWith(color: AppColors.lightGray),
+            selectedTextStyle: AppTextStyle.font14W500Normal.copyWith(
+                color: AppColors.darkGray, fontWeight: FontWeight.w600),
             zeroPad: zeroPad,
             onChanged: (value) => onChange(value),
           ),

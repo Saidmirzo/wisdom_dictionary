@@ -22,13 +22,15 @@ class EmptyJar extends StatelessWidget {
             padding: EdgeInsets.only(top: 50.h, bottom: 16.h),
             child: Text(
               'Lug\'at daftari bo\'sh',
-              style: AppTextStyle.font28W600Normal.copyWith(color: AppColors.darkGray),
+              style: AppTextStyle.font28W600Normal
+                  .copyWith(color: AppColors.darkGray),
             ),
           ),
           Text(
             'Sizda kerakli so\'zlar bo\'limi bo\'sh,\n iltimos biror so\'zni qo\'shing!',
             textAlign: TextAlign.center,
-            style: AppTextStyle.font17W400Normal.copyWith(color: AppColors.paleGray.withOpacity(0.57)),
+            style: AppTextStyle.font17W400Normal
+                .copyWith(color: AppColors.paleGray.withOpacity(0.57)),
           )
         ],
       ),

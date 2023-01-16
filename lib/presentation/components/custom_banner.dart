@@ -40,14 +40,17 @@ class CustomBanner extends StatelessWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18.r),
-                          onTap: () => onTap ?? () {},
+                          onTap: () => onTap!() ?? () {},
                           child: Padding(
                             padding: contentPadding,
                             child: child,
                           ),
                         ),
                       )
-                    : child,
+                    : Padding(
+                        padding: contentPadding,
+                        child: child,
+                      ),
               ),
             ],
           ),

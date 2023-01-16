@@ -36,12 +36,14 @@ class WordJarItem extends StatelessWidget {
                   padding: EdgeInsets.only(left: 34.w),
                   child: RichText(
                     text: TextSpan(
-                      style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                      style: AppTextStyle.font14W500Normal
+                          .copyWith(color: AppColors.darkGray),
                       text: firstText,
                       children: [
                         TextSpan(
                             text: ' - $secondText',
-                            style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.darkGray)),
+                            style: AppTextStyle.font14W400Normal
+                                .copyWith(color: AppColors.darkGray)),
                       ],
                     ),
                   ),
