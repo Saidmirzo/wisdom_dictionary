@@ -10,6 +10,9 @@ class LocalViewModel extends BaseViewModel {
 
   bool isFromMain = true;
 
+  bool isTitle = true;
+  bool isSubSub = false;
+
   changePageIndex(int index) {
     if (index < 4) {
       current_index.value = index;

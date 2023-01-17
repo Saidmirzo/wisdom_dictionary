@@ -32,12 +32,24 @@ class SpeakingPageViewModel extends BaseViewModel {
   }
 
   goMain() {
-    localViewModel.changePageIndex(3);
+    if (localViewModel.isTitle) {
+      localViewModel.isTitle = false;
+      localViewModel.changePageIndex(16);
+    }
+    if (localViewModel.isSubSub) {
+      localViewModel.isSubSub = false;
+    }
   }
 
-  goToDetails(CatalogModel catalogModel) {
-    homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: catalogModel.word);
+  goToNext(CatalogModel catalogModel) {
+    if (!localViewModel.isTitle) {
+      homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: catalogModel.title);
+      localViewModel.isTitle = true;
+    }
+    if (!localViewModel.isSubSub) {
+      localViewModel.isSubSub = true;
+    }
+    localViewModel.changePageIndex(16);
     // localViewModel.isFromMain = false;
-    // localViewModel.changePageIndex(5);
   }
 }
