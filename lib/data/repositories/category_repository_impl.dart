@@ -31,6 +31,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
   List<CatalogModel> _differenceWordsList = [];
   List<CatalogModel> _metaphorWordsList = [];
   List<CatalogModel> _cultureWordsList = [];
+  List<CatalogModel> _speakingWordsList = [];
   CultureModel _cultureModel = CultureModel();
 
   @override
@@ -142,6 +143,15 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
+  Future<void> getSpeakingWordsList(String? subTitle, String? word) async {
+    _speakingWordsList = [];
+    var response = await dbHelper.getCatalogsList("speaking");
+    if (response != null) {
+      _speakingWordsList.addAll(response);
+    }
+  }
+
+  @override
   WordWithGrammarModel get grammarDetailModel => _grammarModel;
 
   @override
@@ -184,4 +194,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
 
   @override
   WordWithCultureModel get cultureDetailModel => _cultureDetailModel;
+
+  @override
+  List<CatalogModel> get speakingWordsList => _speakingWordsList;
 }

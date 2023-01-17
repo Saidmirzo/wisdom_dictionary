@@ -40,7 +40,7 @@ class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
                 CatalogButton(text: 'Differences', onTap: () => locator<LocalViewModel>().changePageIndex(13)),
                 CatalogButton(text: 'Metaphors', onTap: () => locator<LocalViewModel>().changePageIndex(14)),
                 CatalogButton(text: 'Culture', onTap: () => locator<LocalViewModel>().changePageIndex(15)),
-                CatalogButton(text: 'Speaking', onTap: () {}),
+                CatalogButton(text: 'Speaking', onTap: () => locator<LocalViewModel>().changePageIndex(17)),
               ],
             ),
           ),

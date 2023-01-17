@@ -17,6 +17,7 @@ import 'package:wisdom/presentation/pages/metaphor/view/metaphor_page.dart';
 import 'package:wisdom/presentation/pages/search/view/search_page.dart';
 import 'package:wisdom/presentation/pages/catalogs/view/catalogs_page.dart';
 import 'package:wisdom/presentation/pages/speaking/view/speaking_details_page.dart';
+import 'package:wisdom/presentation/pages/speaking/view/speaking_page.dart';
 import 'package:wisdom/presentation/pages/thesaurus/view/thesaurus_details_page.dart';
 import 'package:wisdom/presentation/pages/thesaurus/view/thesaurus_page.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
@@ -53,6 +54,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
     MetaphorPage(), // 14
     CulturePage(), // 15
     CultureDetailPage(), // 16
+    SpeakingPage(), // 17
   ];
 
   @override

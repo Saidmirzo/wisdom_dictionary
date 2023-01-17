@@ -11,7 +11,6 @@ import 'package:wisdom/data/model/word_with_theasurus_model.dart';
 import '../../data/model/catalog_model.dart';
 
 abstract class CategoryRepository {
-
   Future<void> getGrammarDetail(int gId);
 
   Future<void> getDifferenceDetail(int dId);
@@ -35,6 +34,8 @@ abstract class CategoryRepository {
   Future<void> getMetaphorWordsList();
 
   Future<void> getCultureWordsList();
+
+  Future<void> getSpeakingWordsList(String? subTitle, String? word);
 
   WordWithGrammarModel get grammarDetailModel;
 
@@ -60,8 +61,9 @@ abstract class CategoryRepository {
 
   List<CatalogModel> get cultureWordsList;
 
+  List<CatalogModel> get speakingWordsList;
+
   CultureModel get cultureModel;
 
   set cultureModel(CultureModel cultureModel);
-
 }
