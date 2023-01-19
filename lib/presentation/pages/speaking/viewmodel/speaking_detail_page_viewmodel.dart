@@ -6,13 +6,14 @@ import '../../../../core/di/app_locator.dart';
 import '../../../../domain/repositories/category_repository.dart';
 
 class SpeakingDetailPageViewModel extends BaseViewModel {
-  SpeakingDetailPageViewModel({
-    required super.context,
-    required this.homeRepository,
-    required this.categoryRepository,
-  });
+  SpeakingDetailPageViewModel(
+      {required super.context,
+      required this.homeRepository,
+      required this.categoryRepository,
+      required this.localViewModel});
 
   final HomeRepository homeRepository;
+  final LocalViewModel localViewModel;
   final CategoryRepository categoryRepository;
   final String getSpeakingDetailsTag = 'getSpeakingDetails';
 
@@ -34,6 +35,12 @@ class SpeakingDetailPageViewModel extends BaseViewModel {
   }
 
   goBack() {
-    locator<LocalViewModel>().changePageIndex(0);
+    if (localViewModel.isFromMain) {
+      localViewModel.isFromMain = true;
+      localViewModel.changePageIndex(0);
+    } else {
+      localViewModel.speakingCatalogModel.id = int.parse(localViewModel.speakingCatalogModel.category ?? "0");
+      localViewModel.changePageIndex(17);
+    }
   }
 }

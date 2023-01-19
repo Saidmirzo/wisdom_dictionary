@@ -20,7 +20,7 @@ class SpeakingPage extends ViewModelBuilderWidget<SpeakingPageViewModel> {
 
   @override
   void onViewModelReady(SpeakingPageViewModel viewModel) {
-    viewModel.getSpeakingWordsList();
+    viewModel.getSpeakingWordsList(null);
     super.onViewModelReady(viewModel);
   }
 
@@ -34,7 +34,8 @@ class SpeakingPage extends ViewModelBuilderWidget<SpeakingPageViewModel> {
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
-          isSearch: false,
+          isSearch: true,
+          onChange: (value) => viewModel.getSpeakingWordsList(value),
           title: "Speaking",
         ),
         body: viewModel.isSuccess(tag: viewModel.getSpeakingTag)
@@ -46,7 +47,8 @@ class SpeakingPage extends ViewModelBuilderWidget<SpeakingPageViewModel> {
                 itemBuilder: (context, index) {
                   var element = viewModel.categoryRepository.speakingWordsList[index];
                   return CatalogItem(
-                    firstText: element.title ?? "unknown",
+                    firstText:
+                        viewModel.localViewModel.isSubSub ? element.word ?? "unknown" : element.title ?? "unknown",
                     onTap: () => viewModel.goToNext(element),
                   );
                 },

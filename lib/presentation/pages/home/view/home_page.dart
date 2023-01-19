@@ -9,7 +9,7 @@ import 'drawer_screen.dart';
 import 'home_screen.dart';
 
 class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
-  HomePage({super.key});
+   HomePage({super.key});
 
   final drawerController = ZoomDrawerController();
 

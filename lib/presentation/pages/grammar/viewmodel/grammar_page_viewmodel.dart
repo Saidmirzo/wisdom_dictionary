@@ -20,9 +20,13 @@ class GrammarPageViewModel extends BaseViewModel {
 
   final String getGrammarTag = 'getGrammarTag';
 
-  Future getGrammarWordsList() async {
+  void getGrammarWordsList(String? searchText) {
     safeBlock(() async {
-      await categoryRepository.getGrammarWordsList();
+      if (searchText != null && searchText.trim().isNotEmpty) {
+        await categoryRepository.getGrammarWordsList(searchText.trim().toString());
+      } else {
+        await categoryRepository.getGrammarWordsList(null);
+      }
       if (categoryRepository.grammarWordsList.isNotEmpty) {
         setSuccess(tag: getGrammarTag);
       } else {

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/components/search_clean_button.dart';
 import 'package:wisdom/presentation/components/search_history_item.dart';
 import 'package:wisdom/presentation/components/search_word_item.dart';
@@ -11,10 +12,17 @@ import 'package:wisdom/presentation/pages/search/viewmodel/search_page_viewmodel
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
 import '../../../widgets/custom_app_bar.dart';
+import '../../../widgets/loading_widget.dart';
 
 // ignore: must_be_immutable
 class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
   SearchPage({super.key});
+
+  @override
+  void onViewModelReady(SearchPageViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 
   @override
   Widget builder(BuildContext context, SearchPageViewModel viewModel, Widget? child) {
@@ -25,33 +33,46 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),
         isSearch: true,
-        title: 'Qidiruvlar oynasi',
+        title: 'Search',
         onChange: (text) => viewModel.searchByWord(text),
       ),
       // body: const EmptyJar(),
       body: Column(
         children: [
-          SearchCleanButton(onTap: () {}),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(bottom: 70),
-              physics: const BouncingScrollPhysics(),
-              children: [
-                SearchWordItem(firstText: 'love', secondText: 'noun', onTap: () {}),
-                SearchWordItem(firstText: 'love', secondText: 'verb', onTap: () {}),
-                SearchWordItem(firstText: 'help', secondText: 'verb', onTap: () {}),
-                SearchWordItem(firstText: 'cat', secondText: 'noun', onTap: () {}),
-                SearchWordItem(firstText: 'dictionary', secondText: 'noun', onTap: () {}),
-                SearchWordItem(firstText: 'fast', secondText: 'adj', onTap: () {}),
-                SearchWordItem(firstText: 'love', secondText: 'verb', onTap: () {}),
-                SearchHistoryItem(firstText: 'fast', secondText: 'adj', onTap: () {}),
-                SearchHistoryItem(firstText: 'fast', secondText: 'adj', onTap: () {}),
-                SearchHistoryItem(firstText: 'fast', secondText: 'adj', onTap: () {}),
-                SearchHistoryItem(firstText: 'fast', secondText: 'adj', onTap: () {}),
-                SearchHistoryItem(firstText: 'fast', secondText: 'adj', onTap: () {}),
-              ],
+          Visibility(
+            visible: viewModel.recentList.isNotEmpty,
+            child: SearchCleanButton(
+              onTap: () {},
             ),
+          ),
+          Expanded(
+            child: (viewModel.isSuccess(tag: viewModel.searchTag) || viewModel.isSuccess(tag: viewModel.initTag))
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(bottom: 130),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: viewModel.searchRepository.wordList.isNotEmpty
+                        ? viewModel.searchRepository.wordList.length
+                        : viewModel.recentList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (viewModel.searchRepository.wordList.isNotEmpty) {
+                        var item = viewModel.searchRepository.wordList[index];
+                        return SearchWordItem(
+                          firstText: item.word ?? "unknown",
+                          secondText: item.wordClasswordClass ?? "",
+                          onTap: () {},
+                        );
+                      } else {
+                        var itemRecent = viewModel.recentList[index];
+                        return SearchHistoryItem(
+                          firstText: itemRecent.word ?? "unknown",
+                          secondText: itemRecent.wordClass ?? "",
+                          onTap: () {},
+                        );
+                      }
+                    },
+                  )
+                : const Center(child: LoadingWidget()),
           ),
         ],
       ),
@@ -82,6 +103,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
 
   @override
   SearchPageViewModel viewModelBuilder(BuildContext context) {
-    return SearchPageViewModel(context: context);
+    return SearchPageViewModel(
+        context: context, preferenceHelper: locator.get(), dbHelper: locator.get(), searchRepository: locator.get());
   }
 }

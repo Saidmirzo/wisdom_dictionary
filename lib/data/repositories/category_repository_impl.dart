@@ -98,55 +98,97 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<void> getGrammarWordsList() async {
-    _grammarWordsList = [];
-    var response = await dbHelper.getCatalogsList("grammar");
+  Future<void> getGrammarWordsList(String? searchText) async {
+    List<CatalogModel>? response = [];
+    if (searchText != null) {
+      response = await dbHelper.getIfWordIsWordenList("grammar", searchText);
+    } else {
+      response = await dbHelper.getCatalogsList("grammar");
+    }
     if (response != null) {
+      _grammarWordsList = [];
       _grammarWordsList.addAll(response);
     }
   }
 
   @override
-  Future<void> getThesaurusWordsList() async {
-    _theasurusWordsList = [];
-    var response = await dbHelper.getCatalogsList("thesaurus");
+  Future<void> getThesaurusWordsList(String? searchText) async {
+    List<CatalogModel>? response = [];
+    if (searchText != null) {
+      response = await dbHelper.getIfWordIsWordenList("thesaurus", searchText);
+    } else {
+      response = await dbHelper.getCatalogsList("thesaurus");
+    }
     if (response != null) {
+      _theasurusWordsList = [];
       _theasurusWordsList.addAll(response);
     }
   }
 
   @override
-  Future<void> getDifferenceWordsList() async {
-    _differenceWordsList = [];
-    var response = await dbHelper.getCatalogsList("differences");
+  Future<void> getDifferenceWordsList(String? searchText) async {
+    List<CatalogModel>? response;
+    if (searchText != null) {
+      response = await dbHelper.getCatalogWordList("differences", searchText);
+    } else {
+      response = await dbHelper.getCatalogsList("differences");
+    }
     if (response != null) {
+      _differenceWordsList = [];
       _differenceWordsList.addAll(response);
     }
   }
 
   @override
-  Future<void> getMetaphorWordsList() async {
-    _metaphorWordsList = [];
-    var response = await dbHelper.getCatalogsList("metaphoras");
+  Future<void> getMetaphorWordsList(String? searchText) async {
+    List<CatalogModel>? response = [];
+    if (searchText != null) {
+      response = await dbHelper.getIfWordIsWordenList("metaphoras", searchText);
+    } else {
+      response = await dbHelper.getCatalogsList("metaphoras");
+    }
     if (response != null) {
+      _metaphorWordsList = [];
       _metaphorWordsList.addAll(response);
     }
   }
 
   @override
-  Future<void> getCultureWordsList() async {
-    _cultureWordsList = [];
-    var response = await dbHelper.getCatalogsList("culture");
+  Future<void> getCultureWordsList(String? searchText) async {
+    List<CatalogModel>? response = [];
+    if (searchText != null) {
+      response = await dbHelper.getIfWordIsWordenList("culture", searchText);
+    } else {
+      response = await dbHelper.getCatalogsList("culture");
+    }
     if (response != null) {
+      _cultureWordsList = [];
       _cultureWordsList.addAll(response);
     }
   }
 
   @override
-  Future<void> getSpeakingWordsList(String? subTitle, String? word) async {
-    _speakingWordsList = [];
-    var response = await dbHelper.getCatalogsList("speaking");
+  Future<void> getSpeakingWordsList(String? categoryId, String? title, String? word) async {
+    List<CatalogModel>? response = [];
+    if (categoryId== null) {
+      if (title != null) {
+        response = await dbHelper.getTitleList("speaking", title);
+      } else {
+        response = await dbHelper.getCatalogsList("speaking");
+      }
+    } else if(word == null) {
+      if (title != null) {
+        response = await dbHelper.getTitleList(categoryId, title);
+      } else {
+        response = await dbHelper.getTitleList(categoryId, null);
+      }
+    } else {
+      if (word != null) {
+        response = await dbHelper.getCatalogWordList(categoryId, word);
+      }
+    }
     if (response != null) {
+      _speakingWordsList = [];
       _speakingWordsList.addAll(response);
     }
   }

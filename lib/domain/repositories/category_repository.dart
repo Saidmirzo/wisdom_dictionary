@@ -25,17 +25,17 @@ abstract class CategoryRepository {
 
   Future<void> getCultureDetail(int id);
 
-  Future<void> getGrammarWordsList();
+  Future<void> getGrammarWordsList(String? searchText);
 
-  Future<void> getThesaurusWordsList();
+  Future<void> getThesaurusWordsList(String? searchText);
 
-  Future<void> getDifferenceWordsList();
+  Future<void> getDifferenceWordsList(String? searchText);
 
-  Future<void> getMetaphorWordsList();
+  Future<void> getMetaphorWordsList(String? searchText);
 
-  Future<void> getCultureWordsList();
+  Future<void> getCultureWordsList(String? searchText);
 
-  Future<void> getSpeakingWordsList(String? subTitle, String? word);
+  Future<void> getSpeakingWordsList(String? categoryId, String? title, String? word);
 
   WordWithGrammarModel get grammarDetailModel;
 

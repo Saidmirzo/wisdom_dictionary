@@ -19,9 +19,13 @@ class DifferencePageViewModel extends BaseViewModel {
   final LocalViewModel localViewModel;
   final String getDifferenceTag = 'getDifference';
 
-  Future getDifferenceWordsList() async {
+  Future getDifferenceWordsList(String? searchText) async {
     safeBlock(() async {
-      await categoryRepository.getDifferenceWordsList();
+      if (searchText != null && searchText.trim().isNotEmpty) {
+        await categoryRepository.getDifferenceWordsList(searchText.trim().toString());
+      } else {
+        await categoryRepository.getDifferenceWordsList(null);
+      }
       if (categoryRepository.differenceWordsList.isNotEmpty) {
         setSuccess(tag: getDifferenceTag);
       } else {

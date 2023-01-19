@@ -21,21 +21,22 @@ class ThesaurusPage extends ViewModelBuilderWidget<ThesaurusPageViewModel> {
 
   @override
   void onViewModelReady(ThesaurusPageViewModel viewModel) {
-    viewModel.getThesaurusWordsList();
+    viewModel.getThesaurusWordsList(null);
     super.onViewModelReady(viewModel);
   }
 
   @override
   Widget builder(BuildContext context, ThesaurusPageViewModel viewModel, Widget? child) {
     return WillPopScope(
-      onWillPop: ()=> viewModel.goMain(),
+      onWillPop: () => viewModel.goMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
         backgroundColor: AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
-          isSearch: false,
+          isSearch: true,
+          onChange: (value) => viewModel.getThesaurusWordsList(value),
           title: "Thesaurus",
         ),
         body: viewModel.isSuccess(tag: viewModel.getThesaurusTag)

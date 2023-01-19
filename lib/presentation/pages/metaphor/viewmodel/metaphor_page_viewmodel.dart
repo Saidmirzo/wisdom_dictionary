@@ -19,9 +19,13 @@ class MetaphorPageViewModel extends BaseViewModel {
   final CategoryRepository categoryRepository;
   final String getMetaphorTag = 'getMetaphorTag';
 
-  Future getMetaphorWordsList() async {
+  getMetaphorWordsList(String? searchText) {
     safeBlock(() async {
-      await categoryRepository.getMetaphorWordsList();
+      if (searchText != null && searchText.trim().isNotEmpty) {
+        await categoryRepository.getMetaphorWordsList(searchText.trim());
+      } else {
+        await categoryRepository.getMetaphorWordsList(null);
+      }
       if (categoryRepository.metaphorWordsList.isNotEmpty) {
         setSuccess(tag: getMetaphorTag);
       } else {

@@ -49,7 +49,7 @@ class GivingAdPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: 15.h, horizontal: 12.w),
+                          vertical: 15.h, horizontal: 10.w),
                       child: TextButton.icon(
                         icon: const Icon(
                           Icons.call_rounded,
@@ -80,7 +80,7 @@ class GivingAdPage extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: TextButton.icon(
                         icon: const Icon(
                           Icons.telegram,

@@ -19,7 +19,7 @@ class DifferencePage extends ViewModelBuilderWidget<DifferencePageViewModel> {
 
   @override
   void onViewModelReady(DifferencePageViewModel viewModel) {
-    viewModel.getDifferenceWordsList();
+    viewModel.getDifferenceWordsList(null);
     super.onViewModelReady(viewModel);
   }
 
@@ -33,7 +33,8 @@ class DifferencePage extends ViewModelBuilderWidget<DifferencePageViewModel> {
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
-          isSearch: false,
+          isSearch: true,
+          onChange: (value) => viewModel.getDifferenceWordsList(value),
           title: "Differences",
         ),
         body: viewModel.isSuccess(tag: viewModel.getDifferenceTag)

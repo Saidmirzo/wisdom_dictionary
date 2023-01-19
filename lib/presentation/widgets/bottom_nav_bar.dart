@@ -62,6 +62,10 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
                     filledIcon: Assets.icons.unitsFilled,
                     callBack: () {
                       onTap(3);
+                      viewModel.localViewModel.isFinal = false;
+                      viewModel.localViewModel.isTitle = false;
+                      viewModel.localViewModel.isSubSub = false;
+                      viewModel.localViewModel.subId = -1;
                       viewModel.localViewModel.changePageIndex(3);
                     }),
                 BottomNavButton(

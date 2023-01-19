@@ -6,7 +6,7 @@ import '../../config/constants/app_text_style.dart';
 import '../../config/constants/assets.dart';
 
 // ignore: must_be_immutable
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   CustomAppBar({
     super.key,
     required this.title,
@@ -21,16 +21,36 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function(String text)? onChange;
   final String leadingIcon;
   bool isSearch;
-  late TextEditingController controller = TextEditingController();
+
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(isSearch ? 134.h : 86.h);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  TextEditingController controller = TextEditingController();
+  bool hasText = false;
+
+  @override
+  void initState() {
+    controller.addListener(() {
+      if (widget.onChange != null) {
+        if (controller.text.isNotEmpty) {
+          hasText = true;
+        } else {
+          hasText = false;
+        }
+        setState(() {});
+        widget.onChange!(controller.text);
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    controller.addListener(() {
-      if (onChange != null && controller.text.isNotEmpty) {
-        onChange!(controller.text.trim());
-      }
-    });
-
     return AppBar(
       backgroundColor: AppColors.blue,
       shadowColor: const Color(0xFF6D8DAD).withOpacity(0.15),
@@ -47,10 +67,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           right: 5.w,
           top: 15.h,
         ),
-        child: InkWell(
-          onTap: () => onTap(),
+        child: InkResponse(
+          onTap: () => widget.onTap(),
           child: SvgPicture.asset(
-            leadingIcon,
+            widget.leadingIcon,
             height: 24.h,
             width: 24.h,
             fit: BoxFit.scaleDown,
@@ -60,29 +80,49 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Padding(
         padding: EdgeInsets.only(top: 15.h),
-        child: Text(title, style: AppTextStyle.font14W500Normal),
+        child: Text(widget.title, style: AppTextStyle.font14W500Normal),
       ),
-      bottom: isSearch
+      bottom: widget.isSearch
           ? PreferredSize(
               preferredSize: Size.fromHeight(70.h),
               child: Container(
                 height: 47.h,
-                margin: EdgeInsets.all(14),
+                margin: EdgeInsets.all(14.r),
                 decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
-                child: TextFormField(
+                child: TextField(
                   style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
-                  cursorHeight: 18.h,
+                  cursorHeight: 19.h,
                   controller: controller,
                   decoration: InputDecoration(
-                    prefixIcon: SvgPicture.asset(
-                      Assets.icons.searchText,
-                      height: 18.h,
-                      width: 18.h,
-                      fit: BoxFit.scaleDown,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: 8.0.w),
+                      child: SvgPicture.asset(
+                        Assets.icons.searchText,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                    suffixIcon: Visibility(
+                      visible: hasText,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 8.0.w),
+                        child: InkResponse(
+                          onTap: () {
+                            controller.text = '';
+                            setState(() {});
+                          },
+                          child: SvgPicture.asset(
+                            Assets.icons.crossClose,
+                            height: 10.h,
+                            width: 10.h,
+                            fit: BoxFit.scaleDown,
+                          ),
+                        ),
+                      ),
                     ),
                     hintText: 'Search',
                     border: InputBorder.none,
-                    hintStyle: AppTextStyle.font12W400Normal.copyWith(
+                    contentPadding: EdgeInsets.symmetric(vertical: 14.h),
+                    hintStyle: AppTextStyle.font14W400Normal.copyWith(
                       color: AppColors.paleBlue.withOpacity(0.5),
                     ),
                   ),
@@ -92,7 +132,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : null,
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(isSearch ? 134.h : 86.h);
 }

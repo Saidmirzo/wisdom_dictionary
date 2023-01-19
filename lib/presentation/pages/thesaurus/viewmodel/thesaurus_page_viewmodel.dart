@@ -18,9 +18,13 @@ class ThesaurusPageViewModel extends BaseViewModel {
   final LocalViewModel localViewModel;
   final String getThesaurusTag = 'getThesaurus';
 
-  Future getThesaurusWordsList() async {
+  getThesaurusWordsList(String? searchText) {
     safeBlock(() async {
-      await categoryRepository.getThesaurusWordsList();
+      if (searchText != null && searchText.trim().isNotEmpty) {
+        await categoryRepository.getThesaurusWordsList(searchText.trim().toString());
+      } else {
+        await categoryRepository.getThesaurusWordsList(null);
+      }
       if (categoryRepository.thesaurusWordsList.isNotEmpty) {
         setSuccess(tag: getThesaurusTag);
       } else {

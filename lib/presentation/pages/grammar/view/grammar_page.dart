@@ -14,7 +14,7 @@ class GrammarPage extends ViewModelBuilderWidget<GrammarPageViewModel> {
 
   @override
   void onViewModelReady(GrammarPageViewModel viewModel) {
-    viewModel.getGrammarWordsList();
+    viewModel.getGrammarWordsList(null);
     super.onViewModelReady(viewModel);
   }
 
@@ -29,6 +29,8 @@ class GrammarPage extends ViewModelBuilderWidget<GrammarPageViewModel> {
           title: 'Grammar',
           onTap: () => viewModel.goMain(),
           leadingIcon: Assets.icons.arrowLeft,
+          isSearch: true,
+          onChange: (value) => viewModel.getGrammarWordsList(value),
         ),
         resizeToAvoidBottomInset: true,
         body: viewModel.isSuccess(tag: viewModel.getGrammarTag)

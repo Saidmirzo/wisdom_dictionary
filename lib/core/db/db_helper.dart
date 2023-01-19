@@ -34,6 +34,7 @@ import 'package:wisdom/data/model/words_and_parents_and_words_uz_model.dart';
 import 'package:wisdom/data/model/words_uz_model.dart';
 import '../../data/model/catalog_model.dart';
 import '../../data/model/phrases_with_all.dart';
+import '../../data/model/word_and_parents_and_phrases.dart';
 import '../../data/model/word_model.dart';
 import '../../data/model/word_with_difference_new_model.dart';
 
@@ -298,11 +299,11 @@ class DBHelper {
     return null;
   }
 
-  Future<List<CatalogModel>?> getTitleList(String categoryId, String title) async {
+  Future<List<CatalogModel>?> getTitleList(String categoryId, String? title) async {
     try {
+      var newTitle = title != null ? "AND title LIKE '$title%'" : "";
       if (database.isOpen) {
-        var response =
-            await database.rawQuery("SELECT * FROM catalogue WHERE category='$categoryId' AND title LIKE '$title%'");
+        var response = await database.rawQuery("SELECT * FROM catalogue WHERE category='$categoryId' $newTitle");
         var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
         return model;
       }
@@ -535,12 +536,27 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT id,word_classid,word_classword_id,word_classword_class,p_word FROM word_entity INNER JOIN phrases ON id=p_word_id AND p_word LIKE:'$search%' ORDER BY word COLLATE NOCASE asc limit 40");
+            "SELECT id,word_classid,word_classword_id,word_classword_class,p_word FROM word_entity INNER JOIN phrases ON id=p_word_id AND p_word LIKE '$search%' ORDER BY word COLLATE NOCASE asc limit 40");
         var wordWithPhrases = List<WordWithPhrasesModel>.from(response.map((e) => WordWithPhrasesModel.fromJson(e)));
         return wordWithPhrases;
       }
     } catch (e) {
       log("searchByPhrases", error: e.toString());
+    }
+    return null;
+  }
+
+  Future<List<WordAndParentsAndPhrases>?> searchByWordParent1(String parents) async {
+    try {
+      if (database.isOpen) {
+        var response = await database.rawQuery(
+            "SELECT w.id,w.word_classid,w.word_classword_id,w.word_classword_class,ph.p_word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id AND ph.p_word LIKE '$parents%' order by  w.word COLLATE NOCASE asc  limit 40");
+        var wordsAndParentsAndWordsUzModel =
+            List<WordAndParentsAndPhrases>.from(response.map((e) => WordAndParentsAndPhrases.fromJson(e)));
+        return wordsAndParentsAndWordsUzModel;
+      }
+    } catch (e) {
+      log("searchByWordParent1", error: e.toString());
     }
     return null;
   }

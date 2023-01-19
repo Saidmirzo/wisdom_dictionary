@@ -20,7 +20,7 @@ class MetaphorPage extends ViewModelBuilderWidget<MetaphorPageViewModel> {
 
   @override
   void onViewModelReady(MetaphorPageViewModel viewModel) {
-    viewModel.getMetaphorWordsList();
+    viewModel.getMetaphorWordsList(null);
     super.onViewModelReady(viewModel);
   }
 
@@ -34,7 +34,8 @@ class MetaphorPage extends ViewModelBuilderWidget<MetaphorPageViewModel> {
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
-          isSearch: false,
+          isSearch: true,
+          onChange: (value) => viewModel.getMetaphorWordsList(value),
           title: "Metaphor",
         ),
         body: viewModel.isSuccess(tag: viewModel.getMetaphorTag)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_colors.dart';
 
@@ -7,11 +8,11 @@ abstract class AppTextStyle {
 
   static const String fontFamily = "Montserrat";
 
-  static TextStyle font14W500Normal = const TextStyle(
+  static TextStyle font14W500Normal = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.normal,
-    fontSize: 14,
+    fontSize: 14.sp,
     color: AppColors.white,
   );
 
@@ -39,19 +40,19 @@ abstract class AppTextStyle {
     color: AppColors.white,
   );
 
-  static TextStyle font16W500Italic = const TextStyle(
+  static TextStyle font16W500Italic = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.italic,
-    fontSize: 16,
+    fontSize: 16.sp,
     color: AppColors.white,
   );
 
-  static TextStyle font14W400Normal = const TextStyle(
+  static TextStyle font14W400Normal = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal,
-    fontSize: 14,
+    fontSize: 14.sp,
     color: AppColors.white,
   );
 

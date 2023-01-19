@@ -80,6 +80,9 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
   @override
   SpeakingDetailPageViewModel viewModelBuilder(BuildContext context) {
     return SpeakingDetailPageViewModel(
-        context: context, homeRepository: locator.get(), categoryRepository: locator.get());
+        context: context,
+        homeRepository: locator.get(),
+        categoryRepository: locator.get(),
+        localViewModel: locator.get());
   }
 }

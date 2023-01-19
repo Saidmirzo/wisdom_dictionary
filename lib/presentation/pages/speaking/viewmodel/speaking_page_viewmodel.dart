@@ -20,9 +20,30 @@ class SpeakingPageViewModel extends BaseViewModel {
 
   final String getSpeakingTag = 'getSpeaking';
 
-  Future getSpeakingWordsList() async {
+  Future getSpeakingWordsList(String? searchText) async {
     safeBlock(() async {
-      await categoryRepository.getSpeakingWordsList(null, null);
+      if (localViewModel.isSubSub) {
+        if (searchText != null && searchText.trim().isNotEmpty) {
+          await categoryRepository.getSpeakingWordsList(
+              localViewModel.speakingCatalogModel.id.toString(), null, searchText.trim());
+        } else {
+          await categoryRepository.getSpeakingWordsList(localViewModel.speakingCatalogModel.id.toString(), null, null);
+        }
+      } else if (localViewModel.isTitle) {
+        localViewModel.subId = localViewModel.speakingCatalogModel.id ?? 0;
+        if (searchText != null && searchText.trim().isNotEmpty) {
+          await categoryRepository.getSpeakingWordsList(
+              localViewModel.speakingCatalogModel.id.toString(), searchText.trim(), null);
+        } else {
+          await categoryRepository.getSpeakingWordsList(localViewModel.speakingCatalogModel.id.toString(), null, null);
+        }
+      } else {
+        if (searchText != null && searchText.trim().isNotEmpty) {
+          await categoryRepository.getSpeakingWordsList(null, searchText.trim(), null);
+        } else {
+          await categoryRepository.getSpeakingWordsList(null, null, null);
+        }
+      }
       if (categoryRepository.speakingWordsList.isNotEmpty) {
         setSuccess(tag: getSpeakingTag);
       } else {
@@ -32,24 +53,41 @@ class SpeakingPageViewModel extends BaseViewModel {
   }
 
   goMain() {
-    if (localViewModel.isTitle) {
-      localViewModel.isTitle = false;
-      localViewModel.changePageIndex(16);
-    }
     if (localViewModel.isSubSub) {
+      localViewModel.speakingCatalogModel.id = localViewModel.subId;
       localViewModel.isSubSub = false;
+      getSpeakingWordsList(null); // opening this page again but with another value
+      localViewModel.notifyListeners();
+    } else if (localViewModel.isTitle) {
+      localViewModel.isTitle = false;
+      getSpeakingWordsList(null); // opening this page again but with another value
+      localViewModel.notifyListeners();
+    } else {
+      localViewModel.changePageIndex(3);
     }
   }
 
   goToNext(CatalogModel catalogModel) {
+    localViewModel.speakingCatalogModel = catalogModel;
     if (!localViewModel.isTitle) {
-      homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: catalogModel.title);
+      var title = catalogModel.title;
+      if (catalogModel.title!.length > 28) title = catalogModel.title!.substring(0, 27).replaceRange(24, 27, '...');
+      homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: title);
       localViewModel.isTitle = true;
-    }
-    if (!localViewModel.isSubSub) {
+      getSpeakingWordsList(null); // opening this page again but with another value
+      localViewModel.notifyListeners();
+    } else if (!localViewModel.isSubSub) {
+      var title = catalogModel.title;
+      if (catalogModel.title!.length > 28) title = catalogModel.title!.substring(0, 27).replaceRange(24, 27, '...');
+      homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: title);
       localViewModel.isSubSub = true;
+      getSpeakingWordsList(null); // opening this page again but with another value
+      localViewModel.notifyListeners();
+    } else if (!localViewModel.isFinal) {
+      localViewModel.isFromMain = false;
+      homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: catalogModel.word);
+      localViewModel.changePageIndex(10);
     }
-    localViewModel.changePageIndex(16);
     // localViewModel.isFromMain = false;
   }
 }

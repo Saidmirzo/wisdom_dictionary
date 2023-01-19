@@ -14,7 +14,7 @@ class CulturePage extends ViewModelBuilderWidget<CulturePageViewModel> {
 
   @override
   void onViewModelReady(CulturePageViewModel viewModel) {
-    viewModel.getCultureWordsList();
+    viewModel.getCultureWordsList(null);
     super.onViewModelReady(viewModel);
   }
 
@@ -29,6 +29,8 @@ class CulturePage extends ViewModelBuilderWidget<CulturePageViewModel> {
           title: 'Culture',
           onTap: () => viewModel.goMain(),
           leadingIcon: Assets.icons.arrowLeft,
+          isSearch: true,
+          onChange: (value) => viewModel.getCultureWordsList(value),
         ),
         resizeToAvoidBottomInset: true,
         body: viewModel.isSuccess(tag: viewModel.getCultureTag)

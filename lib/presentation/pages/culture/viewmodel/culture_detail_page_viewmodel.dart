@@ -20,7 +20,7 @@ class CultureDetailPageViewModel extends BaseViewModel {
     return categoryRepository.cultureModel.body!;
   }
 
-  Future getCultureDetails() async {
+  void getCultureDetails() {
     safeBlock(() async {
       if (categoryRepository.cultureModel.wordId != null) {
         await categoryRepository.getCultureDetail(categoryRepository.cultureModel.id!);

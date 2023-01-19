@@ -24,7 +24,7 @@ class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
-          isSearch: true,
+          isSearch: false,
           title: 'Catalogue',
         ),
         body: Padding(

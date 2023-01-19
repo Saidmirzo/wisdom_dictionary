@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,5 +43,41 @@ class SharedPreferenceHelper {
 
   Future<bool?> getFirstTime() async {
     prefs.getInt(isFirstTime);
+  }
+
+  putString(String key, String value) {
+    prefs.setString(key, value);
+  }
+
+  String getString(String key, String defValue) {
+    return prefs.getString(key) ?? defValue;
+  }
+
+  putInt(String key, int value) {
+    prefs.setInt(key, value);
+  }
+
+  int getInt(String key, int defValue) {
+    return prefs.getInt(key) ?? defValue;
+  }
+
+  putFloat(String key, double value) {
+    prefs.setDouble(key, value);
+  }
+
+  double getFloat(String key, double defValue) {
+    return prefs.getDouble(key) ?? defValue;
+  }
+
+  putBoolean(String key, bool value) {
+    prefs.setBool(key, value);
+  }
+
+  bool getBoolean(String key, bool defValue) {
+    return prefs.getBool(key) ?? defValue;
+  }
+
+  clear() {
+    prefs.clear();
   }
 }

@@ -19,9 +19,13 @@ class CulturePageViewModel extends BaseViewModel {
 
   final String getCultureTag = 'getCultureTag';
 
-  Future getCultureWordsList() async {
+  void getCultureWordsList(String? searchText) {
     safeBlock(() async {
-      await categoryRepository.getCultureWordsList();
+      if (searchText != null && searchText.trim().isNotEmpty) {
+        await categoryRepository.getCultureWordsList(searchText.trim());
+      } else {
+        await categoryRepository.getCultureWordsList(null);
+      }
       if (categoryRepository.cultureWordsList.isNotEmpty) {
         setSuccess(tag: getCultureTag);
       } else {
@@ -34,7 +38,7 @@ class CulturePageViewModel extends BaseViewModel {
     localViewModel.changePageIndex(3);
   }
 
-  goToDetails(CatalogModel catalogModel) {
+  void goToDetails(CatalogModel catalogModel) {
     categoryRepository.cultureModel =
         CultureModel(id: catalogModel.id, wordId: catalogModel.wordenid, body: catalogModel.wordenword);
     localViewModel.isFromMain = false;
