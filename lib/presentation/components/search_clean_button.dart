@@ -44,7 +44,7 @@ class SearchCleanButton extends StatelessWidget {
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                        onTap: () => onTap,
+                        onTap: () => onTap(),
                         borderRadius: BorderRadius.circular(21.r),
                         child: Center(
                           child: Text(

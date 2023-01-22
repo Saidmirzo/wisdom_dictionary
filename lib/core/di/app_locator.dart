@@ -22,7 +22,8 @@ void setupLocator() {
   locator.registerSingleton<DBHelper>(DBHelper(locator.get()));
   locator.registerSingleton<LocalViewModel>(LocalViewModel(context: null));
   locator.registerSingleton<SharedPreferenceHelper>(SharedPreferenceHelper());
-  locator.registerLazySingleton<WordEntityRepository>(() => WordEntityRepositoryImpl(client: locator.get()));
+  locator.registerLazySingleton<WordEntityRepository>(
+      () => WordEntityRepositoryImpl(client: locator.get(), dbHelper: locator.get()));
   locator.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(locator.get()));
   locator.registerLazySingleton<CategoryRepository>(() => CategoryRepositoryImpl(locator.get()));
   locator.registerLazySingleton<SearchRepository>(() => SearchRepositoryImpl(locator.get(), locator.get()));

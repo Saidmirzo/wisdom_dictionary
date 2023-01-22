@@ -28,13 +28,13 @@ import 'package:wisdom/data/model/word_with_culture_model.dart';
 import 'package:wisdom/data/model/word_with_difference_model.dart';
 import 'package:wisdom/data/model/word_with_grammar_model.dart';
 import 'package:wisdom/data/model/word_with_metaphor_model.dart';
-import 'package:wisdom/data/model/word_with_phrases_model.dart';
+import 'package:wisdom/data/model/word_and_phrases_model.dart';
 import 'package:wisdom/data/model/word_with_theasurus_model.dart';
 import 'package:wisdom/data/model/words_and_parents_and_words_uz_model.dart';
 import 'package:wisdom/data/model/words_uz_model.dart';
 import '../../data/model/catalog_model.dart';
 import '../../data/model/phrases_with_all.dart';
-import '../../data/model/word_and_parents_and_phrases.dart';
+import '../../data/model/word_and_parents_and_phrases_model.dart';
 import '../../data/model/word_model.dart';
 import '../../data/model/word_with_difference_new_model.dart';
 
@@ -408,7 +408,7 @@ class DBHelper {
   }
 
   Future<List<PhrasesWithAll>> getPhrasesAll(int? id) async {
-    List<PhrasesWithAll> _phrasesWithAll = [];
+    List<PhrasesWithAll> phrasesWithAll = [];
 
     var responsePhrases = await database.rawQuery("SELECT * FROM phrases WHERE p_word_id=$id ");
     var phrases =
@@ -429,9 +429,9 @@ class DBHelper {
 
       var parentsPhrasesWithAll = await getParentPhrasesWithAll(element.pId);
 
-      _phrasesWithAll.add(PhrasesWithAll(element, wordPhraseTranslate, wordPhraseExample, parentsPhrasesWithAll));
+      phrasesWithAll.add(PhrasesWithAll(element, wordPhraseTranslate, wordPhraseExample, parentsPhrasesWithAll));
     }
-    return _phrasesWithAll;
+    return phrasesWithAll;
   }
 
   Future<List<ParentPhrasesWithAll>> getParentPhrasesWithAll(int? pId) async {
@@ -532,12 +532,12 @@ class DBHelper {
     return null;
   }
 
-  Future<List<WordWithPhrasesModel>?> searchByPhrases(String search) async {
+  Future<List<WordAndPhrasesModel>?> searchByPhrases(String search) async {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
             "SELECT id,word_classid,word_classword_id,word_classword_class,p_word FROM word_entity INNER JOIN phrases ON id=p_word_id AND p_word LIKE '$search%' ORDER BY word COLLATE NOCASE asc limit 40");
-        var wordWithPhrases = List<WordWithPhrasesModel>.from(response.map((e) => WordWithPhrasesModel.fromJson(e)));
+        var wordWithPhrases = List<WordAndPhrasesModel>.from(response.map((e) => WordAndPhrasesModel.fromJson(e)));
         return wordWithPhrases;
       }
     } catch (e) {
@@ -546,13 +546,13 @@ class DBHelper {
     return null;
   }
 
-  Future<List<WordAndParentsAndPhrases>?> searchByWordParent1(String parents) async {
+  Future<List<WordAndParentsAndPhrasesModel>?> searchByWordParent1(String parents) async {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
             "SELECT w.id,w.word_classid,w.word_classword_id,w.word_classword_class,ph.p_word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id AND ph.p_word LIKE '$parents%' order by  w.word COLLATE NOCASE asc  limit 40");
         var wordsAndParentsAndWordsUzModel =
-            List<WordAndParentsAndPhrases>.from(response.map((e) => WordAndParentsAndPhrases.fromJson(e)));
+            List<WordAndParentsAndPhrasesModel>.from(response.map((e) => WordAndParentsAndPhrasesModel.fromJson(e)));
         return wordsAndParentsAndWordsUzModel;
       }
     } catch (e) {

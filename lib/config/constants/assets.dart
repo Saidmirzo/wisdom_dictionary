@@ -63,7 +63,9 @@ class _Icons extends _AssetsHolder {
 
   String get person => '$basePath/person.svg';
 
-  String get playButton => '$basePath/play.svg';
+  String get collapsed => '$basePath/collapsed.svg';
+
+  String get expanded => '$basePath/expanded.svg';
 
   String get proVersion => '$basePath/pro_version.svg';
 
@@ -98,6 +100,12 @@ class _Icons extends _AssetsHolder {
   String get unitsOutline => '$basePath/vertical_row_outline.svg';
 
   String get saveWord => '$basePath/word_save.svg';
+
+  String get starFull => '$basePath/rank_full.svg';
+
+  String get starHalf => '$basePath/rank_half.svg';
+
+  String get starLow => '$basePath/rank_low.svg';
 }
 
 class _Images extends _AssetsHolder {

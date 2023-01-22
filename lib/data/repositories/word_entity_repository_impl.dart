@@ -4,17 +4,22 @@ import 'dart:developer';
 import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/urls.dart';
+import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/services/custom_client.dart';
+import 'package:wisdom/data/model/phrases_with_all.dart';
 import 'package:wisdom/data/model/word_entity_model.dart';
 import 'package:wisdom/data/model/word_path_model/word_path_model.dart';
 import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 
 class WordEntityRepositoryImpl extends WordEntityRepository {
-  WordEntityRepositoryImpl({required this.client});
+  WordEntityRepositoryImpl({required this.client, required this.dbHelper});
 
   final CustomClient client;
+  final DBHelper dbHelper;
   List<WordEntityModel> _wordEntityList = [];
   WordPathModel _wordPathModel = WordPathModel();
+  WordWithAll _requitedWordWithAll = WordWithAll();
+
 
   // getting words from api
   @override
@@ -50,4 +55,15 @@ class WordEntityRepositoryImpl extends WordEntityRepository {
 
   @override
   WordPathModel get wordPathModel => _wordPathModel;
+
+  @override
+  Future<void> getRequiredWord(int wordId) async {
+    var response = await dbHelper.getWord1(wordId);
+    if (response != null) {
+      _requitedWordWithAll = response;
+    }
+  }
+
+  @override
+  WordWithAll get requiredWordWithAllModel => _requitedWordWithAll;
 }

@@ -26,6 +26,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
 
   @override
   Widget builder(BuildContext context, SearchPageViewModel viewModel, Widget? child) {
+    // viewModel.init();
     return Scaffold(
       drawerEnableOpenDragGesture: false,
       backgroundColor: AppColors.lightBackground,
@@ -40,39 +41,52 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
       body: Column(
         children: [
           Visibility(
-            visible: viewModel.recentList.isNotEmpty,
+            visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
             child: SearchCleanButton(
-              onTap: () {},
+              onTap: () => viewModel.cleanHistory(),
             ),
           ),
-          Expanded(
-            child: (viewModel.isSuccess(tag: viewModel.searchTag) || viewModel.isSuccess(tag: viewModel.initTag))
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(bottom: 130),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: viewModel.searchRepository.wordList.isNotEmpty
-                        ? viewModel.searchRepository.wordList.length
-                        : viewModel.recentList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (viewModel.searchRepository.wordList.isNotEmpty) {
-                        var item = viewModel.searchRepository.wordList[index];
+          Visibility(
+            visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
+            child: Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(bottom: 130),
+                physics: const BouncingScrollPhysics(),
+                itemCount: viewModel.recentList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var itemRecent = viewModel.recentList[index];
+                  return SearchHistoryItem(
+                    firstText: itemRecent.word ?? "unknown",
+                    secondText: itemRecent.wordClass ?? "",
+                    onTap: () => viewModel.goOnDetail(itemRecent),
+                  );
+                },
+              ),
+            ),
+          ),
+          Visibility(
+            visible: (viewModel.searchRepository.searchResultList.isNotEmpty || viewModel.searchText.isNotEmpty),
+            child: (viewModel.isSuccess(tag: viewModel.searchTag) &&
+                    viewModel.searchText.isNotEmpty &&
+                    viewModel.searchRepository.searchResultList.isNotEmpty)
+                ? Expanded(
+              child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(bottom: 130),
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: viewModel.searchRepository.searchResultList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var item = viewModel.searchRepository.searchResultList[index];
                         return SearchWordItem(
                           firstText: item.word ?? "unknown",
                           secondText: item.wordClasswordClass ?? "",
-                          onTap: () {},
+                          onTap: () => viewModel.goOnDetail(item),
                         );
-                      } else {
-                        var itemRecent = viewModel.recentList[index];
-                        return SearchHistoryItem(
-                          firstText: itemRecent.word ?? "unknown",
-                          secondText: itemRecent.wordClass ?? "",
-                          onTap: () {},
-                        );
-                      }
-                    },
-                  )
-                : const Center(child: LoadingWidget()),
+                      },
+                    ),
+                )
+                : SizedBox(height: 120.h, child: LoadingWidget()),
           ),
         ],
       ),
@@ -104,6 +118,10 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
   @override
   SearchPageViewModel viewModelBuilder(BuildContext context) {
     return SearchPageViewModel(
-        context: context, preferenceHelper: locator.get(), dbHelper: locator.get(), searchRepository: locator.get());
+        context: context,
+        preferenceHelper: locator.get(),
+        dbHelper: locator.get(),
+        searchRepository: locator.get(),
+        localViewModel: locator.get());
   }
 }

@@ -1,14 +1,16 @@
 class WordsUzModel {
   WordsUzModel({
-      this.id, 
-      this.wordId, 
-      this.word,});
+    this.id,
+    this.wordId,
+    this.word,
+  });
 
   WordsUzModel.fromJson(dynamic json) {
     id = json['id'];
     wordId = json['word_id'];
     word = json['word'];
   }
+
   int? id;
   int? wordId;
   String? word;
@@ -20,5 +22,4 @@ class WordsUzModel {
     map['word'] = word;
     return map;
   }
-
 }

@@ -35,17 +35,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   @override
   void initState() {
-    controller.addListener(() {
-      if (widget.onChange != null) {
-        if (controller.text.isNotEmpty) {
-          hasText = true;
-        } else {
-          hasText = false;
-        }
-        setState(() {});
-        widget.onChange!(controller.text);
-      }
-    });
+    // controller.addListener(() {
+    //   if (widget.onChange != null) {
+    //     if (controller.text.isNotEmpty) {
+    //       hasText = true;
+    //     } else {
+    //       hasText = false;
+    //     }
+    //     setState(() {});
+    //     widget.onChange!(controller.text);
+    //   }
+    // });
     super.initState();
   }
 
@@ -93,6 +93,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
                   cursorHeight: 19.h,
                   controller: controller,
+                  onChanged: (value) {
+                    onChanged(value);
+                  },
                   decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(left: 8.0.w),
@@ -107,8 +110,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         padding: EdgeInsets.only(right: 8.0.w),
                         child: InkResponse(
                           onTap: () {
-                            controller.text = '';
-                            setState(() {});
+                            controller.clear();
+                            onChanged("");
                           },
                           child: SvgPicture.asset(
                             Assets.icons.crossClose,
@@ -131,5 +134,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
             )
           : null,
     );
+  }
+
+  onChanged(String text) {
+    if (controller.text.isEmpty) {
+      hasText = false;
+    } else {
+      hasText = true;
+    }
+    setState(() {});
+    if (widget.onChange != null) {
+      widget.onChange!(text);
+    }
   }
 }

@@ -15,7 +15,7 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return ValueListenableBuilder(
-      valueListenable: viewModel.localViewModel.current_index,
+      valueListenable: viewModel.localViewModel.currentIndex,
       builder: (context, value, child) {
         return Positioned(
           bottom: 0,

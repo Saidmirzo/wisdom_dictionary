@@ -6,8 +6,6 @@ import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/data/model/timeline_model.dart';
 
 import '../../config/constants/urls.dart';
-import '../../core/di/app_locator.dart';
-import '../../core/services/custom_client.dart';
 import '../../domain/repositories/home_repository.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
@@ -15,6 +13,7 @@ class HomeRepositoryImpl extends HomeRepository {
 
   final DBHelper dbHelper;
   TimelineModel _timeLineModel = TimelineModel();
+  Ad _ad = Ad();
 
   @override
   Future<TimelineModel> getRandomWords() async {
@@ -50,12 +49,12 @@ class HomeRepositoryImpl extends HomeRepository {
     var timeLineSpeaking = Speaking(id: getSpeaking!.id, word: getSpeaking.word);
 
     var ad = Ad();
-    if (await locator<NetWorkChecker>().isNetworkAvailable()) {
-      var response = await getLenta();
-      if (response != null && response.ad != null) {
-        ad = Ad(id: response.ad?.id, image: response.ad?.image!, link: response.ad?.link);
-      }
-    }
+    // if (await locator<NetWorkChecker>().isNetworkAvailable()) {
+    //   var response = getLenta();
+    //   if (response != null && response.ad != null) {
+    //     ad = Ad(id: response.ad?.id, image: response.ad?.image!, link: response.ad?.link);
+    //   }
+    // }
 
     _timeLineModel = TimelineModel(
         word: timeLineWord,
@@ -74,13 +73,15 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   // getting local ad from host
-  Future<TimelineModel?> getLenta() async {
+  @override
+  Future<Ad> getAd() async {
     var response = await get(Urls.getLenta);
     if (response.statusCode == 200) {
       var model = TimelineModel.fromJson(jsonDecode(response.body));
-      return model;
+      _ad = Ad(id: model.ad?.id, image: model.ad?.image!, link: model.ad?.link);
+      return _ad;
     } else {
-      throw VMException(response.body, callFuncName: 'getLenta', response: response);
+      throw VMException(response.body, callFuncName: 'getAd', response: response);
     }
   }
 

@@ -6,12 +6,14 @@ import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 
 import '../../../../core/di/app_locator.dart';
+import '../../../../data/model/timeline_model.dart';
 import '../../../../domain/repositories/word_entity_repository.dart';
 import '../../../widgets/loading_widget.dart';
 
@@ -31,18 +33,33 @@ class HomeViewModel extends BaseViewModel {
   Future? dialog;
 
   final String getDailyWordsTag = "getDailyWordsTag";
+  final String getAdTag = "getAdTag";
 
   Future<void> getRandomDailyWords() async {
     safeBlock(() async {
       await homeRepository.getRandomWords();
       controller.add(SwipeRefreshState.hidden);
       setSuccess(tag: getDailyWordsTag);
+      getAd();
     }, callFuncName: 'getRandomDailyWords', tag: getDailyWordsTag, inProgress: false);
+  }
+
+  Future<void> getAd() async {
+    safeBlock(() async {
+      Ad response = await homeRepository.getAd();
+      if (response.image != null) {
+        homeRepository.timelineModel.ad = response;
+      }
+      setSuccess(tag: getAdTag);
+    }, callFuncName: 'getAd', tag: getAdTag, inProgress: false);
   }
 
   onAdWebClicked() {
     safeBlock(() async {
-      launchUrl(Uri.parse(homeRepository.timelineModel.ad!.link!));
+      launchUrlString(
+        homeRepository.timelineModel.ad!.link!,
+        mode: LaunchMode.externalApplication,
+      );
     }, callFuncName: 'onAdWebClicked', inProgress: false);
   }
 

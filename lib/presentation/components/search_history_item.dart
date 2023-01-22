@@ -20,7 +20,7 @@ class SearchHistoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap,
+      onTap: () => onTap(),
       child: SizedBox(
         height: 52.h,
         child: Column(
@@ -39,9 +39,9 @@ class SearchHistoryItem extends StatelessWidget {
                       text: firstText,
                       children: [
                         TextSpan(
-                            text: ' $secondText',
+                            text: '   $secondText',
                             style: AppTextStyle.font14W500Normal
-                                .copyWith(color: AppColors.blue)),
+                                .copyWith(color: AppColors.paleBlue)),
                       ],
                     ),
                   ),

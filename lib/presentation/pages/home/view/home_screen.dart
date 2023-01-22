@@ -20,6 +20,7 @@ import 'package:wisdom/presentation/pages/speaking/view/speaking_details_page.da
 import 'package:wisdom/presentation/pages/speaking/view/speaking_page.dart';
 import 'package:wisdom/presentation/pages/thesaurus/view/thesaurus_details_page.dart';
 import 'package:wisdom/presentation/pages/thesaurus/view/thesaurus_page.dart';
+import 'package:wisdom/presentation/pages/word_detail/view/word_detail_page.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
 import '../../../../config/constants/app_colors.dart';
@@ -43,7 +44,6 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
     GoogleTranslatorPage(), // 4
     GrammarDetailPage(), // 5
     DifferenceDetailPage(), // 6
-    // ThesaurusDetailPage(),
     ThesaurusDetailPage(), // 7
     CollocationDetailPage(), // 8
     MetaphorDetailPage(), // 9
@@ -55,6 +55,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
     CulturePage(), // 15
     CultureDetailPage(), // 16
     SpeakingPage(), // 17
+    WordDetailPage(), // 18
   ];
 
   @override
@@ -104,49 +105,55 @@ class Home extends ViewModelWidget<HomeViewModel> {
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       children: [
-                        Visibility(
-                          visible: viewModel.homeRepository.timelineModel.ad != null,
-                          child: GestureDetector(
-                            onTap: () => viewModel.onAdWebClicked(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  decoration: AppDecoration.bannerDecor,
-                                  child: viewModel.homeRepository.timelineModel.ad!.image != null
-                                      ? ClipRRect(
-                                          borderRadius: BorderRadius.circular(18.r),
-                                          child: Image.network(
-                                            Urls.baseUrl + viewModel.homeRepository.timelineModel.ad!.image!,
-                                            fit: BoxFit.cover,
-                                            loadingBuilder: (context, child, loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              return SizedBox(
-                                                height: 165.h,
-                                                child: const LoadingWidget(
-                                                  color: AppColors.blue,
-                                                  width: 2,
-                                                ),
-                                              );
-                                            },
-                                            errorBuilder: (context, error, stackTrace) {
-                                              return SizedBox(
-                                                height: 165.h,
-                                                child: const LoadingWidget(
-                                                  color: AppColors.blue,
-                                                  width: 2,
-                                                ),
-                                              );
-                                            },
+                        Builder(
+                          builder: (context) {
+                            return viewModel.isSuccess(tag: viewModel.getDailyWordsTag)
+                                ? Visibility(
+                                    visible: viewModel.homeRepository.timelineModel.ad != null,
+                                    child: GestureDetector(
+                                      onTap: () => viewModel.onAdWebClicked(),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            decoration: AppDecoration.bannerDecor,
+                                            child: viewModel.homeRepository.timelineModel.ad!.image != null
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.circular(18.r),
+                                                    child: Image.network(
+                                                      Urls.baseUrl + viewModel.homeRepository.timelineModel.ad!.image!,
+                                                      fit: BoxFit.cover,
+                                                      loadingBuilder: (context, child, loadingProgress) {
+                                                        if (loadingProgress == null) {
+                                                          return child;
+                                                        }
+                                                        return SizedBox(
+                                                          height: 165.h,
+                                                          child: const LoadingWidget(
+                                                            color: AppColors.blue,
+                                                            width: 2,
+                                                          ),
+                                                        );
+                                                      },
+                                                      errorBuilder: (context, error, stackTrace) {
+                                                        return SizedBox(
+                                                          height: 165.h,
+                                                          child: const LoadingWidget(
+                                                            color: AppColors.blue,
+                                                            width: 2,
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  )
+                                                : const SizedBox.shrink(),
                                           ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ),
-                              ],
-                            ),
-                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink();
+                          },
                         ),
                         CustomBanner(
                           title: 'Grammar',
