@@ -7,6 +7,7 @@ import 'package:wisdom/config/constants/urls.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/services/custom_client.dart';
 import 'package:wisdom/data/model/phrases_with_all.dart';
+import 'package:wisdom/data/model/word_bank_model.dart';
 import 'package:wisdom/data/model/word_entity_model.dart';
 import 'package:wisdom/data/model/word_path_model/word_path_model.dart';
 import 'package:wisdom/domain/repositories/word_entity_repository.dart';
@@ -17,9 +18,9 @@ class WordEntityRepositoryImpl extends WordEntityRepository {
   final CustomClient client;
   final DBHelper dbHelper;
   List<WordEntityModel> _wordEntityList = [];
+  List<WordBankModel> _wordBankModel = [];
   WordPathModel _wordPathModel = WordPathModel();
   WordWithAll _requitedWordWithAll = WordWithAll();
-
 
   // getting words from api
   @override
@@ -66,4 +67,36 @@ class WordEntityRepositoryImpl extends WordEntityRepository {
 
   @override
   WordWithAll get requiredWordWithAllModel => _requitedWordWithAll;
+
+  @override
+  Future<void> saveWordBank(WordBankModel model) async {
+    _wordBankModel.add(model);
+    dbHelper.saveToWordBank(model);
+  }
+
+  @override
+  Future<void> getWordBankList(String text) async {
+    _wordBankModel.clear();
+    var response = await dbHelper.getWordBankList();
+    if (response != null && response.isNotEmpty) {
+      if (text.isNotEmpty) {
+        for (var item in response) {
+          if ((item.word ?? "").toUpperCase().contains(text.toUpperCase())) {
+            _wordBankModel.add(item);
+          }
+        }
+      } else {
+        _wordBankModel.addAll(response);
+      }
+    }
+  }
+
+  @override
+  List<WordBankModel> get wordBankList => _wordBankModel;
+
+  @override
+  Future<void> deleteWorkBank(WordBankModel model) async {
+    _wordBankModel.remove(model);
+    dbHelper.deleteWordBank(model);
+  }
 }

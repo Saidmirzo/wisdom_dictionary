@@ -37,7 +37,7 @@ class WordMapper {
             wordId: wordWithAll.word!.id,
             word: wordWithAll.word!.word!,
             star: wordWithAll.word!.star,
-            synonyms: wordWithAll.word!.synonyms!,
+            synonyms: wordWithAll.word!.synonyms,
             anthonims: wordWithAll.word!.anthonims,
             body: wordWithAll.word!.body,
             comment: wordWithAll.word!.comment,

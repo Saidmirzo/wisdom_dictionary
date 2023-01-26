@@ -16,6 +16,15 @@ abstract class AppTextStyle {
     color: AppColors.white,
   );
 
+
+  static TextStyle font14W600Normal = TextStyle(
+    fontFamily: fontFamily,
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal,
+    fontSize: 14.sp,
+    color: AppColors.white,
+  );
+
   static TextStyle font14W700Normal = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,

@@ -6,10 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/data/model/phrases_with_all.dart';
 import 'package:wisdom/presentation/components/custom_expandable_widget.dart';
+import 'package:wisdom/presentation/components/phrases_widget.dart';
 
 import '../../config/constants/assets.dart';
 import '../pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
@@ -25,6 +27,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
 
   @override
   Widget build(BuildContext context, viewModel) {
+    GlobalKey widgetKey = GlobalKey();
     return Padding(
       padding: EdgeInsets.only(top: 20.h),
       child: Column(
@@ -37,7 +40,16 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord)),
+                Container(
+                  key: widgetKey,
+                  child: GestureDetector(
+                    onTap: () => viewModel.addToWordBankFromParent(model, orderNum, widgetKey),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10.w),
+                      child: SvgPicture.asset(Assets.icons.saveWord),
+                    ),
+                  ),
+                ),
                 model.parents!.star != "0"
                     ? Padding(
                         padding: EdgeInsets.only(right: 10.w),
@@ -58,7 +70,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                           ),
                           TextSpan(
                             text: viewModel.conductToString(model.wordsUz),
-                            style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.darkGray),
+                            style: AppTextStyle.font14W600Normal.copyWith(color: AppColors.darkGray),
                           )
                         ],
                       ),
@@ -94,7 +106,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Synonyms
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Synonyms",
             body: HtmlWidget(
               (model.parents!.synonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
@@ -104,7 +115,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Antonym
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Antonyms",
             body: HtmlWidget(
               (model.parents!.anthonims ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
@@ -114,7 +124,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Grammar
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Grammar",
             body: HtmlWidget(
               (model.grammar != null ? model.grammar!.first.body ?? "" : "")
@@ -126,7 +135,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           //Difference
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Difference",
             body: Column(
               mainAxisSize: MainAxisSize.min,
@@ -151,7 +159,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Collocations
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Collocations",
             body: HtmlWidget(
               (model.collocation != null ? model.collocation!.first.body ?? "" : "")
@@ -163,7 +170,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Thesaurus
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Thesaurus",
             body: HtmlWidget(
               (model.thesaurus != null ? model.thesaurus!.first.body ?? "" : "")
@@ -175,7 +181,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Metaphors
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "Metaphor",
             body: HtmlWidget(
               (model.metaphor != null ? model.metaphor!.first.body ?? "" : "")
@@ -187,8 +192,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Culture
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
-            title: "Metaphor",
+            title: "Culture",
             body: HtmlWidget(
               (model.culture != null ? model.culture!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
@@ -199,7 +203,6 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // More examples
           CustomExpandableWidget(
-            isExpanded: viewModel.synonymsIsExpanded,
             title: "More Examples",
             body: HtmlWidget(
               (model.parents!.moreExamples != null ? model.parents!.moreExamples ?? "" : "")
@@ -208,6 +211,28 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               // textStyle: AppTextStyle.font12W400ItalicHtml,
             ),
             visible: model.parents!.moreExamples != null && model.parents!.moreExamples!.isNotEmpty,
+          ),
+          // Phrases and Idioms
+          CustomExpandableWidget(
+            title: "Phrases and Idioms",
+            isExpanded: viewModel.hasToBeExpanded(model.phrasesWithAll),
+            body: (model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty)
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: model.phrasesWithAll!.length,
+                    itemBuilder: (context, index) {
+                      var phraseModel = model.phrasesWithAll![index];
+                      viewModel.checkIfPhrase(phraseModel, index);
+                      return AutoScrollTag(
+                          key: ValueKey(phraseModel.phrases!.pId),
+                          controller: viewModel.autoScrollController,
+                          index: index,
+                          child: PhrasesWidget(model: phraseModel, orderNum: '1', index: index));
+                    },
+                  )
+                : const SizedBox.shrink(),
+            visible: model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty,
           ),
         ],
       ),

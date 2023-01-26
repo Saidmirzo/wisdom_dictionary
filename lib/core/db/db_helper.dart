@@ -35,6 +35,7 @@ import 'package:wisdom/data/model/words_uz_model.dart';
 import '../../data/model/catalog_model.dart';
 import '../../data/model/phrases_with_all.dart';
 import '../../data/model/word_and_parents_and_phrases_model.dart';
+import '../../data/model/word_bank_model.dart';
 import '../../data/model/word_model.dart';
 import '../../data/model/word_with_difference_new_model.dart';
 
@@ -47,6 +48,7 @@ class DBHelper {
   final String databaseName = 'waio_dictionary.db';
   final int databaseVersion = 1;
   final String tableWordEntity = 'word_entity';
+  final String tableWordBank = 'word_bank';
 
   // opens the database (and creates if it do not exist)
   Future<void> init() async {
@@ -68,7 +70,7 @@ class DBHelper {
 
       await File(path).writeAsBytes(bytes, flush: true);
     } else {}
-    database = await openDatabase(path, readOnly: true);
+    database = await openDatabase(path, readOnly: false,);
   }
 
   Future saveAllWords(List<WordEntityModel> wordEntityModel) async {
@@ -79,10 +81,8 @@ class DBHelper {
     try {
       if (database.isOpen) {
         for (var element in wordModel) {
-          var id = await database.update(
-            tableWordEntity,
-            element.toJson(),
-          );
+          var id =
+              await database.update(tableWordEntity, element.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
           log("updated Id: $id ");
         }
       }
@@ -348,7 +348,7 @@ class DBHelper {
         var responseAll = await database.rawQuery("SELECT * FROM word_entity WHERE id=$id LIMIT 1");
         var word = responseAll.isNotEmpty ? WordModel.fromJson(responseAll.first) : null;
 
-        var responseWordUz = await database.rawQuery("SELECT * FROM words_uz WHERE word_id=$id ");
+          var responseWordUz = await database.rawQuery("SELECT * FROM words_uz WHERE word_id=$id");
         var wordWordUz = responseWordUz.isNotEmpty
             ? List<WordsUzModel>.from(responseWordUz.map((e) => WordsUzModel.fromJson(e)))
             : null;
@@ -456,11 +456,12 @@ class DBHelper {
           ? List<ParentPhrasesTranslateModel>.from(
               responseParentPhrasesTranslate.map((e) => ParentPhrasesTranslateModel.fromJson(e)))
           : null;
-
-      _parentPhrasesWithAll
-          .add(ParentPhrasesWithAll(element, wordPhraseParentPhrasesExample, wordPhraseParentPhrasesTranslate));
+      if ((element.word != null && element.word!.isNotEmpty) &&
+          (element.wordClassComment != null && element.wordClassComment.isNotEmpty)) {
+        _parentPhrasesWithAll
+            .add(ParentPhrasesWithAll(element, wordPhraseParentPhrasesExample, wordPhraseParentPhrasesTranslate));
+      }
     }
-
     return _parentPhrasesWithAll;
   }
 
@@ -635,5 +636,59 @@ class DBHelper {
       log("searchByPhrasesUz1", error: e.toString());
     }
     return null;
+  }
+
+  Future<List<WordBankModel>?> getWordBankList() async {
+    try {
+      if (database.isOpen) {
+        var response = await database.rawQuery("SELECT * from word_bank ORDER BY created_at DESC");
+        var wordBankList = List<WordBankModel>.from(response.map((e) => WordBankModel.fromJson(e)));
+        return wordBankList;
+      }
+    } catch (e) {
+      log("getWordBankList", error: e.toString());
+    }
+    return null;
+  }
+
+  Future<void> saveToWordBank(WordBankModel wordBankModel) async {
+    try {
+      if (database.isOpen) {
+            await database.insert(tableWordBank, wordBankModel.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    } catch (e) {
+      log("saveToWordBank", error: e.toString());
+    }
+  }
+
+  Future<void> deleteAllWordBank() async {
+    try {
+      if (database.isOpen) {
+        await database.delete(tableWordBank);
+      }
+    } catch (e) {
+      log("deleteAllWordBank", error: e.toString());
+    }
+  }
+
+  Future<void> deleteWordBank(WordBankModel model) async {
+    try {
+      if (database.isOpen) {
+        await database.delete(tableWordBank, where: "id = ?", whereArgs: [model.id]);
+      }
+    } catch (e) {
+      log("deleteWordBank", error: e.toString());
+    }
+  }
+
+  Future<void> updateWordBank(WordBankModel model) async {
+    try {
+      if (database.isOpen) {
+        await database.update(tableWordBank, model.toJson(),
+            where: "id = ?", whereArgs: [model.id], conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    } catch (e) {
+      log("updateWordBank", error: e.toString());
+    }
   }
 }

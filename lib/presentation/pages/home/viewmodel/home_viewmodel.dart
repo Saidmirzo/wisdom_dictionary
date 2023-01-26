@@ -137,4 +137,12 @@ class HomeViewModel extends BaseViewModel {
       ),
     );
   }
+
+  void getWordBank() {
+    safeBlock(() async {
+      await wordEntity.getWordBankList('');
+      localViewModel.changeBadgeCount(0);
+      localViewModel.changeBadgeCount(wordEntity.wordBankList.length);
+    }, callFuncName: 'getWordBank');
+  }
 }

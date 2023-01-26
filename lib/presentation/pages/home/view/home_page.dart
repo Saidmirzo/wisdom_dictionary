@@ -17,6 +17,7 @@ class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
   void onViewModelReady(HomeViewModel viewModel) {
     super.onViewModelReady(viewModel);
     viewModel.getRandomDailyWords();
+    viewModel.getWordBank();
   }
 
   @override

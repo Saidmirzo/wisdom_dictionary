@@ -1,3 +1,4 @@
+import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -7,7 +8,6 @@ import 'package:wisdom/config/constants/urls.dart';
 import 'package:wisdom/presentation/pages/collocation/view/collocation_details_page.dart';
 import 'package:wisdom/presentation/pages/culture/view/culture_detail_page.dart';
 import 'package:wisdom/presentation/pages/difference/view/difference_detail_page.dart';
-import 'package:wisdom/presentation/pages/exercise/view/exercise_page.dart';
 import 'package:wisdom/presentation/pages/google_translator/view/google_translator_page.dart';
 import 'package:wisdom/presentation/pages/grammar/view/grammar_detail_page.dart';
 import 'package:wisdom/presentation/pages/grammar/view/grammar_page.dart';
@@ -20,6 +20,7 @@ import 'package:wisdom/presentation/pages/speaking/view/speaking_details_page.da
 import 'package:wisdom/presentation/pages/speaking/view/speaking_page.dart';
 import 'package:wisdom/presentation/pages/thesaurus/view/thesaurus_details_page.dart';
 import 'package:wisdom/presentation/pages/thesaurus/view/thesaurus_page.dart';
+import 'package:wisdom/presentation/pages/word_bank/view/wordbank_page.dart';
 import 'package:wisdom/presentation/pages/word_detail/view/word_detail_page.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
@@ -38,7 +39,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
 
   late final List<Widget> pages = [
     Home(), // 0
-    ExercisePage(), // 1
+    WordBankPage(), // 1
     SearchPage(), // 2
     CatalogsPage(), // 3
     GoogleTranslatorPage(), // 4
@@ -60,19 +61,25 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
-    return Stack(
-      children: [
-        PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: viewModel.localViewModel.pageController,
-          children: pages,
-        ),
-        HomeBottomNavBar(
-          onTap: ((index) {
-            viewModel.localViewModel.changePageIndex(index);
-          }),
-        ),
-      ],
+    return AddToCartAnimation(
+      cartKey: viewModel.localViewModel.cartKey,
+      createAddToCartAnimation: (runAddToCartAnimation) {
+        viewModel.localViewModel.runAddToCartAnimation = runAddToCartAnimation;
+      },
+      child: Stack(
+        children: [
+          PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: viewModel.localViewModel.pageController,
+            children: pages,
+          ),
+          HomeBottomNavBar(
+            onTap: ((index) {
+              viewModel.localViewModel.changePageIndex(index);
+            }),
+          ),
+        ],
+      ),
     );
   }
 }
