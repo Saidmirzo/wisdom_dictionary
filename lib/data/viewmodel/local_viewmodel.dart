@@ -54,6 +54,7 @@ class LocalViewModel extends BaseViewModel {
     } else {
       badgeCount.value = how;
     }
-    notifyListeners();
+    cartKey.currentState!.runCartAnimation((badgeCount.value).toString(), );
+    // notifyListeners();
   }
 }

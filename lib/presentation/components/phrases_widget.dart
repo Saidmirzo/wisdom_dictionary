@@ -29,6 +29,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
 
   @override
   Widget build(BuildContext context, viewModel) {
+    GlobalKey widgetKey = GlobalKey();
     return Padding(
       padding: EdgeInsets.only(top: 15.h),
       child: Column(
@@ -48,7 +49,13 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord)),
+                Container(
+                  key: widgetKey,
+                  child: GestureDetector(
+                      onTap: () => viewModel.addToWordBankFromPhrase(model, orderNum, widgetKey),
+                      child: Padding(
+                          padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord))),
+                ),
                 (model.phrases!.pStar ?? 0).toString() != "0"
                     ? Padding(
                         padding: EdgeInsets.only(right: 10.w),

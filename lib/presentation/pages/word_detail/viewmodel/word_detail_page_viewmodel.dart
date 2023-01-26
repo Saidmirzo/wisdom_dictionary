@@ -66,28 +66,60 @@ class WordDetailPageViewModel extends BaseViewModel {
   addToWordBankFromParent(ParentsWithAll model, String num, GlobalKey key) {
     safeBlock(() async {
       int number = int.parse(num.isEmpty ? "0" : num);
-      int count = 0;
       var wordBank = WordBankModel(
-          id: model.parents!.wordId,
+          id: model.parents!.id,
           word: model.parents!.word,
           example: model.parents!.example,
           translation: conductToString(model.wordsUz),
           createdAt: DateTime.now().toString(),
           number: number);
+      funAddToWordBank(wordBank, key);
+    }, callFuncName: 'addToWordBankFromParent', inProgress: false);
+  }
+
+  addToWordBankFromPhrase(PhrasesWithAll model, String num, GlobalKey key) {
+    safeBlock(() async {
+      int number = int.parse(num.isEmpty ? "0" : num);
+      var wordBank = WordBankModel(
+          id: model.phrases!.pId,
+          word: model.phrases!.pWord,
+          example: model.phrasesExample![0].value,
+          translation: conductToStringPhrasesTranslate(model.phrasesTranslate!),
+          createdAt: DateTime.now().toString(),
+          number: number);
+      funAddToWordBank(wordBank, key);
+    }, callFuncName: 'addToWordBankFromPhrase', inProgress: false);
+  }
+
+  addToWordBankFromParentPhrase(ParentPhrasesWithAll model, String num, GlobalKey key) {
+    safeBlock(() async {
+      int number = int.parse(num.isEmpty ? "0" : num);
+      var wordBank = WordBankModel(
+          id: model.parentPhrases!.id,
+          word: model.parentPhrases!.word ?? "",
+          example: model.phrasesExample![0].value,
+          translation: conductToStringParentPhrasesTranslate(model.parentPhrasesTranslate!),
+          createdAt: DateTime.now().toString(),
+          number: number);
+      funAddToWordBank(wordBank, key);
+    }, callFuncName: 'addToWordBankFromParentPhrase', inProgress: false);
+  }
+
+  funAddToWordBank(WordBankModel bankModel, GlobalKey key) {
+    safeBlock(() async {
+      int count = 0;
       for (var item in wordEntityRepository.wordBankList) {
-        if (item.id == wordBank.id) {
+        if (item.id == bankModel.id) {
           count++;
           break;
         }
       }
       if (count == 0) {
-        localViewModel.changeBadgeCount(1);
         localViewModel.runAddToCartAnimation(key);
+        localViewModel.changeBadgeCount(1);
+        await wordEntityRepository.saveWordBank(bankModel);
       }
-      // await localViewModel.cartKey.currentState!
-      //     .runCartAnimation((++_cartQuantityItems).toString());
-      await wordEntityRepository.saveWordBank(wordBank);
-    }, callFuncName: 'addToWordBankFromParent', inProgress: false);
+    }, callFuncName: 'funAddToWordBank', inProgress: false);
   }
 
   void textToSpeech() {

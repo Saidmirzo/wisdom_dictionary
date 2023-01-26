@@ -89,232 +89,238 @@ class Home extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
-    return Scaffold(
-      drawerEnableOpenDragGesture: false,
-      backgroundColor: AppColors.lightBackground,
-      appBar: CustomAppBar(
-        leadingIcon: Assets.icons.menu,
-        onTap: () => ZoomDrawer.of(context)!.toggle(),
-        isSearch: false,
-        title: 'Wisdom Dictionary',
-      ),
-      body: SwipeRefresh.adaptive(
-        stateStream: viewModel.stream,
-        onRefresh: () => viewModel.getRandomDailyWords(),
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Builder(
-            builder: (context) {
-              return viewModel.isSuccess(tag: viewModel.getDailyWordsTag)
-                  ? ListView(
-                      padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 75.h),
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        Builder(
-                          builder: (context) {
-                            return viewModel.isSuccess(tag: viewModel.getDailyWordsTag)
-                                ? Visibility(
-                                    visible: viewModel.homeRepository.timelineModel.ad != null,
-                                    child: GestureDetector(
-                                      onTap: () => viewModel.onAdWebClicked(),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            decoration: AppDecoration.bannerDecor,
-                                            child: viewModel.homeRepository.timelineModel.ad!.image != null
-                                                ? ClipRRect(
-                                                    borderRadius: BorderRadius.circular(18.r),
-                                                    child: Image.network(
-                                                      Urls.baseUrl + viewModel.homeRepository.timelineModel.ad!.image!,
-                                                      fit: BoxFit.cover,
-                                                      loadingBuilder: (context, child, loadingProgress) {
-                                                        if (loadingProgress == null) {
-                                                          return child;
-                                                        }
-                                                        return SizedBox(
-                                                          height: 165.h,
-                                                          child: const LoadingWidget(
-                                                            color: AppColors.blue,
-                                                            width: 2,
-                                                          ),
-                                                        );
-                                                      },
-                                                      errorBuilder: (context, error, stackTrace) {
-                                                        return SizedBox(
-                                                          height: 165.h,
-                                                          child: const LoadingWidget(
-                                                            color: AppColors.blue,
-                                                            width: 2,
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  )
-                                                : const SizedBox.shrink(),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox.shrink();
-                          },
-                        ),
-                        CustomBanner(
-                          title: 'Grammar',
-                          isInkWellEnable: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
-                          onTap: () {
-                            viewModel.localViewModel.isFromMain = true;
-                            viewModel.localViewModel.changePageIndex(5);
-                          },
-                          child: Center(
-                            child: Text(
-                              viewModel.homeRepository.timelineModel.grammar!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        CustomBanner(
-                          title: 'Differences',
-                          isInkWellEnable: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
-                          onTap: () {
-                            viewModel.localViewModel.changePageIndex(6);
-                          },
-                          child: Center(
-                            child: RichText(
-                              text: TextSpan(
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
-                                text: viewModel.separateDifference(
-                                    true, viewModel.homeRepository.timelineModel.difference!.word!),
-                                children: [
-                                  TextSpan(
-                                      text: ' or ',
-                                      style: AppTextStyle.font16W500Italic.copyWith(color: AppColors.paleGray)),
-                                  TextSpan(
-                                      text: viewModel.separateDifference(
-                                          false, viewModel.homeRepository.timelineModel.difference!.word)),
-                                ],
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        CustomBanner(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                          title: 'Do you know this ?',
-                          onTap: () {
-                            // viewModel.localViewModel.changeIndex(7);
-                          },
-                          isInkWellEnable: true,
-                          child: Center(
-                            child: Image.network(
-                              Urls.baseUrl + viewModel.homeRepository.timelineModel.image!.image!,
-                              height: 200.h,
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return SizedBox(
-                                  height: 200.h,
-                                  child: const LoadingWidget(
-                                    color: AppColors.blue,
-                                    width: 2,
-                                  ),
-                                );
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image(
-                                      image: AssetImage(Assets.images.noInternet),
-                                      height: 200.h,
-                                      fit: BoxFit.cover,
-                                      color: AppColors.error,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 15.h),
-                                      child: Text(
-                                        "oops! no connection",
-                                        style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.error),
+    return WillPopScope(
+      onWillPop: () {
+        return Future.value(false);
+      },
+      child: Scaffold(
+        drawerEnableOpenDragGesture: false,
+        backgroundColor: AppColors.lightBackground,
+        appBar: CustomAppBar(
+          leadingIcon: Assets.icons.menu,
+          onTap: () => ZoomDrawer.of(context)!.toggle(),
+          isSearch: false,
+          title: 'Wisdom Dictionary',
+        ),
+        body: SwipeRefresh.adaptive(
+          stateStream: viewModel.stream,
+          onRefresh: () => viewModel.getRandomDailyWords(),
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            Builder(
+              builder: (context) {
+                return viewModel.isSuccess(tag: viewModel.getDailyWordsTag)
+                    ? ListView(
+                        padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 75.h),
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              return viewModel.isSuccess(tag: viewModel.getDailyWordsTag)
+                                  ? Visibility(
+                                      visible: viewModel.homeRepository.timelineModel.ad != null,
+                                      child: GestureDetector(
+                                        onTap: () => viewModel.onAdWebClicked(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              decoration: AppDecoration.bannerDecor,
+                                              child: viewModel.homeRepository.timelineModel.ad!.image != null
+                                                  ? ClipRRect(
+                                                      borderRadius: BorderRadius.circular(18.r),
+                                                      child: Image.network(
+                                                        Urls.baseUrl +
+                                                            viewModel.homeRepository.timelineModel.ad!.image!,
+                                                        fit: BoxFit.cover,
+                                                        loadingBuilder: (context, child, loadingProgress) {
+                                                          if (loadingProgress == null) {
+                                                            return child;
+                                                          }
+                                                          return SizedBox(
+                                                            height: 165.h,
+                                                            child: const LoadingWidget(
+                                                              color: AppColors.blue,
+                                                              width: 2,
+                                                            ),
+                                                          );
+                                                        },
+                                                        errorBuilder: (context, error, stackTrace) {
+                                                          return SizedBox(
+                                                            height: 165.h,
+                                                            child: const LoadingWidget(
+                                                              color: AppColors.blue,
+                                                              width: 2,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    )
+                                                  : const SizedBox.shrink(),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     )
+                                  : const SizedBox.shrink();
+                            },
+                          ),
+                          CustomBanner(
+                            title: 'Grammar',
+                            isInkWellEnable: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                            onTap: () {
+                              viewModel.localViewModel.isFromMain = true;
+                              viewModel.localViewModel.changePageIndex(5);
+                            },
+                            child: Center(
+                              child: Text(
+                                viewModel.homeRepository.timelineModel.grammar!.worden!.word!,
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          CustomBanner(
+                            title: 'Differences',
+                            isInkWellEnable: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                            onTap: () {
+                              viewModel.localViewModel.changePageIndex(6);
+                            },
+                            child: Center(
+                              child: RichText(
+                                text: TextSpan(
+                                  style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                  text: viewModel.separateDifference(
+                                      true, viewModel.homeRepository.timelineModel.difference!.word!),
+                                  children: [
+                                    TextSpan(
+                                        text: ' or ',
+                                        style: AppTextStyle.font16W500Italic.copyWith(color: AppColors.paleGray)),
+                                    TextSpan(
+                                        text: viewModel.separateDifference(
+                                            false, viewModel.homeRepository.timelineModel.difference!.word)),
                                   ],
-                                );
-                              },
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
-                        ),
-                        CustomBanner(
-                          title: 'Thesaurus',
-                          isInkWellEnable: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
-                          onTap: () {
-                            viewModel.localViewModel.changePageIndex(7);
-                          },
-                          child: Center(
-                            child: Text(
-                              viewModel.homeRepository.timelineModel.thesaurus!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                          CustomBanner(
+                            contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                            title: 'Do you know this ?',
+                            onTap: () {
+                              // viewModel.localViewModel.changeIndex(7);
+                            },
+                            isInkWellEnable: true,
+                            child: Center(
+                              child: Image.network(
+                                Urls.baseUrl + viewModel.homeRepository.timelineModel.image!.image!,
+                                height: 200.h,
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return SizedBox(
+                                    height: 200.h,
+                                    child: const LoadingWidget(
+                                      color: AppColors.blue,
+                                      width: 2,
+                                    ),
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image(
+                                        image: AssetImage(Assets.images.noInternet),
+                                        height: 200.h,
+                                        fit: BoxFit.cover,
+                                        color: AppColors.error,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 15.h),
+                                        child: Text(
+                                          "oops! no connection",
+                                          style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.error),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        CustomBanner(
-                          title: 'Collocation',
-                          isInkWellEnable: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
-                          onTap: () {
-                            viewModel.localViewModel.changePageIndex(8);
-                          },
-                          child: Center(
-                            child: Text(
-                              viewModel.homeRepository.timelineModel.collocation!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                          CustomBanner(
+                            title: 'Thesaurus',
+                            isInkWellEnable: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                            onTap: () {
+                              viewModel.localViewModel.changePageIndex(7);
+                            },
+                            child: Center(
+                              child: Text(
+                                viewModel.homeRepository.timelineModel.thesaurus!.worden!.word!,
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              ),
                             ),
                           ),
-                        ),
-                        CustomBanner(
-                          title: 'Metaphor',
-                          isInkWellEnable: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
-                          onTap: () {
-                            viewModel.localViewModel.changePageIndex(9);
-                          },
-                          child: Center(
-                            child: Text(
-                              viewModel.homeRepository.timelineModel.metaphor!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                          CustomBanner(
+                            title: 'Collocation',
+                            isInkWellEnable: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                            onTap: () {
+                              viewModel.localViewModel.changePageIndex(8);
+                            },
+                            child: Center(
+                              child: Text(
+                                viewModel.homeRepository.timelineModel.collocation!.worden!.word!,
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              ),
                             ),
                           ),
-                        ),
-                        CustomBanner(
-                          title: 'Speaking',
-                          isInkWellEnable: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
-                          onTap: () {
-                            viewModel.localViewModel.changePageIndex(10);
-                          },
-                          child: Center(
-                            child: Text(
-                              viewModel.homeRepository.timelineModel.speaking!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
-                              textAlign: TextAlign.center,
+                          CustomBanner(
+                            title: 'Metaphor',
+                            isInkWellEnable: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                            onTap: () {
+                              viewModel.localViewModel.changePageIndex(9);
+                            },
+                            child: Center(
+                              child: Text(
+                                viewModel.homeRepository.timelineModel.metaphor!.worden!.word!,
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  : SizedBox(
-                      height: MediaQuery.of(context).size.height - 75,
-                      child: const Center(child: LoadingWidget(color: AppColors.paleBlue, width: 3)));
-            },
-          )
-        ],
+                          CustomBanner(
+                            title: 'Speaking',
+                            isInkWellEnable: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
+                            onTap: () {
+                              viewModel.localViewModel.changePageIndex(10);
+                            },
+                            child: Center(
+                              child: Text(
+                                viewModel.homeRepository.timelineModel.speaking!.word!,
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height - 75,
+                        child: const Center(child: LoadingWidget(color: AppColors.paleBlue, width: 3)));
+              },
+            )
+          ],
+        ),
       ),
     );
   }

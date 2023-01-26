@@ -26,89 +26,91 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
 
   @override
   Widget builder(BuildContext context, SearchPageViewModel viewModel, Widget? child) {
-    // viewModel.init();
-    return Scaffold(
-      drawerEnableOpenDragGesture: false,
-      backgroundColor: AppColors.lightBackground,
-      appBar: CustomAppBar(
-        leadingIcon: Assets.icons.menu,
-        onTap: () => ZoomDrawer.of(context)!.toggle(),
-        isSearch: true,
-        title: 'Search',
-        onChange: (text) => viewModel.searchByWord(text),
-      ),
-      // body: const EmptyJar(),
-      body: Column(
-        children: [
-          Visibility(
-            visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
-            child: SearchCleanButton(
-              onTap: () => viewModel.cleanHistory(),
-            ),
-          ),
-          Visibility(
-            visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
-            child: Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(bottom: 130),
-                physics: const BouncingScrollPhysics(),
-                itemCount: viewModel.recentList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var itemRecent = viewModel.recentList[index];
-                  return SearchHistoryItem(
-                    firstText: itemRecent.word ?? "unknown",
-                    secondText: itemRecent.wordClass ?? "",
-                    onTap: () => viewModel.goOnDetail(itemRecent),
-                  );
-                },
+    return WillPopScope(
+      onWillPop: () => viewModel.goBackToMain(),
+      child: Scaffold(
+        drawerEnableOpenDragGesture: false,
+        backgroundColor: AppColors.lightBackground,
+        appBar: CustomAppBar(
+          leadingIcon: Assets.icons.menu,
+          onTap: () => ZoomDrawer.of(context)!.toggle(),
+          isSearch: true,
+          title: 'Search',
+          onChange: (text) => viewModel.searchByWord(text),
+        ),
+        // body: const EmptyJar(),
+        body: Column(
+          children: [
+            Visibility(
+              visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
+              child: SearchCleanButton(
+                onTap: () => viewModel.cleanHistory(),
               ),
             ),
-          ),
-          Visibility(
-            visible: (viewModel.searchRepository.searchResultList.isNotEmpty || viewModel.searchText.isNotEmpty),
-            child: (viewModel.isSuccess(tag: viewModel.searchTag) &&
-                    viewModel.searchText.isNotEmpty &&
-                    viewModel.searchRepository.searchResultList.isNotEmpty)
-                ? Expanded(
-              child: ListView.builder(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(bottom: 130),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: viewModel.searchRepository.searchResultList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var item = viewModel.searchRepository.searchResultList[index];
-                        return SearchWordItem(
-                          firstText: item.word ?? "unknown",
-                          secondText: item.wordClasswordClass ?? "",
-                          onTap: () => viewModel.goOnDetail(item),
-                        );
-                      },
-                    ),
-                )
-                : SizedBox(height: 120.h, child: LoadingWidget()),
-          ),
-        ],
-      ),
-      resizeToAvoidBottomInset: false,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(bottom: 65),
-        decoration: BoxDecoration(color: AppColors.blue, borderRadius: BorderRadius.circular(26.r)),
-        height: 52.h,
-        width: 52.h,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(26.r),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SvgPicture.asset(
-                Assets.icons.changeLang,
-                height: 20.h,
-                color: AppColors.white,
-                fit: BoxFit.scaleDown,
+            Visibility(
+              visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
+              child: Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(bottom: 130),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: viewModel.recentList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var itemRecent = viewModel.recentList[index];
+                    return SearchHistoryItem(
+                      firstText: itemRecent.word ?? "unknown",
+                      secondText: itemRecent.wordClass ?? "",
+                      onTap: () => viewModel.goOnDetail(itemRecent),
+                    );
+                  },
+                ),
               ),
-            ]),
+            ),
+            Visibility(
+              visible: (viewModel.searchRepository.searchResultList.isNotEmpty || viewModel.searchText.isNotEmpty),
+              child: (viewModel.isSuccess(tag: viewModel.searchTag) &&
+                      viewModel.searchText.isNotEmpty &&
+                      viewModel.searchRepository.searchResultList.isNotEmpty)
+                  ? Expanded(
+                child: ListView.builder(
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(bottom: 130),
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: viewModel.searchRepository.searchResultList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var item = viewModel.searchRepository.searchResultList[index];
+                          return SearchWordItem(
+                            firstText: item.word ?? "unknown",
+                            secondText: item.wordClasswordClass ?? "",
+                            onTap: () => viewModel.goOnDetail(item),
+                          );
+                        },
+                      ),
+                  )
+                  : SizedBox(height: 120.h, child: LoadingWidget()),
+            ),
+          ],
+        ),
+        resizeToAvoidBottomInset: false,
+        floatingActionButton: Container(
+          margin: const EdgeInsets.only(bottom: 65),
+          decoration: BoxDecoration(color: AppColors.blue, borderRadius: BorderRadius.circular(26.r)),
+          height: 52.h,
+          width: 52.h,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {},
+              borderRadius: BorderRadius.circular(26.r),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SvgPicture.asset(
+                  Assets.icons.changeLang,
+                  height: 20.h,
+                  color: AppColors.white,
+                  fit: BoxFit.scaleDown,
+                ),
+              ]),
+            ),
           ),
         ),
       ),

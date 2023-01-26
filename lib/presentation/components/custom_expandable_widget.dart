@@ -23,7 +23,8 @@ class CustomExpandableWidget extends StatefulWidget {
 }
 
 class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
-  late bool isExpanded;
+
+  late bool isExpanded = false;
 
   final ExpandableController expandableController = ExpandableController();
 

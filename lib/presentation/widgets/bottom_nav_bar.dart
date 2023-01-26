@@ -43,33 +43,40 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
                       onTap(0);
                       viewModel.localViewModel.changePageIndex(0);
                     }),
-                ValueListenableBuilder(
-                  valueListenable: viewModel.localViewModel.badgeCount,
-                  builder: (BuildContext context, value, Widget? child) {
-                    return badge.Badge(
-                      badgeContent: Text(
-                        viewModel.localViewModel.badgeCount.value.toString(),
-                        style: AppTextStyle.font12W400Normal.copyWith(fontSize: 10.sp, fontWeight: FontWeight.w600),
-                      ),
-                      ignorePointer: true,
-                      position: badge.BadgePosition.topEnd(top: 1, end: 1),
-                      child: AddToCartIcon(
-                        badgeOptions: const BadgeOptions(
-                          active: false,
-                        ),
-                        key: viewModel.localViewModel.cartKey,
-                        icon: BottomNavButton(
-                            isTabSelected: value == 1,
-                            defIcon: Assets.icons.bookOutline,
-                            filledIcon: Assets.icons.bookFilled,
-                            callBack: () {
-                              onTap(1);
-                              viewModel.localViewModel.changePageIndex(1);
-                            }),
-                      ),
-                    );
-                  },
+                Material(
+                  color: AppColors.blue,
+                  child: AddToCartIcon(
+                    badgeOptions: const BadgeOptions(
+                      active: true,
+                      fontSize: 12,
+                      backgroundColor: AppColors.accentLight,
+                      foregroundColor: AppColors.white
+                    ),
+                    key: viewModel.localViewModel.cartKey,
+                    icon: BottomNavButton(
+                        isTabSelected: value == 1,
+                        defIcon: Assets.icons.bookOutline,
+                        filledIcon: Assets.icons.bookFilled,
+                        callBack: () {
+                          onTap(1);
+                          viewModel.localViewModel.changePageIndex(1);
+                        }),
+                  ),
                 ),
+                // ValueListenableBuilder(
+                //   valueListenable: viewModel.localViewModel.badgeCount,
+                //   builder: (BuildContext context, value, Widget? child) {
+                //     return badge.Badge(
+                //       badgeContent: Text(
+                //         viewModel.localViewModel.badgeCount.value.toString(),
+                //         style: AppTextStyle.font12W400Normal.copyWith(fontSize: 10.sp, fontWeight: FontWeight.w600),
+                //       ),
+                //       ignorePointer: true,
+                //       position: badge.BadgePosition.topEnd(top: 1, end: 1),
+                //       child: ,
+                //     );
+                //   },
+                // ),
                 BottomNavButton(
                     isTabSelected: value == 2,
                     defIcon: Assets.icons.searchOutline,

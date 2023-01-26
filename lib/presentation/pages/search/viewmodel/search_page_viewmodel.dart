@@ -60,6 +60,10 @@ class SearchPageViewModel extends BaseViewModel {
     );
   }
 
+  goBackToMain() {
+    localViewModel.changePageIndex(0);
+  }
+
   goOnDetail(var model) {
     safeBlock(
       () async {

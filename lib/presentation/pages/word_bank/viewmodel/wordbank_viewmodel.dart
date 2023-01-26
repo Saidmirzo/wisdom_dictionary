@@ -28,6 +28,10 @@ class WordBankViewModel extends BaseViewModel {
     );
   }
 
+  goBackToMain() {
+    localViewModel.changePageIndex(0);
+  }
+
   deleteWordBank(WordBankModel model) {
     safeBlock(
       () async {

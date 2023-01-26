@@ -9,7 +9,7 @@ import 'drawer_screen.dart';
 import 'home_screen.dart';
 
 class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
-   HomePage({super.key});
+  HomePage({super.key});
 
   final drawerController = ZoomDrawerController();
 
@@ -22,16 +22,19 @@ class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
 
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
-    return ZoomDrawer(
-      menuScreen: DrawerScreen(),
-      mainScreen: HomeScreen(),
-      borderRadius: 30,
-      showShadow: false,
-      mainScreenTapClose: true,
-      mainScreenScale: 0.2,
-      angle: 0,
-      menuBackgroundColor: AppColors.lightBackground,
-      slideWidth: MediaQuery.of(context).size.width * 0.75,
+    return WillPopScope(
+      onWillPop: () {return Future.value(false);},
+      child: ZoomDrawer(
+        menuScreen: DrawerScreen(),
+        mainScreen: HomeScreen(),
+        borderRadius: 30,
+        showShadow: false,
+        mainScreenTapClose: true,
+        mainScreenScale: 0.2,
+        angle: 0,
+        menuBackgroundColor: AppColors.lightBackground,
+        slideWidth: MediaQuery.of(context).size.width * 0.75,
+      ),
     );
   }
 

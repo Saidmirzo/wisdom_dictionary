@@ -35,7 +35,7 @@ class HomeViewModel extends BaseViewModel {
   final String getDailyWordsTag = "getDailyWordsTag";
   final String getAdTag = "getAdTag";
 
-  Future<void> getRandomDailyWords() async {
+  void getRandomDailyWords() {
     safeBlock(() async {
       await homeRepository.getRandomWords();
       controller.add(SwipeRefreshState.hidden);
@@ -44,7 +44,7 @@ class HomeViewModel extends BaseViewModel {
     }, callFuncName: 'getRandomDailyWords', tag: getDailyWordsTag, inProgress: false);
   }
 
-  Future<void> getAd() async {
+  void getAd() {
     safeBlock(() async {
       Ad response = await homeRepository.getAd();
       if (response.image != null) {
@@ -54,7 +54,7 @@ class HomeViewModel extends BaseViewModel {
     }, callFuncName: 'getAd', tag: getAdTag, inProgress: false);
   }
 
-  onAdWebClicked() {
+  void onAdWebClicked() {
     safeBlock(() async {
       launchUrlString(
         homeRepository.timelineModel.ad!.link!,
@@ -75,25 +75,6 @@ class HomeViewModel extends BaseViewModel {
     return str;
   }
 
-  Future<void> getGrammar() async {
-    safeBlock(
-      () async {
-        await dbHelper.getGrammar();
-      },
-      callFuncName: 'getGrammar',
-    );
-  }
-
-  Future<void> getWord() async {
-    safeBlock(
-      () async {
-        //searching word
-        await dbHelper.getWord1(200);
-      },
-      callFuncName: 'getGrammar',
-    );
-  }
-
   Future<void> updateWords() async {
     safeBlock(
       () async {
@@ -106,23 +87,6 @@ class HomeViewModel extends BaseViewModel {
       },
       callFuncName: 'getWords',
     );
-  }
-
-  @override
-  callBackBusy(bool value, String? tag) {
-    if (dialog == null && isBusy(tag: tag)) {
-      Future.delayed(Duration.zero, () {
-        dialog = showLoadingDialog(context!);
-      });
-    }
-  }
-
-  @override
-  callBackSuccess(value, String? tag) {
-    if (dialog != null) {
-      pop();
-      dialog = null;
-    }
   }
 
   @override
@@ -143,6 +107,6 @@ class HomeViewModel extends BaseViewModel {
       await wordEntity.getWordBankList('');
       localViewModel.changeBadgeCount(0);
       localViewModel.changeBadgeCount(wordEntity.wordBankList.length);
-    }, callFuncName: 'getWordBank');
+    }, callFuncName: 'getWordBank', inProgress: false);
   }
 }

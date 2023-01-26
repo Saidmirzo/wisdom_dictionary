@@ -25,57 +25,60 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
 
   @override
   Widget builder(BuildContext context, WordBankViewModel viewModel, Widget? child) {
-    return Scaffold(
-      drawerEnableOpenDragGesture: false,
-      resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.lightBackground,
-      appBar: CustomAppBar(
-        leadingIcon: Assets.icons.menu,
-        onTap: () => ZoomDrawer.of(context)!.toggle(),
-        isSearch: true,
-        title: 'Word bank',
-        onChange: (value) => viewModel.getWordBankList(value),
-      ),
-      // body: const EmptyJar(),
-      body: viewModel.isSuccess(tag: viewModel.getWordBankListTag) &&
-              viewModel.wordEntityRepository.wordBankList.isNotEmpty
-          ? ListView.builder(
-              padding: const EdgeInsets.only(top: 16, bottom: 130),
-              physics: const BouncingScrollPhysics(),
-              itemCount: viewModel.wordEntityRepository.wordBankList.length,
-              itemBuilder: (context, index) {
-                var model = viewModel.wordEntityRepository.wordBankList[index];
-                return WordBankItem(
-                  model: model,
-                );
-              },
-            )
-          : viewModel.wordEntityRepository.wordBankList.isEmpty
-              ? const EmptyJar()
-              : const Center(
-                  child: LoadingWidget(),
-                ),
-      endDrawerEnableOpenDragGesture: true,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(bottom: 65),
-        decoration: BoxDecoration(color: AppColors.blue, borderRadius: BorderRadius.circular(25.r)),
-        height: 40.h,
-        width: 125.w,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {},
-            borderRadius: BorderRadius.circular(25.r),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SvgPicture.asset(Assets.icons.exercise, height: 20.h, fit: BoxFit.scaleDown),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  'Exercise',
-                  style: AppTextStyle.font14W500Normal,
-                ),
+    return WillPopScope(
+      onWillPop: () => viewModel.goBackToMain(),
+      child: Scaffold(
+        drawerEnableOpenDragGesture: false,
+        resizeToAvoidBottomInset: true,
+        backgroundColor: AppColors.lightBackground,
+        appBar: CustomAppBar(
+          leadingIcon: Assets.icons.menu,
+          onTap: () => ZoomDrawer.of(context)!.toggle(),
+          isSearch: true,
+          title: 'Word bank',
+          onChange: (value) => viewModel.getWordBankList(value),
+        ),
+        // body: const EmptyJar(),
+        body: viewModel.isSuccess(tag: viewModel.getWordBankListTag) &&
+                viewModel.wordEntityRepository.wordBankList.isNotEmpty
+            ? ListView.builder(
+                padding: const EdgeInsets.only(top: 16, bottom: 130),
+                physics: const BouncingScrollPhysics(),
+                itemCount: viewModel.wordEntityRepository.wordBankList.length,
+                itemBuilder: (context, index) {
+                  var model = viewModel.wordEntityRepository.wordBankList[index];
+                  return WordBankItem(
+                    model: model,
+                  );
+                },
               )
-            ]),
+            : viewModel.wordEntityRepository.wordBankList.isEmpty
+                ? const EmptyJar()
+                : const Center(
+                    child: LoadingWidget(),
+                  ),
+        endDrawerEnableOpenDragGesture: true,
+        floatingActionButton: Container(
+          margin: const EdgeInsets.only(bottom: 65),
+          decoration: BoxDecoration(color: AppColors.blue, borderRadius: BorderRadius.circular(25.r)),
+          height: 40.h,
+          width: 125.w,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {},
+              borderRadius: BorderRadius.circular(25.r),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                SvgPicture.asset(Assets.icons.exercise, height: 20.h, fit: BoxFit.scaleDown),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Exercise',
+                    style: AppTextStyle.font14W500Normal,
+                  ),
+                )
+              ]),
+            ),
           ),
         ),
       ),
