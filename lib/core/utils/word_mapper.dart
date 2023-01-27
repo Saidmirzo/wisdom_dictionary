@@ -1,6 +1,12 @@
 import 'package:wisdom/data/model/parents_model.dart';
 import 'package:wisdom/data/model/phrases_with_all.dart';
+import 'package:wisdom/data/model/search_result_uz_model.dart';
+import 'package:wisdom/data/model/word_and_parents_and_phrases_and_translate_model.dart';
+import 'package:wisdom/data/model/word_and_parents_and_phrases_parent_phrases_and_translate_model.dart';
+import 'package:wisdom/data/model/word_and_phrases_and_translate_model.dart';
+import 'package:wisdom/data/model/word_and_words_uz_model.dart';
 import 'package:wisdom/data/model/word_model.dart';
+import 'package:wisdom/data/model/words_and_parents_and_words_uz_model.dart';
 
 import '../../data/model/search_result_model.dart';
 import '../../data/model/word_and_parents_and_phrases_model.dart';
@@ -148,6 +154,169 @@ class WordMapper {
             wordClasswordClass: parentsAndPhrasesModel.wordClasswordClass,
             type: type),
       );
+    }
+    return searchResultList;
+  }
+
+  // Word
+  List<SearchResultUzModel> mapWordDtoListToSearchUz(
+      List<WordAndWordsUzModel>? searchByWordUzEntity, String searchText, String type) {
+    List<SearchResultUzModel> searchResultUzList = [];
+    List<SearchResultUzModel> execute = [];
+
+    for (var element in searchByWordUzEntity!) {
+      mapWordDtoToSearchResultUz(element, type, searchText, execute).forEach((element) {
+        searchResultUzList.add(element);
+        execute.add(element);
+      });
+    }
+
+    return searchResultUzList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoToSearchResultUz(
+      WordAndWordsUzModel model, String type, String searchText, List<SearchResultUzModel> executor) {
+    List<SearchResultUzModel> searchResultList = [];
+
+    if (model.word!.startsWith(searchText) &&
+        model.word![0] == searchText[0] &&
+        model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
+        model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
+      var result = SearchResultUzModel(
+          id: model.id,
+          word: model.word ?? "",
+          type: type,
+          wordClass: model.wordClass,
+          star: model.word == searchText ? 3 : 0);
+      if (!executor.contains(result)) searchResultList.add(result);
+    }
+    return searchResultList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoListToSearchParentUz(
+      List<WordsAndParentsAndWordsUzModel>? searchByWordUzEntity, String searchText, String type) {
+    List<SearchResultUzModel> searchResultUzList = [];
+    List<SearchResultUzModel> execute = [];
+
+    for (var element in searchByWordUzEntity!) {
+      mapWordDtoToSearchResultParentUz(element, type, searchText, execute).forEach((element) {
+        searchResultUzList.add(element);
+        execute.add(element);
+      });
+    }
+
+    return searchResultUzList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoToSearchResultParentUz(
+      WordsAndParentsAndWordsUzModel model, String type, String searchText, List<SearchResultUzModel> executor) {
+    List<SearchResultUzModel> searchResultList = [];
+
+    if (model.word!.startsWith(searchText) &&
+        model.word![0] == searchText[0] &&
+        model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
+        model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
+      var result = SearchResultUzModel(
+          id: model.id,
+          word: model.word ?? "",
+          type: type,
+          wordClass: model.wordClass,
+          star: model.word == searchText ? 3 : 0);
+      if (!executor.contains(result)) searchResultList.add(result);
+    }
+    return searchResultList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoListToSearchPhrasesUz(
+      List<WordAndPhrasesAndTranslateModel>? translateModel, String searchText, String type) {
+    List<SearchResultUzModel> searchResultUzList = [];
+
+    for (var element in translateModel!) {
+      mapWordDtoToSearchUzResultForPhrase(element, type, searchText).forEach((element) {
+        searchResultUzList.add(element);
+      });
+    }
+
+    return searchResultUzList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoToSearchUzResultForPhrase(
+      WordAndPhrasesAndTranslateModel model, String type, String searchText) {
+    List<SearchResultUzModel> searchResultList = [];
+
+    if (model.word!.startsWith(searchText) &&
+        model.word![0] == searchText[0] &&
+        model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
+        model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
+      var result = SearchResultUzModel(
+          id: model.id,
+          word: model.word ?? "",
+          type: type,
+          wordClass: model.wordClass,
+          star: model.word == searchText ? 3 : 0);
+      searchResultList.add(result);
+    }
+    return searchResultList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoListToSearchUzParentPhrase(
+      List<WordAndParentsAndPhrasesAndTranslateModel>? translateModel, String searchText, String type) {
+    List<SearchResultUzModel> searchResultUzList = [];
+    List<SearchResultUzModel> execute = [];
+
+    for (var element in translateModel!) {
+      mapWordDtoToSearchResultParentTranslate(element, type, searchText, execute).forEach((element) {
+        searchResultUzList.add(element);
+        execute.add(element);
+      });
+    }
+    return searchResultUzList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoToSearchResultParentTranslate(WordAndParentsAndPhrasesAndTranslateModel model,
+      String type, String searchText, List<SearchResultUzModel> execute) {
+    List<SearchResultUzModel> searchResultList = [];
+
+    if (model.word!.startsWith(searchText)) {
+      var result = SearchResultUzModel(
+          id: model.id,
+          word: model.word ?? "",
+          type: type,
+          wordClass: model.wordClass,
+          star: model.word == searchText ? 3 : 0);
+      if (!execute.contains(result)) searchResultList.add(result);
+    }
+    return searchResultList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoListToSearchUzParentPhraseTranslate(
+      List<WordAndParentsAndPhrasesParentPhrasesAndTranslateModel>? translateModel, String searchText, String type) {
+    List<SearchResultUzModel> searchResultUzList = [];
+    List<String> execute = [];
+
+    for (var element in translateModel!) {
+      mapWordDtoToSearchResultParentPhraseTranslate(element, type, searchText, execute).forEach((element) {
+        searchResultUzList.add(element);
+      });
+    }
+    return searchResultUzList;
+  }
+
+  List<SearchResultUzModel> mapWordDtoToSearchResultParentPhraseTranslate(
+      WordAndParentsAndPhrasesParentPhrasesAndTranslateModel model,
+      String type,
+      String searchText,
+      List<String> execute) {
+    List<SearchResultUzModel> searchResultList = [];
+
+    if (model.word!.startsWith(searchText) && (!execute.contains(model.word ?? ""))) {
+      var result = SearchResultUzModel(
+          id: model.id,
+          word: model.word ?? "",
+          type: type,
+          wordClass: model.wordClass,
+          star: model.word == searchText ? 3 : 0);
+      searchResultList.add(result);
     }
     return searchResultList;
   }

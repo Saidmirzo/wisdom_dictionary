@@ -27,7 +27,9 @@ class _Icons extends _AssetsHolder {
 
   String get bookOutline => '$basePath/book_outline.svg';
 
-  String get changeLang => '$basePath/change_lan.svg';
+  String get uzToEn => '$basePath/uz_to_en.svg';
+
+  String get enToUz => '$basePath/en_to_uz.svg';
 
   String get crossClean => '$basePath/clear.svg';
 

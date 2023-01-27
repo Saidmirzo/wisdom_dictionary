@@ -14,6 +14,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.isSearch = false,
     required this.leadingIcon,
     this.onChange,
+    this.focus = false,
+    this.focusNode,
   });
 
   final String title;
@@ -21,6 +23,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Function(String text)? onChange;
   final String leadingIcon;
   bool isSearch;
+  bool focus;
+  FocusNode? focusNode;
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -35,17 +39,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   @override
   void initState() {
-    // controller.addListener(() {
-    //   if (widget.onChange != null) {
-    //     if (controller.text.isNotEmpty) {
-    //       hasText = true;
-    //     } else {
-    //       hasText = false;
-    //     }
-    //     setState(() {});
-    //     widget.onChange!(controller.text);
-    //   }
-    // });
     super.initState();
   }
 
@@ -90,6 +83,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 margin: EdgeInsets.all(14.r),
                 decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
                 child: TextField(
+                  autofocus: widget.focus,
+                  focusNode: widget.focusNode,
                   style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
                   cursorHeight: 19.h,
                   controller: controller,

@@ -27,18 +27,38 @@ class SearchPageViewModel extends BaseViewModel {
   String initTag = 'initTag';
   String searchTag = 'searchTag';
   String searchText = '';
+  String searchLangMode = '';
+  String searchLangKey = "searchLangKey";
+
+  getSearchLanguageMode() async {
+    searchLangMode = preferenceHelper.getString(searchLangKey, "en");
+  }
+
+  setSearchLanguageMode() {
+    if (searchLangMode == "en") {
+      searchLangMode = "uz";
+    } else {
+      searchLangMode = "en";
+    }
+    preferenceHelper.putString(searchLangKey, searchLangMode);
+    notifyListeners();
+  }
 
   void searchByWord(String searchText) {
     safeBlock(
       () async {
         this.searchText = searchText;
         if (searchText.isNotEmpty) {
-          await searchRepository.searchByWord(searchText.toString());
+          if (searchLangMode == 'en') {
+            await searchRepository.searchByWord(searchText.toString());
+          } else {
+            await searchRepository.searchByUzWord(searchText.toString());
+          }
         } else {
-          await searchRepository.cleanList();
+          await searchRepository.cleanList(searchLangMode);
           init();
         }
-        if (searchRepository.searchResultList.isNotEmpty) {
+        if (searchRepository.searchResultList.isNotEmpty || searchRepository.searchResultUzList.isNotEmpty) {
           setSuccess(tag: searchTag);
         }
       },
@@ -51,6 +71,7 @@ class SearchPageViewModel extends BaseViewModel {
       () async {
         recentList.clear();
         var result = await getRecentHistory();
+        await getSearchLanguageMode();
         if (result.isNotEmpty) {
           recentList.addAll(result);
           setSuccess(tag: initTag);
@@ -93,17 +114,30 @@ class SearchPageViewModel extends BaseViewModel {
     }
     _recentList.insert(0, recent);
     var json = jsonEncode(_recentList);
-    preferenceHelper.putString(Constants.KEY_RECENT, json);
+    if (searchLangMode == "en") {
+      preferenceHelper.putString(Constants.KEY_RECENT, json);
+    } else {
+      preferenceHelper.putString(Constants.KEY_RECENT_UZ, json);
+    }
   }
 
   void cleanHistory() {
-    preferenceHelper.putString(Constants.KEY_RECENT, "");
+    if (searchLangMode == 'en') {
+      preferenceHelper.putString(Constants.KEY_RECENT, "");
+    } else {
+      preferenceHelper.putString(Constants.KEY_RECENT_UZ, "");
+    }
     init();
   }
 
   Future<List<RecentModel>> getRecentHistory() async {
     List<RecentModel> newList = [];
-    var json = preferenceHelper.getString(Constants.KEY_RECENT, "");
+    var json = "";
+    if (searchLangMode == 'uz') {
+      json = preferenceHelper.getString(Constants.KEY_RECENT, "");
+    } else {
+      json = preferenceHelper.getString(Constants.KEY_RECENT_UZ, "");
+    }
     if (json.isNotEmpty) {
       List<dynamic> jsonList = jsonDecode(json);
       List<RecentModel> list = List<RecentModel>.from(jsonList.map((e) => RecentModel.fromJson(e)));

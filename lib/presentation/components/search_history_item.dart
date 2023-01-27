@@ -10,11 +10,13 @@ class SearchHistoryItem extends StatelessWidget {
     super.key,
     required this.firstText,
     required this.secondText,
+    this.thirdText,
     required this.onTap,
   });
 
   final String firstText;
   final String secondText;
+  final String? thirdText;
   final Function() onTap;
 
   @override
@@ -32,18 +34,24 @@ class SearchHistoryItem extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 34.w),
-                  child: RichText(
-                    text: TextSpan(
-                      style: AppTextStyle.font14W500Normal
-                          .copyWith(color: AppColors.darkGray),
-                      text: firstText,
-                      children: [
-                        TextSpan(
-                            text: '   $secondText',
-                            style: AppTextStyle.font14W500Normal
-                                .copyWith(color: AppColors.paleBlue)),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                          text: firstText,
+                          children: [
+                            TextSpan(
+                                text: '   $secondText',
+                                style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleBlue)),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        thirdText ?? "",
+                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(

@@ -24,6 +24,8 @@ class LocalViewModel extends BaseViewModel {
   bool isSubSub = false;
   bool isFinal = false;
 
+  FocusNode focusNode = FocusNode();
+
   CatalogModel speakingCatalogModel = CatalogModel();
 
   GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
@@ -34,6 +36,9 @@ class LocalViewModel extends BaseViewModel {
   changePageIndex(int index) {
     if (index < 5) {
       currentIndex.value = index;
+    }
+    if (index == 2) {
+      focusNode.requestFocus();
     }
     notifyListeners();
     pageController.animateTo(
@@ -54,7 +59,9 @@ class LocalViewModel extends BaseViewModel {
     } else {
       badgeCount.value = how;
     }
-    cartKey.currentState!.runCartAnimation((badgeCount.value).toString(), );
+    cartKey.currentState!.runCartAnimation(
+      (badgeCount.value).toString(),
+    );
     // notifyListeners();
   }
 }

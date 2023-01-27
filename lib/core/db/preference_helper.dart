@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceHelper {
+
   String db = "db";
   String name = "waio";
   String index = "index";
