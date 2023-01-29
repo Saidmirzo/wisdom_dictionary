@@ -30,6 +30,11 @@ dependencies:
   connectivity_plus: ^3.0.2
   swipe_refresh: ^1.0.2
   flutter_widget_from_html: ^0.9.1
+  translator: ^0.1.7
+  flutter_tts: ^3.6.3
+  clipboard: ^0.1.3
+  speech_to_text: ^6.1.1
+  lottie: ^2.2.0
   # path_provider: ^2.0.11
   # path: ^1.8.3
   expandable: ^5.0.1
@@ -63,6 +68,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lottie/
     - fonts/
     - assets/waio_dictionary.db
 
