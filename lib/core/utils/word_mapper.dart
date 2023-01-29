@@ -182,12 +182,9 @@ class WordMapper {
         model.word![0] == searchText[0] &&
         model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
         model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
-      var result = SearchResultUzModel(
-          id: model.id,
-          word: model.word ?? "",
-          type: type,
-          wordClass: model.wordClass,
-          star: model.word == searchText ? 3 : 0);
+      var star = model.word == searchText ? int.parse(model.star!) + 10 : 0;
+      var result =
+          SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
       if (!executor.contains(result)) searchResultList.add(result);
     }
     return searchResultList;
@@ -216,12 +213,9 @@ class WordMapper {
         model.word![0] == searchText[0] &&
         model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
         model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
-      var result = SearchResultUzModel(
-          id: model.id,
-          word: model.word ?? "",
-          type: type,
-          wordClass: model.wordClass,
-          star: model.word == searchText ? 3 : 0);
+      var star = model.word == searchText ? int.parse(model.star!) + 10 : 0;
+      var result =
+          SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
       if (!executor.contains(result)) searchResultList.add(result);
     }
     return searchResultList;
@@ -248,12 +242,9 @@ class WordMapper {
         model.word![0] == searchText[0] &&
         model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
         model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
-      var result = SearchResultUzModel(
-          id: model.id,
-          word: model.word ?? "",
-          type: type,
-          wordClass: model.wordClass,
-          star: model.word == searchText ? 3 : 0);
+      var star = model.word == searchText ? model.pStar ?? 0 + 10 : 0;
+      var result =
+          SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
       searchResultList.add(result);
     }
     return searchResultList;
@@ -278,12 +269,9 @@ class WordMapper {
     List<SearchResultUzModel> searchResultList = [];
 
     if (model.word!.startsWith(searchText)) {
-      var result = SearchResultUzModel(
-          id: model.id,
-          word: model.word ?? "",
-          type: type,
-          wordClass: model.wordClass,
-          star: model.word == searchText ? 3 : 0);
+      var star = model.word == searchText ? model.pStar ?? 0 + 10 : 0;
+      var result =
+          SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
       if (!execute.contains(result)) searchResultList.add(result);
     }
     return searchResultList;
@@ -310,12 +298,9 @@ class WordMapper {
     List<SearchResultUzModel> searchResultList = [];
 
     if (model.word!.startsWith(searchText) && (!execute.contains(model.word ?? ""))) {
-      var result = SearchResultUzModel(
-          id: model.id,
-          word: model.word ?? "",
-          type: type,
-          wordClass: model.wordClass,
-          star: model.word == searchText ? 3 : 0);
+      var star = model.word == searchText ? model.star ?? 0 + 10 : 0;
+      var result =
+          SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
       searchResultList.add(result);
     }
     return searchResultList;

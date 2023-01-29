@@ -45,12 +45,14 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
           children: [
             //Clean  button
             Visibility(
-              visible: viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty,
+              visible: (viewModel.recentList.isNotEmpty && viewModel.searchLangMode == 'en') ||
+                  (viewModel.recentListUz.isNotEmpty && viewModel.searchLangMode == 'uz') &&
+                      viewModel.searchText.isEmpty,
               child: SearchCleanButton(
                 onTap: () => viewModel.cleanHistory(),
               ),
             ),
-            // TODO: Recent searched lists for english words
+            // Recent searched lists for english words
             Visibility(
               visible:
                   viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty && viewModel.searchLangMode == 'en',
@@ -95,18 +97,18 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                     )
                   : SizedBox(height: 120.h, child: const LoadingWidget()),
             ),
-            // TODO: Recent searched lists for Uzbek words
+            // Recent searched lists for Uzbek words
             Visibility(
               visible:
-                  viewModel.recentList.isNotEmpty && viewModel.searchText.isEmpty && viewModel.searchLangMode == 'uz',
+                  viewModel.recentListUz.isNotEmpty && viewModel.searchText.isEmpty && viewModel.searchLangMode == 'uz',
               child: Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(bottom: 130),
                   physics: const BouncingScrollPhysics(),
-                  itemCount: viewModel.recentList.length,
+                  itemCount: viewModel.recentListUz.length,
                   itemBuilder: (BuildContext context, int index) {
-                    var itemRecent = viewModel.recentList[index];
+                    var itemRecent = viewModel.recentListUz[index];
                     return SearchHistoryItem(
                       firstText: itemRecent.word ?? "unknown",
                       secondText: itemRecent.wordClass ?? "",
@@ -134,7 +136,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                           return SearchWordItem(
                             firstText: item.word ?? "unknown",
                             secondText: item.wordClass ?? "",
-                            thirdText: "some same words appear here",
+                            thirdText: item.star.toString(),
                             onTap: () {},
                           );
                         },

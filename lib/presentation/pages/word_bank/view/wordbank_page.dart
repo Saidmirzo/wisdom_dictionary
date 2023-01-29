@@ -34,9 +34,9 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
-          isSearch: true,
+          // isSearch: true,
           title: 'Word bank',
-          onChange: (value) => viewModel.getWordBankList(value),
+          // onChange: (value) => viewModel.getWordBankList(value),
         ),
         // body: const EmptyJar(),
         body: viewModel.isSuccess(tag: viewModel.getWordBankListTag) &&

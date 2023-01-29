@@ -60,7 +60,9 @@ class SearchRepositoryImpl extends SearchRepository {
     _searchUzResult.addAll(searchPhraseParentUzList);
     _searchUzResult.addAll(searchPhraseDtoParentPhraseTranslate1List);
 
-    // todo star bo'yicha so'rt qilish kerak
+    _searchUzResult.sort((a, b) => (b.star ?? 0).compareTo((a.star ?? 0)));
+
+    // _searchUzResult.reversed;
   }
 
   @override

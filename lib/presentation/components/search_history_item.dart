@@ -35,6 +35,8 @@ class SearchHistoryItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 34.w),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       RichText(
                         text: TextSpan(

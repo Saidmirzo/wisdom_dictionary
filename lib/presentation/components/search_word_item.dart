@@ -34,8 +34,11 @@ class SearchWordItem extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(left: 34.w),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       RichText(
+                        overflow: TextOverflow.ellipsis,
                         text: TextSpan(
                           style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
                           text: firstText,
@@ -46,10 +49,11 @@ class SearchWordItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(
-                        thirdText ?? "",
-                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
-                      ),
+                      // todo : qo'shimcha o'zbekcha manolar qo'shish va searchni sortini to'g'irlash
+                      // Text(
+                      //   thirdText ?? "",
+                      //   style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                      // ),
                     ],
                   ),
                 ),

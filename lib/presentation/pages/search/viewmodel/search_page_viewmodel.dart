@@ -24,14 +24,18 @@ class SearchPageViewModel extends BaseViewModel {
   final DBHelper dbHelper;
   final LocalViewModel localViewModel;
   List<RecentModel> recentList = [];
+  List<RecentModel> recentListUz = [];
   String initTag = 'initTag';
   String searchTag = 'searchTag';
   String searchText = '';
-  String searchLangMode = '';
+  String searchLangMode = 'en';
   String searchLangKey = "searchLangKey";
 
   getSearchLanguageMode() async {
-    searchLangMode = preferenceHelper.getString(searchLangKey, "en");
+    if(searchLangMode.isEmpty) {
+      searchLangMode = preferenceHelper.getString(searchLangKey, "en");
+      // notifyListeners();
+    }
   }
 
   setSearchLanguageMode() {
@@ -41,6 +45,7 @@ class SearchPageViewModel extends BaseViewModel {
       searchLangMode = "en";
     }
     preferenceHelper.putString(searchLangKey, searchLangMode);
+    // init();
     notifyListeners();
   }
 
@@ -70,10 +75,14 @@ class SearchPageViewModel extends BaseViewModel {
     safeBlock(
       () async {
         recentList.clear();
-        var result = await getRecentHistory();
         await getSearchLanguageMode();
+        var result = await getRecentHistory();
         if (result.isNotEmpty) {
-          recentList.addAll(result);
+          if (searchLangMode == 'en') {
+            recentList.addAll(result);
+          } else {
+            recentListUz.addAll(result);
+          }
           setSuccess(tag: initTag);
         }
       },
@@ -133,7 +142,7 @@ class SearchPageViewModel extends BaseViewModel {
   Future<List<RecentModel>> getRecentHistory() async {
     List<RecentModel> newList = [];
     var json = "";
-    if (searchLangMode == 'uz') {
+    if (searchLangMode == 'en') {
       json = preferenceHelper.getString(Constants.KEY_RECENT, "");
     } else {
       json = preferenceHelper.getString(Constants.KEY_RECENT_UZ, "");
