@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'config/theme/themes.dart';
 import 'core/di/app_locator.dart';
 import 'presentation/routes/routes.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupConfigs(() async {
@@ -19,7 +21,22 @@ void main() async {
     setupLocator();
     await locator<DBHelper>().init();
     await locator<SharedPreferenceHelper>().getInstance();
+    
+
     runApp(const MyApp());
+    AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+          channelGroupKey: "channelGroupKey",
+          channelKey: "channelKey",
+          channelName: "channelName",
+          channelDescription: "channelDescription",
+          defaultColor: Colors.green,
+          ledColor: Colors.lime,
+        ),
+      ],
+    );
   }, appVersion: '1.0.0');
 }
 
@@ -29,7 +46,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     //     statusBarColor: Colors.transparent,
     //     systemNavigationBarIconBrightness: Brightness.dark,
@@ -52,7 +68,6 @@ class MyApp extends StatelessWidget {
           //   GlobalCupertinoLocalizations.delegate,
           // ],
           onGenerateRoute: (setting) => Routes.generateRoutes(setting),
-
         );
       },
     );
