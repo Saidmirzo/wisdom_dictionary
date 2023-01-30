@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/core/di/app_locator.dart';
@@ -45,9 +44,9 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
           children: [
             //Clean  button
             Visibility(
-              visible: (viewModel.recentList.isNotEmpty && viewModel.searchLangMode == 'en') ||
-                  (viewModel.recentListUz.isNotEmpty && viewModel.searchLangMode == 'uz') &&
-                      viewModel.searchText.isEmpty,
+              visible: ((viewModel.recentList.isNotEmpty && viewModel.searchLangMode == 'en') ||
+                      (viewModel.recentListUz.isNotEmpty && viewModel.searchLangMode == 'uz')) &&
+                  viewModel.searchText.isEmpty,
               child: SearchCleanButton(
                 onTap: () => viewModel.cleanHistory(),
               ),
@@ -112,7 +111,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                     return SearchHistoryItem(
                       firstText: itemRecent.word ?? "unknown",
                       secondText: itemRecent.wordClass ?? "",
-                      thirdText: "Example, kind. of , something",
+                      thirdText: "just same  words appear here",
                       onTap: () {},
                     );
                   },
@@ -136,7 +135,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                           return SearchWordItem(
                             firstText: item.word ?? "unknown",
                             secondText: item.wordClass ?? "",
-                            thirdText: item.star.toString(),
+                            thirdText: item.same != null && item.same!.isNotEmpty ? item.same.toString() : "",
                             onTap: () {},
                           );
                         },

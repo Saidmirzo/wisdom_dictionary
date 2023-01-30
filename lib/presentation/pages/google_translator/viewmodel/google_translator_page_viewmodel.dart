@@ -10,12 +10,17 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:translator/translator.dart';
+import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import '../../../widgets/loading_widget.dart';
 
 class GoogleTranslatorPageViewModel extends BaseViewModel {
-  GoogleTranslatorPageViewModel({required super.context});
-  final translator = GoogleTranslator();
+  GoogleTranslatorPageViewModel({
+    required super.context,
+    required this.localViewModel,
+  });
 
+  final translator = GoogleTranslator();
+  final LocalViewModel localViewModel;
   FlutterTts flutterTts = FlutterTts();
   bool isSpeaking = false;
   bool isListening = false;
@@ -31,6 +36,10 @@ class GoogleTranslatorPageViewModel extends BaseViewModel {
     }
     setSuccess();
     return translated;
+  }
+
+  goMain() {
+    localViewModel.changePageIndex(0);
   }
 
   Future<void> readText(String text) async {
@@ -73,7 +82,7 @@ class GoogleTranslatorPageViewModel extends BaseViewModel {
 
   void checkNetwork() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi) {
+    if (connectivityResult != ConnectivityResult.mobile && connectivityResult != ConnectivityResult.wifi) {
       showTopSnackBar(
         Overlay.of(context!)!,
         const CustomSnackBar.error(message: "Not connected to the Internet"),

@@ -86,10 +86,7 @@ class WordMapper {
         model.map(
           (e) {
             var phraseWord = "";
-            if (e.pWord!.startsWith(search) &&
-                (e.pWord![0] == search[0] ||
-                    e.pWord![0].toUpperCase() == search[0] ||
-                    e.pWord![0].toLowerCase() == search[0])) {
+            if (e.pWord!.toLowerCase().startsWith(search.toLowerCase())) {
               phraseWord = e.pWord.toString();
             }
             return SearchResultModel(
@@ -178,10 +175,7 @@ class WordMapper {
       WordAndWordsUzModel model, String type, String searchText, List<SearchResultUzModel> executor) {
     List<SearchResultUzModel> searchResultList = [];
 
-    if (model.word!.startsWith(searchText) &&
-        model.word![0] == searchText[0] &&
-        model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
-        model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
+    if (model.word!.toLowerCase().startsWith(searchText.toLowerCase())) {
       var star = model.word == searchText ? int.parse(model.star!) + 10 : 0;
       var result =
           SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
@@ -209,10 +203,7 @@ class WordMapper {
       WordsAndParentsAndWordsUzModel model, String type, String searchText, List<SearchResultUzModel> executor) {
     List<SearchResultUzModel> searchResultList = [];
 
-    if (model.word!.startsWith(searchText) &&
-        model.word![0] == searchText[0] &&
-        model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
-        model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
+    if (model.word!.toLowerCase().startsWith(searchText.toLowerCase())) {
       var star = model.word == searchText ? int.parse(model.star!) + 10 : 0;
       var result =
           SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
@@ -238,10 +229,7 @@ class WordMapper {
       WordAndPhrasesAndTranslateModel model, String type, String searchText) {
     List<SearchResultUzModel> searchResultList = [];
 
-    if (model.word!.startsWith(searchText) &&
-        model.word![0] == searchText[0] &&
-        model.word![0].toLowerCase() == searchText[0].toLowerCase() &&
-        model.word![0].toUpperCase() == searchText[0].toUpperCase()) {
+    if (model.word!.toLowerCase().startsWith(searchText.toLowerCase())) {
       var star = model.word == searchText ? model.pStar ?? 0 + 10 : 0;
       var result =
           SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
@@ -268,7 +256,7 @@ class WordMapper {
       String type, String searchText, List<SearchResultUzModel> execute) {
     List<SearchResultUzModel> searchResultList = [];
 
-    if (model.word!.startsWith(searchText)) {
+    if (model.word!.toLowerCase().startsWith(searchText.toLowerCase())) {
       var star = model.word == searchText ? model.pStar ?? 0 + 10 : 0;
       var result =
           SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);
@@ -297,7 +285,7 @@ class WordMapper {
       List<String> execute) {
     List<SearchResultUzModel> searchResultList = [];
 
-    if (model.word!.startsWith(searchText) && (!execute.contains(model.word ?? ""))) {
+    if (model.word!.toLowerCase().startsWith(searchText.toLowerCase()) && (!execute.contains(model.word ?? ""))) {
       var star = model.word == searchText ? model.star ?? 0 + 10 : 0;
       var result =
           SearchResultUzModel(id: model.id, word: model.word ?? "", type: type, wordClass: model.wordClass, star: star);

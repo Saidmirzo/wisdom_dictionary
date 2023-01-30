@@ -70,7 +70,10 @@ class DBHelper {
 
       await File(path).writeAsBytes(bytes, flush: true);
     } else {}
-    database = await openDatabase(path, readOnly: false,);
+    database = await openDatabase(
+      path,
+      readOnly: false,
+    );
   }
 
   Future saveAllWords(List<WordEntityModel> wordEntityModel) async {
@@ -348,7 +351,7 @@ class DBHelper {
         var responseAll = await database.rawQuery("SELECT * FROM word_entity WHERE id=$id LIMIT 1");
         var word = responseAll.isNotEmpty ? WordModel.fromJson(responseAll.first) : null;
 
-          var responseWordUz = await database.rawQuery("SELECT * FROM words_uz WHERE word_id=$id");
+        var responseWordUz = await database.rawQuery("SELECT * FROM words_uz WHERE word_id=$id");
         var wordWordUz = responseWordUz.isNotEmpty
             ? List<WordsUzModel>.from(responseWordUz.map((e) => WordsUzModel.fromJson(e)))
             : null;
@@ -566,7 +569,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,p.star,wu.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN words_uz wu ON p.id=wu.word_id AND wu.word LIKE '$parents%' order by w.word COLLATE NOCASE asc  limit 40");
+            "SELECT w.id,w.word as word_class,p.star,wu.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN words_uz wu ON p.id=wu.word_id AND wu.word LIKE '$parents%' order by w.word COLLATE NOCASE asc limit 40");
         var wordsAndParentsAndWordsUzModel =
             List<WordsAndParentsAndWordsUzModel>.from(response.map((e) => WordsAndParentsAndWordsUzModel.fromJson(e)));
         return wordsAndParentsAndWordsUzModel;
@@ -597,7 +600,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,p_ph.star,ppt.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id INNER JOIN parent_phrases p_ph ON ph.p_id=p_ph.phrase_id INNER JOIN parent_phrases_translate ppt ON p_ph.id=ppt.parent_phrase_id AND ppt.word LIKE '$parents%' order by  w.word COLLATE NOCASE asc  limit 40");
+            "SELECT w.id,w.word as word_class,p_ph.star,ppt.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id INNER JOIN parent_phrases p_ph ON ph.p_id=p_ph.phrase_id INNER JOIN parent_phrases_translate ppt ON p_ph.id=ppt.parent_phrase_id AND ppt.word LIKE '$parents%' order by  w.word COLLATE NOCASE asc limit 40");
         var wordAndParentsAndPhrasesParentPhrasesAndTranslateModel =
             List<WordAndParentsAndPhrasesParentPhrasesAndTranslateModel>.from(
                 response.map((e) => WordAndParentsAndPhrasesParentPhrasesAndTranslateModel.fromJson(e)));
@@ -613,7 +616,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,w.star,wu.word as word FROM word_entity w INNER JOIN words_uz wu ON w.id=wu.word_id and wu.word LIKE '$word%' ORDER BY wu.word COLLATE NOCASE asc,star desc");
+            "SELECT w.id,w.word as word_class,w.star,wu.word as word FROM word_entity w INNER JOIN words_uz wu ON w.id=wu.word_id and wu.word LIKE '$word%' ORDER BY wu.word COLLATE NOCASE asc,star desc LIMIT 40");
         var wordAndWordsUzModel = List<WordAndWordsUzModel>.from(response.map((e) => WordAndWordsUzModel.fromJson(e)));
         return wordAndWordsUzModel;
       }
@@ -623,11 +626,19 @@ class DBHelper {
     return null;
   }
 
+  Future<List<String>> wordsUz(int id) async {
+    var responseWordUz = await database.rawQuery("SELECT word FROM words_uz WHERE word_id=$id");
+    var wordWordUz = responseWordUz.isNotEmpty
+        ? List<String>.from(responseWordUz.map((e) => WordsUzModel.fromJson(e).word ?? ""))
+        : [] as List<String>;
+    return wordWordUz;
+  }
+
   Future<List<WordAndPhrasesAndTranslateModel>?> searchByPhrasesUz1(String phrases) async {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,p.p_star,pt.word as word FROM word_entity w INNER JOIN phrases p ON w.id=p.p_word_id INNER JOIN phrases_translate pt ON p.p_id=pt.phrase_id AND p.p_word LIKE '$phrases%' order by w.word COLLATE NOCASE asc,w.star desc limit 41");
+            "SELECT w.id,w.word as word_class,p.p_star,pt.word as word FROM word_entity w INNER JOIN phrases p ON w.id=p.p_word_id INNER JOIN phrases_translate pt ON p.p_id=pt.phrase_id AND p.p_word LIKE '$phrases%' order by w.word COLLATE NOCASE asc,w.star desc limit 40");
         var wordAndPhrasesAndTranslateModel = List<WordAndPhrasesAndTranslateModel>.from(
             response.map((e) => WordAndPhrasesAndTranslateModel.fromJson(e)));
         return wordAndPhrasesAndTranslateModel;
@@ -654,7 +665,7 @@ class DBHelper {
   Future<void> saveToWordBank(WordBankModel wordBankModel) async {
     try {
       if (database.isOpen) {
-            await database.insert(tableWordBank, wordBankModel.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+        await database.insert(tableWordBank, wordBankModel.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
       }
     } catch (e) {
       log("saveToWordBank", error: e.toString());

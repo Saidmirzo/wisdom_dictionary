@@ -572,45 +572,55 @@ class Ad {
 }
 
 /// id : 1
+/// word : ""
 /// image : ""
 
-ImageT imageFromJson(String str) => ImageT.fromJson(json.decode(str));
+ImageT imageTFromJson(String str) => ImageT.fromJson(json.decode(str));
 
-String imageToJson(ImageT data) => json.encode(data.toJson());
+String imageTToJson(ImageT data) => json.encode(data.toJson());
 
 class ImageT {
   ImageT({
     int? id,
+    String? word,
     String? image,
   }) {
     _id = id;
+    _word = word;
     _image = image;
   }
 
   ImageT.fromJson(dynamic json) {
     _id = json['id'];
+    _word = json['word'];
     _image = json['image'];
   }
 
   int? _id;
+  String? _word;
   String? _image;
 
   ImageT copyWith({
     int? id,
+    String? word,
     String? image,
   }) =>
       ImageT(
         id: id ?? _id,
+        word: word ?? _word,
         image: image ?? _image,
       );
 
   int? get id => _id;
+
+  String? get word => _word;
 
   String? get image => _image;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
+    map['word'] = _word;
     map['image'] = _image;
     return map;
   }

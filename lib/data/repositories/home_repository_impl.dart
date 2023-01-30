@@ -29,7 +29,7 @@ class HomeRepositoryImpl extends HomeRepository {
         Collocation(id: getGrammar!.gId ?? 0, worden: Worden(id: getGrammar.id, word: getGrammar.word.toString()));
 
     var getImage = await dbHelper.getImage();
-    var timeLineImage = ImageT(id: getImage!.id ?? 0, image: getImage.image.toString());
+    var timeLineImage = ImageT(id: getImage!.id ?? 0, image: getImage.image.toString(), word: getImage.word);
 
     var getCollection = await dbHelper.getCollocation();
     var timeLineCollection = Collocation(

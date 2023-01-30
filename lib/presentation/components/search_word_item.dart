@@ -50,10 +50,11 @@ class SearchWordItem extends StatelessWidget {
                         ),
                       ),
                       // todo : qo'shimcha o'zbekcha manolar qo'shish va searchni sortini to'g'irlash
-                      // Text(
-                      //   thirdText ?? "",
-                      //   style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
-                      // ),
+                      Text(
+                        thirdText ?? "",
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                      ),
                     ],
                   ),
                 ),

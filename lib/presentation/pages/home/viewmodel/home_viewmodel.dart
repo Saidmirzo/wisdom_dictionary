@@ -15,7 +15,6 @@ import 'package:wisdom/domain/repositories/home_repository.dart';
 import '../../../../core/di/app_locator.dart';
 import '../../../../data/model/timeline_model.dart';
 import '../../../../domain/repositories/word_entity_repository.dart';
-import '../../../widgets/loading_widget.dart';
 
 class HomeViewModel extends BaseViewModel {
   HomeViewModel({required super.context});

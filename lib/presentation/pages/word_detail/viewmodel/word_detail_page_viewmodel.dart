@@ -234,7 +234,11 @@ class WordDetailPageViewModel extends BaseViewModel {
   }
 
   goBackToSearch() {
-    localViewModel.changePageIndex(2);
+    if (localViewModel.isFromMain) {
+      localViewModel.changePageIndex(0);
+    } else {
+      localViewModel.changePageIndex(2);
+    }
   }
 
   @override

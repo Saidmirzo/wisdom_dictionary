@@ -5,6 +5,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:wisdom/config/constants/urls.dart';
+import 'package:wisdom/data/model/recent_model.dart';
 import 'package:wisdom/presentation/pages/collocation/view/collocation_details_page.dart';
 import 'package:wisdom/presentation/pages/culture/view/culture_detail_page.dart';
 import 'package:wisdom/presentation/pages/difference/view/difference_detail_page.dart';
@@ -213,7 +214,11 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                             title: 'Do you know this ?',
                             onTap: () {
-                              // viewModel.localViewModel.changeIndex(7);
+                              viewModel.localViewModel.wordDetailModel = RecentModel(
+                                  id: viewModel.homeRepository.timelineModel.image!.id!,
+                                  word: viewModel.homeRepository.timelineModel.image!.word,
+                                  type: 'word');
+                              viewModel.localViewModel.changePageIndex(18);
                             },
                             isInkWellEnable: true,
                             child: Center(

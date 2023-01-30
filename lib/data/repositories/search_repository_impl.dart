@@ -52,6 +52,11 @@ class SearchRepositoryImpl extends SearchRepository {
         await dbHelper.searchWordAndParentsAndPhrasesParentPhrasesAndTranslate(searchText);
     var searchPhraseDtoParentPhraseTranslate1List = mapper.mapWordDtoListToSearchUzParentPhraseTranslate(
         searchPhraseDtoParentPhraseTranslate1, searchText, "phrases");
+// TODO: ozbekcha sinoinim qo'shish
+    // for (var element in searchByWordUzList) {
+    //   var sameWords = await dbHelper.wordsUz(element.id!);
+    //   element.same = sameWords.isNotEmpty ? sameWords : [""];
+    // }
 
     _searchUzResult.clear();
     _searchUzResult.addAll(searchByWordUzList);
@@ -62,7 +67,7 @@ class SearchRepositoryImpl extends SearchRepository {
 
     _searchUzResult.sort((a, b) => (b.star ?? 0).compareTo((a.star ?? 0)));
 
-    // _searchUzResult.reversed;
+    print(_searchUzResult);
   }
 
   @override
