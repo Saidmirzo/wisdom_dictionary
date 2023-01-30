@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
@@ -32,7 +33,7 @@ class Locked extends StatelessWidget {
           ),
           onPressed: () {},
           label: Text(
-            'Pro versiyani sotib oling',
+            "subscribe_plan".tr(),
             style: AppTextStyle.font14W500Normal.copyWith(
               color: AppColors.blue,
             ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -35,7 +36,7 @@ class SpeakingPage extends ViewModelBuilderWidget<SpeakingPageViewModel> {
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
           isSearch: false,
-          title: "Speaking",
+          title: "speaking".tr(),
         ),
         body: viewModel.isSuccess(tag: viewModel.getSpeakingTag)
             ? ListView.builder(

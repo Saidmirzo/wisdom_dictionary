@@ -11,6 +11,7 @@ import 'package:wisdom/domain/repositories/category_repository.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 
+
 final locator = JbazaLocator.instance;
 
 void setupLocator() {

@@ -1,6 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
@@ -21,13 +20,13 @@ class EmptyJar extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 50.h, bottom: 16.h),
             child: Text(
-              'Lug\'at daftari bo\'sh',
+              "no_entry".tr(),
               style: AppTextStyle.font28W600Normal
                   .copyWith(color: AppColors.darkGray),
             ),
           ),
           Text(
-            'Sizda kerakli so\'zlar bo\'limi bo\'sh,\n iltimos biror so\'zni qo\'shing!',
+            "no_entry_def".tr(),
             textAlign: TextAlign.center,
             style: AppTextStyle.font17W400Normal
                 .copyWith(color: AppColors.paleGray.withOpacity(0.57)),

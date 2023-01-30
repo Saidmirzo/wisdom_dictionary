@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,7 +21,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Shaxsiy kabinet',
+        title: "personal_cabinet".tr(),
         onTap: () => viewModel.pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),

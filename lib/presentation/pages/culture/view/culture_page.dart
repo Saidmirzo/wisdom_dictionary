@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
@@ -26,7 +27,7 @@ class CulturePage extends ViewModelBuilderWidget<CulturePageViewModel> {
         drawerEnableOpenDragGesture: false,
         backgroundColor: const Color(0XFFF6F9FF),
         appBar: CustomAppBar(
-          title: 'Culture',
+          title: 'culture'.tr(),
           onTap: () => viewModel.goMain(),
           leadingIcon: Assets.icons.arrowLeft,
         ),

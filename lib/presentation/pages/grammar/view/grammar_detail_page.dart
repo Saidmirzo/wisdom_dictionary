@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -12,7 +13,10 @@ import '../../../../config/constants/app_decoration.dart';
 import '../../../../config/constants/assets.dart';
 import '../../../widgets/custom_app_bar.dart';
 
+// ignore: must_be_immutable
 class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewModel> {
+  GrammarDetailPage({super.key});
+
   @override
   void onViewModelReady(GrammarDetailPageViewModel viewModel) {
     viewModel.getGrammarDetails();
@@ -30,7 +34,7 @@ class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewMode
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goBack(),
           isSearch: false,
-          title: "Grammar",
+          title: "grammar".tr(),
         ),
         body: ListView(
           padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 75.h),

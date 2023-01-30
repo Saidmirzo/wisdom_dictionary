@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -34,7 +35,7 @@ class DifferencePage extends ViewModelBuilderWidget<DifferencePageViewModel> {
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
           isSearch: false,
-          title: "Differences",
+          title: "differences".tr(),
         ),
         body: viewModel.isSuccess(tag: viewModel.getDifferenceTag)
             ? ListView.builder(

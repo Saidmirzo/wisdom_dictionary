@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,7 +68,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               preferredSize: Size.fromHeight(70.h),
               child: Container(
                 height: 47.h,
-                margin: EdgeInsets.all(14),
+                margin: const EdgeInsets.all(14),
                 decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
                 child: TextFormField(
                   style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
@@ -80,7 +81,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       width: 18.h,
                       fit: BoxFit.scaleDown,
                     ),
-                    hintText: 'Search',
+                    hintText: 'search_hint'.tr(),
                     border: InputBorder.none,
                     hintStyle: AppTextStyle.font12W400Normal.copyWith(
                       color: AppColors.paleBlue.withOpacity(0.5),

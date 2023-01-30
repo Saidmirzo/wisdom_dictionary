@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -36,7 +37,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
   HomeScreen({super.key});
 
   late final List<Widget> pages = [
-    Home(), // 0
+    const Home(), // 0
     ExercisePage(), // 1
     SearchPage(), // 2
     CatalogsPage(), // 3
@@ -77,7 +78,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
 }
 
 class Home extends ViewModelWidget<HomeViewModel> {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
@@ -88,7 +89,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),
         isSearch: false,
-        title: 'Wisdom Dictionary',
+        title: "app_name".tr(),
       ),
       body: SwipeRefresh.adaptive(
         stateStream: viewModel.stream,
@@ -149,7 +150,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                         ),
                         CustomBanner(
-                          title: 'Grammar',
+                          title: 'grammar_label'.tr(),
                           isInkWellEnable: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                           onTap: () {
@@ -165,7 +166,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                         ),
                         CustomBanner(
-                          title: 'Differences',
+                          title: 'differences'.tr(),
                           isInkWellEnable: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                           onTap: () {
@@ -179,7 +180,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                     true, viewModel.homeRepository.timelineModel.difference!.word!),
                                 children: [
                                   TextSpan(
-                                      text: ' or ',
+                                      text: 'or'.tr(),
                                       style: AppTextStyle.font16W500Italic.copyWith(color: AppColors.paleGray)),
                                   TextSpan(
                                       text: viewModel.separateDifference(
@@ -192,7 +193,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                         ),
                         CustomBanner(
                           contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                          title: 'Do you know this ?',
+                          title: "do_you_know".tr(),
                           onTap: () {
                             // viewModel.localViewModel.changeIndex(7);
                           },
@@ -226,7 +227,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                     Padding(
                                       padding: EdgeInsets.only(top: 15.h),
                                       child: Text(
-                                        "oops! no connection",
+                                        "no_internet".tr(),
                                         style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.error),
                                       ),
                                     )
@@ -237,7 +238,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                         ),
                         CustomBanner(
-                          title: 'Thesaurus',
+                          title: 'thesaurus'.tr(),
                           isInkWellEnable: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                           onTap: () {
@@ -251,7 +252,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                         ),
                         CustomBanner(
-                          title: 'Collocation',
+                          title: 'collocation_label'.tr(),
                           isInkWellEnable: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                           onTap: () {
@@ -265,7 +266,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                         ),
                         CustomBanner(
-                          title: 'Metaphor',
+                          title: 'metaphor_label'.tr(),
                           isInkWellEnable: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                           onTap: () {
@@ -279,7 +280,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                         ),
                         CustomBanner(
-                          title: 'Speaking',
+                          title: 'speaking'.tr(),
                           isInkWellEnable: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                           onTap: () {

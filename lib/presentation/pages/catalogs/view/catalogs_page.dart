@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
@@ -25,7 +26,7 @@ class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
           isSearch: true,
-          title: 'Catalogue',
+          title: 'navigation_catalogue'.tr(),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 36),
@@ -35,12 +36,12 @@ class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                CatalogButton(text: 'Grammar', onTap: () => locator<LocalViewModel>().changePageIndex(11)),
-                CatalogButton(text: 'Thesaurus', onTap: () => locator<LocalViewModel>().changePageIndex(12)),
-                CatalogButton(text: 'Differences', onTap: () => locator<LocalViewModel>().changePageIndex(13)),
-                CatalogButton(text: 'Metaphors', onTap: () => locator<LocalViewModel>().changePageIndex(14)),
-                CatalogButton(text: 'Culture', onTap: () => locator<LocalViewModel>().changePageIndex(15)),
-                CatalogButton(text: 'Speaking', onTap: () => locator<LocalViewModel>().changePageIndex(17)),
+                CatalogButton(text: 'grammar'.tr(), onTap: () => locator<LocalViewModel>().changePageIndex(11)),
+                CatalogButton(text: 'thesaurus'.tr(), onTap: () => locator<LocalViewModel>().changePageIndex(12)),
+                CatalogButton(text: 'difference'.tr(), onTap: () => locator<LocalViewModel>().changePageIndex(13)),
+                CatalogButton(text: 'metaphor'.tr(), onTap: () => locator<LocalViewModel>().changePageIndex(14)),
+                CatalogButton(text: 'culture'.tr(), onTap: () => locator<LocalViewModel>().changePageIndex(15)),
+                CatalogButton(text: 'speaking'.tr(), onTap: () => locator<LocalViewModel>().changePageIndex(17)),
               ],
             ),
           ),

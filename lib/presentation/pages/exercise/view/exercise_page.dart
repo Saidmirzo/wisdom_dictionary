@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/assets.dart';
 import '../../../widgets/custom_app_bar.dart';
 
+// ignore: must_be_immutable
 class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
   ExercisePage({super.key});
 
@@ -23,7 +25,7 @@ class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),
         isSearch: true,
-        title: 'Lug\'atlar oynsi',
+        title: "words_page".tr(),
       ),
       // body: const EmptyJar(),
       body: ListView(
@@ -61,7 +63,7 @@ class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Mashq',
+                  'start_exercise'.tr(),
                   style: AppTextStyle.font14W500Normal,
                 ),
               )

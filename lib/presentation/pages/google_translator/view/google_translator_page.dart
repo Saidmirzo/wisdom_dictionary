@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,7 +48,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
       drawerEnableOpenDragGesture: false,
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Translate',
+        title: "translator".tr(),
         onTap: () {},
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -73,7 +74,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
-                              hintText: viewModel.topUzbek ? "O'zbekcha" : "English",
+                              hintText: viewModel.topUzbek ? "uzbek".tr() : "english".tr(),
                               hintStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.lightBlue),
                               border: InputBorder.none,
                             ),
@@ -151,7 +152,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
-                              hintText: viewModel.topUzbek ? "English" : "O'zbekcha",
+                              hintText: viewModel.topUzbek ? "english".tr() : "uzbek".tr(),
                               enabled: false,
                               hintStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.lightBlue),
                               border: InputBorder.none,

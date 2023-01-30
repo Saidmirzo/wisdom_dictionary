@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -33,7 +34,7 @@ class MetaphorDetailPage extends ViewModelBuilderWidget<MetaphorDetailPageViewMo
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goBack(),
           isSearch: false,
-          title: "Metaphor",
+          title: "metaphor".tr(),
         ),
         body: ListView(
           padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 75.h),

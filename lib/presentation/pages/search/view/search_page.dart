@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),
         isSearch: true,
-        title: 'Qidiruvlar oynasi',
+        title: "search_page".tr(),
         onChange: (text) => viewModel.searchByWord(text),
       ),
       // body: const EmptyJar(),

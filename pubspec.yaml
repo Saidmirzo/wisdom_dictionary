@@ -11,10 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # use svg images in this project
-  flutter_svg: ^1.1.6
-  # additional features for this project
+  flutter_localizations:
+    sdk: flutter
+
+  
   intl: ^0.17.0
+  flutter_svg: ^1.1.6
   flutter_screenutil: ^5.5.4
   flutter_zoom_drawer: ^3.0.3
   mask_text_input_formatter: ^2.4.0
@@ -35,14 +37,13 @@ dependencies:
   clipboard: ^0.1.3
   speech_to_text: ^6.1.1
   lottie: ^2.2.0
+  easy_localization: ^3.0.1
   # path_provider: ^2.0.11
   # path: ^1.8.3
 
   cupertino_icons: ^1.0.2
 
-  # Localization
-  #  flutter_localizations:
-  #    sdk: flutter
+  
 
   # state management
   jbaza:
@@ -56,13 +57,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-
   uses-material-design: true
 
   assets:
     - assets/images/
     - assets/icons/
     - assets/lottie/
+    - assets/translations/
     - fonts/
     - assets/waio_dictionary.db
 

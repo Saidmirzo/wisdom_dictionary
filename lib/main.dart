@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,41 +20,45 @@ void main() async {
     setupLocator();
     await locator<DBHelper>().init();
     await locator<SharedPreferenceHelper>().getInstance();
-    runApp(const MyApp());
+    await EasyLocalization.ensureInitialized();
+    runApp(
+      EasyLocalization(
+        supportedLocales: const [Locale('en', 'US'), Locale('uz', 'UZ')],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('en', 'US'),
+        child: const MyApp(),
+      ),
+    );
   }, appVersion: '1.0.0');
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
   static final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  Widget build(BuildContext context) {
+  State<MyApp> createState() => _MyAppState();
+}
 
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //     statusBarColor: Colors.transparent,
-    //     systemNavigationBarIconBrightness: Brightness.dark,
-    //     statusBarBrightness: Brightness.dark,
-    //     statusBarIconBrightness: Brightness.dark));
+class _MyAppState extends State<MyApp> {
+  var widgetKey = GlobalKey();
+  @override
+  Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          title: 'Wisdom Dictionary',
-          debugShowCheckedModeBanner: false,
-          theme: Themes.lightTheme,
-          navigatorKey: navigatorKey,
-          // supportedLocales: const <Locale>[Locale('en', '')],
-          // localizationsDelegates: const [
-          //   GlobalMaterialLocalizations.delegate,
-          //   GlobalWidgetsLocalizations.delegate,
-          //   GlobalCupertinoLocalizations.delegate,
-          // ],
-          onGenerateRoute: (setting) => Routes.generateRoutes(setting),
-
-        );
+              title: 'Wisdom Dictionary',
+              debugShowCheckedModeBanner: false,
+              theme: Themes.lightTheme,
+              navigatorKey: MyApp.navigatorKey,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              onGenerateRoute: (setting) => Routes.generateRoutes(setting),
+            );
       },
     );
   }

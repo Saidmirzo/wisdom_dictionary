@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,16 +15,16 @@ import 'package:wisdom/presentation/pages/setting/viewmodel/setting_page_viewmod
 
 import '../../../widgets/custom_app_bar.dart';
 
+// ignore: must_be_immutable
 class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
   SettingPage({super.key});
 
   @override
-  Widget builder(
-      BuildContext context, SettingPageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, SettingPageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Sozlamalar',
+        title: 'settings'.tr(),
         onTap: () => Navigator.of(context).pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -41,7 +42,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Tilni o\'zgartirish',
+                  "change_language".tr(),
                   style: AppTextStyle.font16W600Normal.copyWith(
                     color: AppColors.black,
                   ),
@@ -53,13 +54,11 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     children: [
                       Expanded(
                         child: CustomOvalButton(
-                          isActive:
-                              viewModel.currentLang == LanguageOption.uzbek,
+                          isActive: context.locale.toString() == "uz_UZ",
                           textStyle: AppTextStyle.font14W500Normal,
-                          label: 'Uzbek',
+                          label: "uzbek".tr(),
                           onTap: () {
-                            viewModel.currentLang = LanguageOption.uzbek;
-                            viewModel.notifyListeners();
+                            context.setLocale(const Locale('uz', 'UZ'));
                           },
                           height: 38.h,
                         ),
@@ -69,13 +68,11 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       ),
                       Expanded(
                         child: CustomOvalButton(
-                          isActive:
-                              viewModel.currentLang == LanguageOption.english,
+                          isActive: context.locale.toString() == "en_US",
                           textStyle: AppTextStyle.font14W500Normal,
-                          label: 'English',
+                          label: "english".tr(),
                           onTap: () {
-                            viewModel.currentLang = LanguageOption.english;
-                            viewModel.notifyListeners();
+                            context.setLocale(const Locale('en', 'US'));
                           },
                           height: 38.h,
                         ),
@@ -98,7 +95,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Mavzu',
+                      'theme'.tr(),
                       style: AppTextStyle.font16W600Normal.copyWith(
                         color: AppColors.black,
                       ),
@@ -110,10 +107,9 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                         children: [
                           Expanded(
                             child: CustomOvalButton(
-                              isActive:
-                                  viewModel.currentTheme == ThemeOption.day,
+                              isActive: viewModel.currentTheme == ThemeOption.day,
                               textStyle: AppTextStyle.font14W500Normal,
-                              label: 'Light mode',
+                              label: "light".tr(),
                               onTap: () {
                                 viewModel.currentTheme = ThemeOption.day;
                                 viewModel.notifyListeners();
@@ -128,10 +124,9 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                           ),
                           Expanded(
                             child: CustomOvalButton(
-                              isActive:
-                                  viewModel.currentTheme == ThemeOption.night,
+                              isActive: viewModel.currentTheme == ThemeOption.night,
                               textStyle: AppTextStyle.font14W500Normal,
-                              label: 'Night mode',
+                              label: "dark".tr(),
                               prefixIcon: true,
                               imgAssets: Assets.icons.moon,
                               onTap: () {
@@ -147,7 +142,8 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   ],
                 ),
               ),
-              const Locked(),
+              // ignore: prefer_const_constructors
+              Locked(),
             ],
           ),
           // Change word size
@@ -164,15 +160,14 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: Text(
-                        'Shirftni o\'zgartirish',
+                        "change_font_size".tr(),
                         style: AppTextStyle.font16W600Normal.copyWith(
                           color: AppColors.black,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 40.h, left: 20.w, right: 20.w, bottom: 10.h),
+                      padding: EdgeInsets.only(top: 40.h, left: 20.w, right: 20.w, bottom: 10.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -193,13 +188,11 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       inactiveColor: AppColors.seekerBack.withOpacity(0.2),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsets.only(left: 20.w, right: 16.w, top: 10.h),
+                      padding: EdgeInsets.only(left: 20.w, right: 16.w, top: 10.h),
                       child: Text(
-                        'Wisdom Dictionary',
-                        style: AppTextStyle.font14W500Normal.copyWith(
-                            fontSize: 10 + viewModel.fontSizeValue,
-                            color: AppColors.darkGray),
+                        "notif_name".tr(),
+                        style: AppTextStyle.font14W500Normal
+                            .copyWith(fontSize: 10 + viewModel.fontSizeValue, color: AppColors.darkGray),
                       ),
                     )
                   ],
@@ -222,7 +215,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: Text(
-                        'So\'z eslatuvchi',
+                        "word_reminder".tr(),
                         style: AppTextStyle.font16W600Normal.copyWith(
                           color: AppColors.black,
                         ),
@@ -230,10 +223,9 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
+                      padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
                       child: Text(
-                        'Yangi so\'z eslish: So\'zlar yuboriladigan vaqti oralig\'ini tanlang!',
+                        "remind_new_words".tr(),
                         style: AppTextStyle.font14W500Normal.copyWith(
                           color: AppColors.darkGray,
                         ),
@@ -248,7 +240,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                           Expanded(
                             child: RadioListTile(
                               title: Text(
-                                'Berilgan vaqt',
+                                "selected_time".tr(),
                                 style: AppTextStyle.font12W500Normal.copyWith(
                                   color: AppColors.black,
                                 ),
@@ -265,7 +257,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                           Expanded(
                             child: RadioListTile(
                               title: Text(
-                                'Avtomatik vaqt',
+                                "automatic_time".tr(),
                                 style: AppTextStyle.font12W500Normal.copyWith(
                                   color: AppColors.black,
                                 ),
@@ -285,8 +277,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     Visibility(
                       visible: viewModel.currentRemind == RemindOption.manual,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.h, bottom: 30.h, left: 16.w),
+                        padding: EdgeInsets.only(top: 20.h, bottom: 30.h, left: 16.w),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -304,9 +295,8 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.w),
                               child: Text(
-                                ':',
-                                style: AppTextStyle.font16W500Normal
-                                    .copyWith(color: AppColors.black),
+                                ":".tr(),
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.black),
                               ),
                             ),
                             CustomNumberPicker(
@@ -322,9 +312,8 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.w),
                               child: Text(
-                                'da',
-                                style: AppTextStyle.font16W500Normal
-                                    .copyWith(color: AppColors.black),
+                                'da'.tr(),
+                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.black),
                               ),
                             ),
                           ],
@@ -334,16 +323,14 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     Visibility(
                       visible: viewModel.currentRemind == RemindOption.auto,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.h, bottom: 30.h, left: 16.w),
+                        padding: EdgeInsets.only(top: 20.h, bottom: 30.h, left: 16.w),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'har',
-                              style: AppTextStyle.font16W500Normal
-                                  .copyWith(color: AppColors.black),
+                              "every".tr(),
+                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.black),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -359,9 +346,8 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                               ),
                             ),
                             Text(
-                              'soatda',
-                              style: AppTextStyle.font16W500Normal
-                                  .copyWith(color: AppColors.black),
+                              'hour'.tr(),
+                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.black),
                             ),
                           ],
                         ),
@@ -370,7 +356,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: CustomOvalButton(
-                        label: 'Sqlash',
+                        label: "save".tr(),
                         onTap: () {},
                         textStyle: AppTextStyle.font16W500Normal,
                         isActive: true,
@@ -379,7 +365,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   ],
                 ),
               ),
-              // Locked(),
+              // const Locked(),
             ],
           ),
         ],

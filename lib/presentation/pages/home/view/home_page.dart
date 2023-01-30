@@ -8,6 +8,7 @@ import 'package:wisdom/presentation/pages/home/viewmodel/home_viewmodel.dart';
 import 'drawer_screen.dart';
 import 'home_screen.dart';
 
+// ignore: must_be_immutable
 class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
   HomePage({super.key});
 
@@ -22,7 +23,7 @@ class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return ZoomDrawer(
-      menuScreen: DrawerScreen(),
+      menuScreen: const DrawerScreen(),
       mainScreen: HomeScreen(),
       borderRadius: 30,
       showShadow: false,
