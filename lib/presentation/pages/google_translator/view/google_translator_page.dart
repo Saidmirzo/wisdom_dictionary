@@ -73,7 +73,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
-                              hintText: "O'zbekcha",
+                              hintText: viewModel.topUzbek ? "O'zbekcha" : "English",
                               hintStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.lightBlue),
                               border: InputBorder.none,
                             ),
@@ -151,7 +151,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             decoration: InputDecoration(
-                              hintText: 'English',
+                              hintText: viewModel.topUzbek ? "English" : "O'zbekcha",
                               enabled: false,
                               hintStyle: AppTextStyle.font14W500Normal.copyWith(color: AppColors.lightBlue),
                               border: InputBorder.none,
@@ -192,7 +192,9 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          viewModel.exchangeLanguages();
+                        },
                         borderRadius: BorderRadius.circular(18.5),
                         child: SizedBox(
                           height: 37.h,

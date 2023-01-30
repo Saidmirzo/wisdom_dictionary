@@ -19,15 +19,23 @@ class GoogleTranslatorPageViewModel extends BaseViewModel {
   FlutterTts flutterTts = FlutterTts();
   bool isSpeaking = false;
   bool isListening = false;
+  bool topUzbek = true;
 
   Future? dialog;
+
+  void exchangeLanguages() {
+    topUzbek = !topUzbek;
+    notifyListeners();
+  }
 
   Future<String> translate(String text) async {
     var translated = "";
     if (text.isNotEmpty) {
       setBusy(true);
       checkNetwork();
-      translated = await translator.translate(text, from: "uz", to: "en").then((value) => value.text);
+      translated = await translator
+          .translate(text, from: topUzbek ? "uz" : "en", to: topUzbek ? "en" : "uz")
+          .then((value) => value.text);
     }
     setSuccess();
     return translated;
