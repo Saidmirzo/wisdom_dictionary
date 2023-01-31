@@ -11,6 +11,7 @@ import 'package:wisdom/presentation/widgets/loading_widget.dart';
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_decoration.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../widgets/custom_app_bar.dart';
 
 class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageViewModel> {
@@ -28,7 +29,7 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
       onWillPop: () => viewModel.goBack(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goBack(),
@@ -42,7 +43,7 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
           children: [
             Column(mainAxisSize: MainAxisSize.min, children: [
               Container(
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -50,7 +51,9 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
                     Center(
                       child: Text(
                         viewModel.getDifference() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal.copyWith(
+                          color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -62,6 +65,7 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
                                 viewModel.categoryRepository.differenceDetailModel.dBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                                textStyle: TextStyle(color: isDarkTheme ? AppColors.lightGray : null),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

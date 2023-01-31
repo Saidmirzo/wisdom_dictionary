@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import '../../config/constants/app_colors.dart';
 import '../../config/constants/app_text_style.dart';
 import '../../config/constants/assets.dart';
@@ -33,8 +34,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     });
 
     return AppBar(
-      backgroundColor: AppColors.blue,
-      shadowColor: const Color(0xFF6D8DAD).withOpacity(0.15),
+      backgroundColor: isDarkTheme ? AppColors.darkForm : AppColors.blue,
+      shadowColor: isDarkTheme ? null : const Color(0xFF6D8DAD).withOpacity(0.15),
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -69,7 +70,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                 height: 47.h,
                 margin: const EdgeInsets.all(14),
-                decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
+                decoration: BoxDecoration(
+                  color: isDarkTheme ? AppColors.darkBackground : AppColors.white,
+                  borderRadius: BorderRadius.circular(23.5.r),
+                ),
                 child: TextFormField(
                   style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.blue),
                   cursorHeight: 18.h,

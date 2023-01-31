@@ -8,6 +8,7 @@ import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../components/catalog_item.dart';
 import '../../../widgets/custom_app_bar.dart';
 
@@ -26,7 +27,7 @@ class MetaphorPage extends ViewModelBuilderWidget<MetaphorPageViewModel> {
       onWillPop: () => viewModel.goMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),

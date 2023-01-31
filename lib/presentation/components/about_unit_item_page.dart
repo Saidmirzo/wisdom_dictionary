@@ -4,6 +4,7 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import '../../config/constants/assets.dart';
+import '../../config/constants/constants.dart';
 import '../widgets/custom_app_bar.dart';
 
 class AboutUnitItemPage extends StatelessWidget {
@@ -30,20 +31,18 @@ class AboutUnitItemPage extends StatelessWidget {
               flex: 1,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 33.h, horizontal: 22.w),
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 child: Column(
                   children: [
                     Text(
                       title,
-                      style: AppTextStyle.font16W600Normal
-                          .copyWith(color: AppColors.darkGray),
+                      style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 16.h),
                       child: Text(
                         'Guruh tuzmoq deyish uchun make a bandemas from a band deyiladi',
-                        style: AppTextStyle.font14W400Normal
-                            .copyWith(color: AppColors.paleGray),
+                        style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
                       ),
                     ),
                   ],
@@ -52,7 +51,7 @@ class AboutUnitItemPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.only(top: 16),
-              decoration: AppDecoration.bannerDecor,
+              decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
               height: 165.h,
               child: Center(
                 child: Text(

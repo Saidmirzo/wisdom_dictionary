@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class SearchHistoryItem extends StatelessWidget {
   const SearchHistoryItem({
@@ -35,13 +36,13 @@ class SearchHistoryItem extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       style: AppTextStyle.font14W500Normal
-                          .copyWith(color: AppColors.darkGray),
+                          .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                       text: firstText,
                       children: [
                         TextSpan(
                             text: ' $secondText',
                             style: AppTextStyle.font14W500Normal
-                                .copyWith(color: AppColors.blue)),
+                                .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue)),
                       ],
                     ),
                   ),

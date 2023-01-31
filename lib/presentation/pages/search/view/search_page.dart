@@ -11,6 +11,7 @@ import 'package:wisdom/presentation/pages/search/viewmodel/search_page_viewmodel
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../widgets/custom_app_bar.dart';
 
 // ignore: must_be_immutable
@@ -21,7 +22,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
   Widget builder(BuildContext context, SearchPageViewModel viewModel, Widget? child) {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),

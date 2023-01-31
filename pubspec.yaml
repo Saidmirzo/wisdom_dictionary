@@ -38,6 +38,13 @@ dependencies:
   speech_to_text: ^6.1.1
   lottie: ^2.2.0
   easy_localization: ^3.0.1
+  provider: ^6.0.5
+
+  flutter_local_notifications: ^13.0.0
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  firebase_messaging: ^14.2.1
+
   # path_provider: ^2.0.11
   # path: ^1.8.3
 

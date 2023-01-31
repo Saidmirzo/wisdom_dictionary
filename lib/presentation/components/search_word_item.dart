@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class SearchWordItem extends StatelessWidget {
   const SearchWordItem({
@@ -34,13 +35,13 @@ class SearchWordItem extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(
                       style: AppTextStyle.font14W500Normal
-                          .copyWith(color: AppColors.darkGray),
+                          .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                       text: firstText,
                       children: [
                         TextSpan(
                             text: ' $secondText',
                             style: AppTextStyle.font14W500Normal
-                                .copyWith(color: AppColors.blue)),
+                                .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue)),
                       ],
                     ),
                   ),

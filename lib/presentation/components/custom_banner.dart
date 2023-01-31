@@ -4,6 +4,8 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 
+import '../../config/constants/constants.dart';
+
 class CustomBanner extends StatelessWidget {
   CustomBanner({
     super.key,
@@ -34,7 +36,7 @@ class CustomBanner extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 12.h),
                 width: double.maxFinite,
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 child: isInkWellEnable
                     ? Material(
                         color: Colors.transparent,

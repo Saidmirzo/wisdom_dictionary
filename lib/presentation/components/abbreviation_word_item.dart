@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class AbbreviationWordItem extends StatelessWidget {
-  const AbbreviationWordItem(
-      {super.key, required this.firstText, required this.secondText});
+  const AbbreviationWordItem({super.key, required this.firstText, required this.secondText});
 
   final String firstText;
   final String secondText;
@@ -20,14 +20,14 @@ class AbbreviationWordItem extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: RichText(
               text: TextSpan(
-                style: AppTextStyle.font14W500Normal
-                    .copyWith(color: AppColors.darkGray),
+                style: AppTextStyle.font14W500Normal.copyWith(
+                  color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                ),
                 text: firstText,
                 children: [
                   TextSpan(
                     text: ' - $secondText',
-                    style: AppTextStyle.font14W400Normal
-                        .copyWith(color: AppColors.paleGray),
+                    style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
                   ),
                 ],
               ),
@@ -38,8 +38,8 @@ class AbbreviationWordItem extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: const Divider(
-                color: AppColors.borderWhite,
+              child: Divider(
+                color:isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite,
                 height: 1,
                 thickness: 0.75,
               ),

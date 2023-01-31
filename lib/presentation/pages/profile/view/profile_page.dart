@@ -10,16 +10,16 @@ import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../config/constants/constants.dart';
 import '../../../components/custom_banner.dart';
 
 class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   ProfilePage({super.key});
 
   @override
-  Widget builder(
-      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         title: "personal_cabinet".tr(),
         onTap: () => viewModel.pop(),
@@ -38,7 +38,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                     height: 144.h,
                     margin: EdgeInsets.only(top: 80.h),
                     padding: const EdgeInsets.symmetric(vertical: 32),
-                    decoration: AppDecoration.bannerDecor,
+                    decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -48,8 +48,10 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                           alignment: Alignment.bottomCenter,
                           child: Text(
                             '+998(99) 005 16 73',
-                            style: AppTextStyle.font18W500Normal
-                                .copyWith(color: AppColors.blue, fontSize: 20),
+                            style: AppTextStyle.font18W500Normal.copyWith(
+                              color: isDarkTheme ? AppColors.white : AppColors.blue,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -63,17 +65,15 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
               ),
               CustomBanner(
                 title: 'Holat',
-                contentPadding: const EdgeInsets.only(
-                    top: 30, left: 20, right: 20, bottom: 20),
+                contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
                 child: RichText(
                   text: TextSpan(
                       text: 'Mening hozirgi holatim: ',
-                      style: AppTextStyle.font14W500Normal
-                          .copyWith(color: AppColors.paleGray),
-                      children: const [
+                      style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleGray),
+                      children: [
                         TextSpan(
-                          text: '2036 yilgacha 29 000 so\'m',
-                          style: TextStyle(color: AppColors.blue),
+                          text: "2036 yilgacha 29 000 so'm",
+                          style: TextStyle(color: isDarkTheme ? AppColors.white : AppColors.blue),
                         ),
                       ]),
                   textAlign: TextAlign.center,

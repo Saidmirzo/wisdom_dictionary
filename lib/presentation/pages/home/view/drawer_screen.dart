@@ -9,6 +9,7 @@ import 'package:wisdom/presentation/routes/routes.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../components/drawer_menu_item.dart';
 
 class DrawerScreen extends ViewModelWidget<HomeViewModel> {
@@ -17,9 +18,9 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(5),

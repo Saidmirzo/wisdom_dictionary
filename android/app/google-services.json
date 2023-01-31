@@ -1,0 +1,48 @@
+{
+    "project_info": {
+      "project_number": "664671656235",
+      "firebase_url": "https://waio-dictionary.firebaseio.com",
+      "project_id": "waio-dictionary",
+      "storage_bucket": "waio-dictionary.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:664671656235:android:ec1865ad83d2e2167e8d6e",
+          "android_client_info": {
+            "package_name": "uz.usoft.waiodictionary"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "664671656235-p3dd4iljiae7eed3ioaosq17vn0g9aes.apps.googleusercontent.com",
+            "client_type": 1,
+            "android_info": {
+              "package_name": "uz.usoft.waiodictionary",
+              "certificate_hash": "e6656f5fb6cb52f3a2fc0d7a2e3bedb07c187475"
+            }
+          },
+          {
+            "client_id": "664671656235-0a52r5vmhd9ad2eh1go1gaesl11etf37.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyCLawuaqj3CIg33BGAsAa4ZhyrTfsKMmXg"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "664671656235-0a52r5vmhd9ad2eh1go1gaesl11etf37.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

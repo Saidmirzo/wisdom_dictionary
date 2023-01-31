@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/config/constants/urls.dart';
 import 'package:wisdom/presentation/pages/collocation/view/collocation_details_page.dart';
 import 'package:wisdom/presentation/pages/culture/view/culture_detail_page.dart';
@@ -84,7 +85,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),
@@ -113,7 +114,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  decoration: AppDecoration.bannerDecor,
+                                  decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                                   child: viewModel.homeRepository.timelineModel.ad!.image != null
                                       ? ClipRRect(
                                           borderRadius: BorderRadius.circular(18.r),
@@ -160,7 +161,9 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           child: Center(
                             child: Text(
                               viewModel.homeRepository.timelineModel.grammar!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              style: AppTextStyle.font16W500Normal.copyWith(
+                                color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -175,7 +178,9 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           child: Center(
                             child: RichText(
                               text: TextSpan(
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal.copyWith(
+                                  color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                                ),
                                 text: viewModel.separateDifference(
                                     true, viewModel.homeRepository.timelineModel.difference!.word!),
                                 children: [
@@ -183,8 +188,12 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                       text: 'or'.tr(),
                                       style: AppTextStyle.font16W500Italic.copyWith(color: AppColors.paleGray)),
                                   TextSpan(
-                                      text: viewModel.separateDifference(
-                                          false, viewModel.homeRepository.timelineModel.difference!.word)),
+                                    text: viewModel.separateDifference(
+                                        false, viewModel.homeRepository.timelineModel.difference!.word),
+                                    style: AppTextStyle.font16W500Normal.copyWith(
+                                      color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                                    ),
+                                  ),
                                 ],
                               ),
                               textAlign: TextAlign.center,
@@ -247,7 +256,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           child: Center(
                             child: Text(
                               viewModel.homeRepository.timelineModel.thesaurus!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              style: AppTextStyle.font16W500Normal
+                                  .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                             ),
                           ),
                         ),
@@ -261,7 +271,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           child: Center(
                             child: Text(
                               viewModel.homeRepository.timelineModel.collocation!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              style: AppTextStyle.font16W500Normal
+                                  .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                             ),
                           ),
                         ),
@@ -275,7 +286,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           child: Center(
                             child: Text(
                               viewModel.homeRepository.timelineModel.metaphor!.worden!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              style: AppTextStyle.font16W500Normal
+                                  .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                             ),
                           ),
                         ),
@@ -289,7 +301,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           child: Center(
                             child: Text(
                               viewModel.homeRepository.timelineModel.speaking!.word!,
-                              style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                              style: AppTextStyle.font16W500Normal
+                                  .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                               textAlign: TextAlign.center,
                             ),
                           ),

@@ -27,4 +27,6 @@ abstract class AppColors {
   static const Color darkForm = Color(0xFF252836);
   static const Color darkBackground = Color(0xFF1F1D2B);
   static const Color black = Color(0xFF000000);
+  static const Color darkBottomBar = Color(0xFF333646);
+  static const Color darkDivider = Color(0xFF003C64);
 }

@@ -32,13 +32,14 @@ class SpeakingPageViewModel extends BaseViewModel {
   }
 
   goMain() {
-    if (localViewModel.isTitle) {
-      localViewModel.isTitle = false;
-      localViewModel.changePageIndex(16);
-    }
-    if (localViewModel.isSubSub) {
-      localViewModel.isSubSub = false;
-    }
+    localViewModel.changePageIndex(3);
+    // if (localViewModel.isTitle) {
+    //   localViewModel.isTitle = false;
+    //   localViewModel.changePageIndex(3);
+    // }
+    // if (localViewModel.isSubSub) {
+    //   localViewModel.isSubSub = false;
+    // }
   }
 
   goToNext(CatalogModel catalogModel) {

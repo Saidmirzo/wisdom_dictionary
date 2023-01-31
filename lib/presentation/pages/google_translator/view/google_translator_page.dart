@@ -13,6 +13,7 @@ import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 
 // ignore: must_be_immutable
 class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageViewModel> {
@@ -46,7 +47,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
   Widget builder(BuildContext context, GoogleTranslatorPageViewModel viewModel, Widget? child) {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         title: "translator".tr(),
         onTap: () {},
@@ -62,7 +63,10 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
               child: Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.r), color: AppColors.white),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18.r),
+                      color: isDarkTheme ? AppColors.darkForm : AppColors.white,
+                    ),
                     height: 158.h,
                     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 23),
                     child: Column(
@@ -140,7 +144,10 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(18.r), color: AppColors.white),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18.r),
+                      color: isDarkTheme ? AppColors.darkForm : AppColors.white,
+                    ),
                     height: 158.h,
                     padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 23),
                     child: Column(

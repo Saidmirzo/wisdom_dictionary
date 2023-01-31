@@ -11,6 +11,8 @@ import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmod
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../config/constants/constants.dart';
+
 // ignore: must_be_immutable
 class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   GettingProPage({super.key});
@@ -18,7 +20,7 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   @override
   Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         title: "app_name".tr(),
         onTap: () => viewModel.pop(),
@@ -41,18 +43,20 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: Text(
                   'Eng yaxshi sarmoya bilimga bo\'lgan sarmoyadir!\nIshonavering siz kerakli joyga sarmoya qilmoqdasiz.',
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                  style: AppTextStyle.font12W400Normal
+                      .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                 ),
               ),
               Container(
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
                 child: Column(
                   children: [
                     RadioListTile(
                       title: Text(
-                        'Bir martalik to\'lov',
-                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                        "Bir martalik to'lov",
+                        style: AppTextStyle.font14W500Normal
+                            .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                       ),
                       value: true,
                       groupValue: true,
@@ -81,7 +85,8 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       onTap: () => viewModel.navigateTo(Routes.registrationPage),
                       child: RichText(
                         text: TextSpan(
-                          style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                          style: AppTextStyle.font12W500Normal
+                              .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                           text: 'Ro\'yhatdan o\'tganmisiz ?',
                           children: [
                             TextSpan(

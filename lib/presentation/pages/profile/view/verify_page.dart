@@ -11,6 +11,8 @@ import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmod
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../config/constants/constants.dart';
+
 class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   VerifyPage({
     super.key,
@@ -21,10 +23,9 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   TextEditingController editingController = TextEditingController();
 
   @override
-  Widget builder(
-      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         title: 'Verifikatsiya kodi',
         onTap: () => viewModel.pop(),
@@ -47,8 +48,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: RichText(
                   text: TextSpan(
                       text: 'Verifikatsiya kodi ',
-                      style: AppTextStyle.font12W400Normal
-                          .copyWith(color: AppColors.darkGray),
+                      style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
                       children: [
                         TextSpan(
                           text: phoneNumber.substring(4, phoneNumber.length),
@@ -58,22 +58,21 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         ),
                         TextSpan(
                           text: ' raqamiga sms tarzda yuborildi',
-                          style: AppTextStyle.font12W400Normal
-                              .copyWith(color: AppColors.darkGray),
+                          style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
                         ),
                       ]),
                   textAlign: TextAlign.center,
                 ),
               ),
               Container(
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
                 child: Column(
                   children: [
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40.r),
-                          color: AppColors.lightBackground),
+                          color: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 24.h, bottom: 12.h),
                       padding: EdgeInsets.only(left: 22.w, right: 22.w),
@@ -84,8 +83,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                           appContext: context,
                           length: 5,
                           keyboardType: TextInputType.number,
-                          textStyle: AppTextStyle.font18W500Normal
-                              .copyWith(color: AppColors.blue),
+                          textStyle: AppTextStyle.font18W500Normal.copyWith(color: AppColors.blue),
                           onChanged: (String value) {},
                           cursorColor: Colors.transparent,
                           pinTheme: PinTheme(
@@ -101,9 +99,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40.r),
-                          color: AppColors.blue),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 20.h, bottom: 12.h),
                       child: Material(
@@ -113,8 +109,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                             if (editingController.text.length == 5) {
                               viewModel.navigateTo(Routes.paymentPage);
                             } else {
-                              viewModel.callBackError(
-                                  'Something went wrong. Please check sms code');
+                              viewModel.callBackError('Something went wrong. Please check sms code');
                             }
                           },
                           borderRadius: BorderRadius.circular(40.r),
@@ -130,8 +125,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                     Text(
                       'Agar siz 60 soniya ichida kodni olmagan bo\'lsangiz, Qayta yuborish tugmasini bosing!',
                       textAlign: TextAlign.center,
-                      style: AppTextStyle.font12W400Normal
-                          .copyWith(color: const Color(0xFF919399)),
+                      style: AppTextStyle.font12W400Normal.copyWith(color: const Color(0xFF919399)),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
@@ -140,8 +134,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         child: Text(
                           'Qayta yuborish',
                           textAlign: TextAlign.center,
-                          style: AppTextStyle.font14W500Normal
-                              .copyWith(color: AppColors.gray),
+                          style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.gray),
                         ),
                       ),
                     ),

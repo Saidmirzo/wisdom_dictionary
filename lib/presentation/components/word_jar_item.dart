@@ -4,9 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class WordJarItem extends StatelessWidget {
-  WordJarItem({
+  const WordJarItem({
     super.key,
     required this.firstText,
     required this.secondText,
@@ -36,14 +37,17 @@ class WordJarItem extends StatelessWidget {
                   padding: EdgeInsets.only(left: 34.w),
                   child: RichText(
                     text: TextSpan(
-                      style: AppTextStyle.font14W500Normal
-                          .copyWith(color: AppColors.darkGray),
+                      style: AppTextStyle.font14W500Normal.copyWith(
+                        color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                      ),
                       text: firstText,
                       children: [
                         TextSpan(
-                            text: ' - $secondText',
-                            style: AppTextStyle.font14W400Normal
-                                .copyWith(color: AppColors.darkGray)),
+                          text: ' - $secondText',
+                          style: AppTextStyle.font14W400Normal.copyWith(
+                            color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -72,8 +76,8 @@ class WordJarItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w),
-              child: const Divider(
-                color: AppColors.borderWhite,
+              child: Divider(
+                color: isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite,
                 height: 1,
                 thickness: 0.5,
               ),

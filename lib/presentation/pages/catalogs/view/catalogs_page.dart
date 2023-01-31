@@ -10,6 +10,7 @@ import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 
 // ignore: must_be_immutable
 class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
@@ -20,7 +21,7 @@ class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
     return WillPopScope(
       onWillPop: () => viewModel.goMain(),
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         drawerEnableOpenDragGesture: false,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,

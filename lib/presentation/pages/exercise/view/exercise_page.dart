@@ -10,6 +10,7 @@ import 'package:wisdom/presentation/pages/exercise/viewmodel/exercise_viewmodel.
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../widgets/custom_app_bar.dart';
 
 // ignore: must_be_immutable
@@ -20,7 +21,7 @@ class ExercisePage extends ViewModelBuilderWidget<ExerciseViewModel> {
   Widget builder(BuildContext context, ExerciseViewModel viewModel, Widget? child) {
     return Scaffold(
       drawerEnableOpenDragGesture: false,
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         leadingIcon: Assets.icons.menu,
         onTap: () => ZoomDrawer.of(context)!.toggle(),
