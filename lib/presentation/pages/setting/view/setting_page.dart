@@ -14,6 +14,7 @@ import 'package:wisdom/presentation/components/custom_oval_button.dart';
 import 'package:wisdom/presentation/components/locked.dart';
 import 'package:wisdom/presentation/pages/setting/viewmodel/setting_page_viewmodel.dart';
 
+import '../../../../app.dart';
 import '../../../../config/constants/constants.dart';
 import '../../../../main.dart';
 import '../../../widgets/custom_app_bar.dart';
