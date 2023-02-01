@@ -22,6 +22,7 @@ import '../../../widgets/custom_app_bar.dart';
 // ignore: must_be_immutable
 class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
   SettingPage({super.key});
+  TimeOfDay? timeOfDay = const TimeOfDay(hour: 0, minute: 0);
 
   @override
   Widget builder(BuildContext context, SettingPageViewModel viewModel, Widget? child) {
@@ -318,6 +319,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                               currentValue: viewModel.currentMinuteValue,
                               onChange: ((value) {
                                 viewModel.currentMinuteValue = value;
+                                timeOfDay = TimeOfDay(
+                                  hour: viewModel.currentHourValue,
+                                  minute: viewModel.currentMinuteValue,
+                                );
                                 viewModel.notifyListeners();
                               }),
                               minValue: 0,
@@ -379,7 +384,11 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       child: CustomOvalButton(
                         label: "save".tr(),
                         onTap: () {
-                          
+                          if (viewModel.currentRemind == RemindOption.manual) {
+                            viewModel.scheduleNotification(timeOfDay!);
+                          } else {
+                            viewModel.scheduleAutomaticNotification();
+                          }
                         },
                         textStyle: AppTextStyle.font16W500Normal,
                         isActive: true,

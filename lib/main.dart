@@ -1,4 +1,4 @@
-
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +20,19 @@ void main() async {
     await locator<DBHelper>().init();
     await locator<SharedPreferenceHelper>().getInstance();
     await EasyLocalization.ensureInitialized();
+    AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+          channelGroupKey: "channelGroupKey",
+          channelKey: "channelKey",
+          channelName: "channelName",
+          channelDescription: "channelDescription",
+          defaultColor: Colors.green,
+          ledColor: Colors.lime,
+        ),
+      ],
+    );
     runApp(
       EasyLocalization(
         supportedLocales: const [Locale('en', 'US'), Locale('uz', 'UZ')],
@@ -30,4 +43,3 @@ void main() async {
     );
   }, appVersion: '1.0.0');
 }
-

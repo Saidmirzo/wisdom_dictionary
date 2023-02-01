@@ -12,6 +12,8 @@ import 'package:wisdom/domain/repositories/category_repository.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 
+import '../services/local_notification_service.dart';
+
 
 final locator = JbazaLocator.instance;
 
@@ -21,6 +23,7 @@ void setupLocator() {
   locator.registerSingleton<WordMapper>(WordMapper());
   locator.registerSingleton<DBHelper>(DBHelper(locator.get()));
   locator.registerSingleton<LocalViewModel>(LocalViewModel(context: null));
+  locator.registerSingleton<LocalNotificationService>(LocalNotificationService());
   locator.registerSingleton<SharedPreferenceHelper>(SharedPreferenceHelper());
   locator.registerLazySingleton<WordEntityRepository>(() => WordEntityRepositoryImpl(client: locator.get()));
   locator.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(locator.get()));
