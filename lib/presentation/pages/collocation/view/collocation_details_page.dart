@@ -50,7 +50,9 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
                     Center(
                       child: Text(
                         viewModel.getCollocation() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal.copyWith(
+                          color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -62,6 +64,9 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
                                 viewModel.categoryRepository.collocationDetailModel.cBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                                textStyle: TextStyle(
+                                  color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                                ),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,9 +58,9 @@ class _MyAppState extends State<MyApp> {
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (BuildContext context, Widget? child) {
+              Provider.of<MainProvider>(context, listen: false).loadTheme();
               return Consumer<MainProvider>(
                 builder: (BuildContext context, provider, Widget? child) {
-                  provider.loadTheme();
                   return MaterialApp(
                     title: 'Wisdom Dictionary',
                     debugShowCheckedModeBanner: false,
