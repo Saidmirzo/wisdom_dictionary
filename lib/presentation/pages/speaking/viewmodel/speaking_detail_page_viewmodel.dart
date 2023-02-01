@@ -36,7 +36,7 @@ class SpeakingDetailPageViewModel extends BaseViewModel {
 
   goBack() {
     if (localViewModel.isFromMain) {
-      localViewModel.isFromMain = true;
+      localViewModel.isFromMain = false;
       localViewModel.changePageIndex(0);
     } else {
       localViewModel.speakingCatalogModel.id = int.parse(localViewModel.speakingCatalogModel.category ?? "0");

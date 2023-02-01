@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
@@ -27,7 +28,7 @@ class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
       child: ZoomDrawer(
         menuScreen: DrawerScreen(),
         mainScreen: HomeScreen(),
-        borderRadius: 30,
+        borderRadius: 30.r,
         showShadow: false,
         mainScreenTapClose: true,
         mainScreenScale: 0.2,

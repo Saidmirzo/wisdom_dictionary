@@ -59,13 +59,14 @@ class SearchPageViewModel extends BaseViewModel {
           } else {
             await searchRepository.searchByUzWord(searchText.toString());
           }
+          if ((searchRepository.searchResultList.isNotEmpty && searchLangMode =='en') || (searchRepository.searchResultUzList.isNotEmpty && searchLangMode=='uz')) {
+            setSuccess(tag: searchTag);
+          }
         } else {
           await searchRepository.cleanList(searchLangMode);
           await init();
         }
-        if ((searchRepository.searchResultList.isNotEmpty && searchLangMode =='en') || (searchRepository.searchResultUzList.isNotEmpty && searchLangMode=='uz')) {
-          setSuccess(tag: searchTag);
-        }
+
       },
       callFuncName: 'searchByWord',
     );

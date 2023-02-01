@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     //     statusBarColor: Colors.transparent,
     //     systemNavigationBarIconBrightness: Brightness.dark,
@@ -51,8 +50,13 @@ class MyApp extends StatelessWidget {
           //   GlobalWidgetsLocalizations.delegate,
           //   GlobalCupertinoLocalizations.delegate,
           // ],
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: child!,
+            );
+          },
           onGenerateRoute: (setting) => Routes.generateRoutes(setting),
-
         );
       },
     );

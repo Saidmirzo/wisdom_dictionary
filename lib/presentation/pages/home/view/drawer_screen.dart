@@ -41,7 +41,7 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 0, top: 40, bottom: 50),
+              padding: EdgeInsets.only(left: 0, top: 40.h, bottom: 50.h),
               child: SvgPicture.asset(
                 Assets.icons.logoBlueText,
                 fit: BoxFit.scaleDown,

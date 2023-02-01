@@ -46,6 +46,7 @@ class WordDetailPageViewModel extends BaseViewModel {
         autoScrollController = AutoScrollController(
             viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context!).padding.bottom),
             axis: Axis.vertical);
+
         await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();
@@ -61,6 +62,24 @@ class WordDetailPageViewModel extends BaseViewModel {
     await autoScrollController.scrollToIndex(index,
         duration: const Duration(milliseconds: 800), preferPosition: AutoScrollPosition.begin);
     autoScrollController.highlight(index);
+  }
+
+  void textToSpeech() {
+    if (wordEntityRepository.requiredWordWithAllModel.word != null &&
+        wordEntityRepository.requiredWordWithAllModel.word!.word != null) {
+      FlutterTts tts = FlutterTts();
+      // await tts.setSharedInstance(true); // For IOS
+      tts.setLanguage('en-US');
+      tts.speak(wordEntityRepository.requiredWordWithAllModel.word!.word!);
+    }
+  }
+
+  Future<void> splitingToParentWithAllModel() async {
+    parentsWithAllList.add(wordMapper.wordWithAllToParentsWithAll(wordEntityRepository.requiredWordWithAllModel));
+    if (wordEntityRepository.requiredWordWithAllModel.parentsWithAll != null &&
+        wordEntityRepository.requiredWordWithAllModel.parentsWithAll!.isNotEmpty) {
+      parentsWithAllList.addAll(wordEntityRepository.requiredWordWithAllModel.parentsWithAll!);
+    }
   }
 
   addToWordBankFromParent(ParentsWithAll model, String num, GlobalKey key) {
@@ -120,24 +139,6 @@ class WordDetailPageViewModel extends BaseViewModel {
         await wordEntityRepository.saveWordBank(bankModel);
       }
     }, callFuncName: 'funAddToWordBank', inProgress: false);
-  }
-
-  void textToSpeech() {
-    if (wordEntityRepository.requiredWordWithAllModel.word != null &&
-        wordEntityRepository.requiredWordWithAllModel.word!.word != null) {
-      FlutterTts tts = FlutterTts();
-      // await tts.setSharedInstance(true); // For IOS
-      tts.setLanguage('en-US');
-      tts.speak(wordEntityRepository.requiredWordWithAllModel.word!.word!);
-    }
-  }
-
-  Future<void> splitingToParentWithAllModel() async {
-    parentsWithAllList.add(wordMapper.wordWithAllToParentsWithAll(wordEntityRepository.requiredWordWithAllModel));
-    if (wordEntityRepository.requiredWordWithAllModel.parentsWithAll != null &&
-        wordEntityRepository.requiredWordWithAllModel.parentsWithAll!.isNotEmpty) {
-      parentsWithAllList.addAll(wordEntityRepository.requiredWordWithAllModel.parentsWithAll!);
-    }
   }
 
   String conductToString(List<WordsUzModel>? wordList) {
@@ -235,6 +236,7 @@ class WordDetailPageViewModel extends BaseViewModel {
 
   goBackToSearch() {
     if (localViewModel.isFromMain) {
+      localViewModel.isFromMain = false;
       localViewModel.changePageIndex(0);
     } else {
       localViewModel.changePageIndex(2);

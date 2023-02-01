@@ -18,7 +18,7 @@ class LocalViewModel extends BaseViewModel {
 
   ValueNotifier<int> badgeCount = ValueNotifier<int>(0);
 
-  bool isFromMain = true;
+  bool isFromMain = false;
 
   bool isTitle = false;
   bool isSubSub = false;
@@ -29,6 +29,7 @@ class LocalViewModel extends BaseViewModel {
   CatalogModel speakingCatalogModel = CatalogModel();
 
   GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
+
   late Function(GlobalKey) runAddToCartAnimation;
 
   int subId = -1;

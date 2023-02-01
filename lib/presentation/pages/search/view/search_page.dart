@@ -73,8 +73,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
               ),
             ),
             Visibility(
-              visible: ((viewModel.searchRepository.searchResultList.isNotEmpty || viewModel.searchText.isNotEmpty) &&
-                  viewModel.searchLangMode == 'en'),
+              visible: ((viewModel.searchText.isNotEmpty) && viewModel.searchLangMode == 'en'),
               child: (viewModel.isSuccess(tag: viewModel.searchTag) &&
                       viewModel.searchText.isNotEmpty &&
                       viewModel.searchRepository.searchResultList.isNotEmpty)
@@ -119,8 +118,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
               ),
             ),
             Visibility(
-              visible: ((viewModel.searchRepository.searchResultUzList.isNotEmpty || viewModel.searchText.isNotEmpty) &&
-                  viewModel.searchLangMode == 'uz'),
+              visible: ((viewModel.searchText.isNotEmpty) && viewModel.searchLangMode == 'uz'),
               child: (viewModel.isSuccess(tag: viewModel.searchTag) &&
                       viewModel.searchText.isNotEmpty &&
                       viewModel.searchRepository.searchResultUzList.isNotEmpty)

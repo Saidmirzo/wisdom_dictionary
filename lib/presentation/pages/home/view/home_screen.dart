@@ -189,6 +189,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
+                              viewModel.localViewModel.isFromMain = true;
                               viewModel.localViewModel.changePageIndex(6);
                             },
                             child: Center(
@@ -218,6 +219,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                   id: viewModel.homeRepository.timelineModel.image!.id!,
                                   word: viewModel.homeRepository.timelineModel.image!.word,
                                   type: 'word');
+                              viewModel.localViewModel.isFromMain = true;
                               viewModel.localViewModel.changePageIndex(18);
                             },
                             isInkWellEnable: true,
@@ -265,6 +267,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
+                              viewModel.localViewModel.isFromMain = true;
                               viewModel.localViewModel.changePageIndex(7);
                             },
                             child: Center(
@@ -279,6 +282,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
+                              viewModel.localViewModel.isFromMain = true;
                               viewModel.localViewModel.changePageIndex(8);
                             },
                             child: Center(
@@ -293,6 +297,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
+                              viewModel.localViewModel.isFromMain = true;
                               viewModel.localViewModel.changePageIndex(9);
                             },
                             child: Center(
@@ -307,6 +312,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
+                              viewModel.localViewModel.isFromMain = true;
                               viewModel.localViewModel.changePageIndex(10);
                             },
                             child: Center(
