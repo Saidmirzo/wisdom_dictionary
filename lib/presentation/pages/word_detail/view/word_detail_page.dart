@@ -30,7 +30,14 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
   }
 
   @override
-  Widget builder(BuildContext context, WordDetailPageViewModel viewModel, Widget? child) {
+  void onDestroy(WordDetailPageViewModel model) {
+    model.getFirstPhrase = true;
+    super.onDestroy(model);
+  }
+
+  @override
+  Widget builder(
+      BuildContext context, WordDetailPageViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () => viewModel.goBackToSearch(),
       child: Scaffold(
@@ -43,14 +50,16 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
         ),
         body: viewModel.isSuccess(tag: viewModel.initTag)
             ? ListView(
-                padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w, bottom: 70.h),
+                padding: EdgeInsets.only(
+                    top: 16.h, left: 16.w, right: 16.w, bottom: 70.h),
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                controller: viewModel.autoScrollController,
+                // controller: viewModel.autoScrollController,
                 children: [
                   Container(
                     decoration: AppDecoration.bannerDecor,
-                    padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 28.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 22.w, vertical: 28.h),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,8 +70,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                               padding: EdgeInsets.only(right: 25.w),
                               child: Text(
                                 viewModel.wordEntityRepository.requiredWordWithAllModel.word!.word ?? "unknown",
-                                style: AppTextStyle.font16W700Normal
-                                    .copyWith(color: AppColors.blue, fontSize: viewModel.fontSize),
+                                style: AppTextStyle.font16W700Normal.copyWith(color: AppColors.darkGray),
                               ),
                             ),
                             GestureDetector(
@@ -93,16 +101,14 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                         viewModel.wordEntityRepository.requiredWordWithAllModel.word!
                                                 .wordClasswordClass ??
                                             "",
-                                        style: AppTextStyle.font14W500Normal
-                                            .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
                                       ),
                                       Flexible(
                                         child: Padding(
                                           padding: EdgeInsets.only(left: 5.w),
                                           child: HtmlWidget(
                                             "  ${viewModel.wordEntityRepository.requiredWordWithAllModel.word!.wordClassBody ?? ""}",
-                                            textStyle:
-                                                TextStyle(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
+                                            textStyle: const TextStyle(color: AppColors.paleGray),
                                           ),
                                         ),
                                       )

@@ -1,12 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/data/model/phrases_with_all.dart';
@@ -43,7 +40,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 Container(
                   key: widgetKey,
                   child: GestureDetector(
-                    onTap: () => viewModel.addToWordBankFromParent(model, orderNum, widgetKey),
+                    onTap: () => viewModel.addToWordBankFromParent(
+                        model, orderNum, widgetKey),
                     child: Padding(
                       padding: EdgeInsets.only(right: 10.w),
                       child: SvgPicture.asset(Assets.icons.saveWord),
@@ -53,7 +51,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 model.parents!.star != "0"
                     ? Padding(
                         padding: EdgeInsets.only(right: 10.w),
-                        child: SvgPicture.asset(viewModel.findRank(model.parents!.star!)))
+                        child: SvgPicture.asset(
+                            viewModel.findRank(model.parents!.star!)))
                     : const SizedBox.shrink(),
                 Flexible(
                   child: SelectionArea(
@@ -154,7 +153,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: HtmlWidget(
-                    (model.difference != null ? model.difference!.first.body ?? "" : "")
+                    (model.difference != null
+                            ? model.difference!.first.body ?? ""
+                            : "")
                         .replaceFirst("\n", "")
                         .replaceAll("\n\n", ""),
                     textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
@@ -169,7 +170,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "Collocations",
             body: HtmlWidget(
-              (model.collocation != null ? model.collocation!.first.body ?? "" : "")
+              (model.collocation != null
+                      ? model.collocation!.first.body ?? ""
+                      : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
@@ -217,7 +220,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "More Examples",
             body: HtmlWidget(
-              (model.parents!.moreExamples != null ? model.parents!.moreExamples ?? "" : "")
+              (model.parents!.moreExamples != null
+                      ? model.parents!.moreExamples ?? ""
+                      : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
@@ -230,23 +235,32 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Phrases and Idioms",
             viewModel: viewModel,
             isExpanded: viewModel.hasToBeExpanded(model.phrasesWithAll),
-            body: (model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty)
+            body: (model.phrasesWithAll != null &&
+                    model.phrasesWithAll!.isNotEmpty)
                 ? ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: model.phrasesWithAll!.length,
                     itemBuilder: (context, index) {
                       var phraseModel = model.phrasesWithAll![index];
-                      viewModel.checkIfPhrase(phraseModel, index);
-                      return AutoScrollTag(
-                          key: ValueKey(phraseModel.phrases!.pId),
-                          controller: viewModel.autoScrollController,
-                          index: index,
-                          child: PhrasesWidget(model: phraseModel, orderNum: '1', index: index));
+                      // viewModel.checkIfPhrase(phraseModel, index);
+                      bool isSelected=viewModel.isWordContained(
+                                phraseModel.phrases!.pWord ?? "")&&viewModel.getFirstPhrase;
+                      if(isSelected) {
+                        viewModel.firstAutoScroll();
+                      }
+                      return Container(
+                        key: isSelected
+                            ? viewModel.scrollKey
+                            : null,
+                        child: PhrasesWidget(
+                            model: phraseModel, orderNum: '1', index: index),
+                      );
                     },
                   )
                 : const SizedBox.shrink(),
-            visible: model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty,
+            visible: model.phrasesWithAll != null &&
+                model.phrasesWithAll!.isNotEmpty,
           ),
         ],
       ),
