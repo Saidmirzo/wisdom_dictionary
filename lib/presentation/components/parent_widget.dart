@@ -38,7 +38,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             padding: EdgeInsets.only(bottom: 15.h),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   key: widgetKey,
@@ -57,23 +57,26 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     : const SizedBox.shrink(),
                 Flexible(
                   child: SelectionArea(
-                    child: RichText(
-                      text: TextSpan(
-                        text: "$orderNum. ",
-                        style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.darkGray),
-                        children: [
-                          TextSpan(
-                            text: orderNum == "1"
-                                ? "${model.parents!.wordClassBodyMeaning ?? ""} "
-                                : "${model.parents!.wordClassBody ?? ""} ",
-                            style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
-                          ),
-                          TextSpan(
-                            text: viewModel.conductToString(model.wordsUz),
-                            style: AppTextStyle.font14W600Normal.copyWith(color: AppColors.darkGray),
-                          )
-                        ],
-                      ),
+                    child: Text.rich(
+                        TextSpan(
+                          text: "$orderNum. ",
+                          style: AppTextStyle.font14W700Normal
+                              .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                          children: [
+                            TextSpan(
+                              text: orderNum == "1"
+                                  ? "${model.parents!.wordClassBodyMeaning ?? ""} "
+                                  : "${model.parents!.wordClassBody ?? ""} ",
+                              style: AppTextStyle.font14W400Normal
+                                  .copyWith(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
+                            ),
+                            TextSpan(
+                              text: viewModel.conductToString(model.wordsUz),
+                              style: AppTextStyle.font14W600Normal
+                                  .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                            )
+                          ],
+                        )
                     ),
                   ),
                 )
@@ -87,7 +90,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: HtmlWidget(
                   (model.parents!.example ?? "").replaceAll("\n", ""),
-                  textStyle: AppTextStyle.font14W400ItalicHtml,
+                  textStyle: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
                 ),
               ),
             ),
@@ -99,7 +102,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: HtmlWidget(
                   (model.parents!.examples ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
-                  textStyle: AppTextStyle.font14W400ItalicHtml,
+                  textStyle: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
                 ),
               ),
             ),
@@ -109,18 +112,20 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Synonyms",
             body: HtmlWidget(
               (model.parents!.synonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parents!.synonyms != null,
+            viewModel: viewModel,
           ),
           // Antonym
           CustomExpandableWidget(
             title: "Antonyms",
             body: HtmlWidget(
               (model.parents!.anthonims ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parents!.anthonims != null,
+            viewModel: viewModel,
           ),
           // Grammar
           CustomExpandableWidget(
@@ -129,9 +134,10 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               (model.grammar != null ? model.grammar!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.grammar != null && model.grammar!.isNotEmpty,
+            viewModel: viewModel,
           ),
           //Difference
           CustomExpandableWidget(
@@ -142,7 +148,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               children: [
                 Text(
                   (model.difference != null ? model.difference!.first.word ?? "" : ""),
-                  style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.darkGray),
+                  style: AppTextStyle.font14W400Normal
+                      .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
@@ -150,12 +157,13 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     (model.difference != null ? model.difference!.first.body ?? "" : "")
                         .replaceFirst("\n", "")
                         .replaceAll("\n\n", ""),
-                    // textStyle: AppTextStyle.font12W400ItalicHtml,
+                    textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
                   ),
                 )
               ],
             ),
             visible: model.difference != null && model.difference!.isNotEmpty,
+            viewModel: viewModel,
           ),
           // Collocations
           CustomExpandableWidget(
@@ -164,9 +172,10 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               (model.collocation != null ? model.collocation!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
-              textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.collocation != null && model.collocation!.isNotEmpty,
+            viewModel: viewModel,
           ),
           // Thesaurus
           CustomExpandableWidget(
@@ -175,9 +184,10 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               (model.thesaurus != null ? model.thesaurus!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.thesaurus != null && model.thesaurus!.isNotEmpty,
+            viewModel: viewModel,
           ),
           // Metaphors
           CustomExpandableWidget(
@@ -186,9 +196,10 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               (model.metaphor != null ? model.metaphor!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.metaphor != null && model.metaphor!.isNotEmpty,
+            viewModel: viewModel,
           ),
           // Culture
           CustomExpandableWidget(
@@ -197,9 +208,10 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               (model.culture != null ? model.culture!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.culture != null && model.culture!.isNotEmpty,
+            viewModel: viewModel,
           ),
           // More examples
           CustomExpandableWidget(
@@ -208,13 +220,15 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               (model.parents!.moreExamples != null ? model.parents!.moreExamples ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
-              // textStyle: AppTextStyle.font12W400ItalicHtml,
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.parents!.moreExamples != null && model.parents!.moreExamples!.isNotEmpty,
+            viewModel: viewModel,
           ),
           // Phrases and Idioms
           CustomExpandableWidget(
             title: "Phrases and Idioms",
+            viewModel: viewModel,
             isExpanded: viewModel.hasToBeExpanded(model.phrasesWithAll),
             body: (model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty)
                 ? ListView.builder(

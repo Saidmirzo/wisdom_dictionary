@@ -64,7 +64,7 @@ class SearchHistoryItem extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () => onTap,
+                        onTap: () => onTap(),
                         borderRadius: BorderRadius.circular(24.r),
                         child: SvgPicture.asset(
                           Assets.icons.arrowCircleRight,

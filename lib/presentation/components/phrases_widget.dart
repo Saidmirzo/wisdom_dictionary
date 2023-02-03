@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/data/model/phrases_with_all.dart';
@@ -40,6 +39,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
             "${model.phrases!.pWord ?? ""} ",
             style: AppTextStyle.font14W700Normal.copyWith(
                 color: AppColors.blue,
+                fontSize: viewModel.fontSize! - 2,
                 backgroundColor:
                     viewModel.isWordContained(model.phrases!.pWord ?? "") ? AppColors.success : Colors.transparent),
           ),
@@ -63,20 +63,29 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     : const SizedBox.shrink(),
                 Flexible(
                   child: SelectionArea(
-                    child: RichText(
-                      text: TextSpan(
+                    child: Text.rich(
+                      TextSpan(
                         text: (model.parentPhrasesWithAll != null && model.parentPhrasesWithAll!.isNotEmpty)
                             ? "$orderNum. "
                             : "",
-                        style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font14W700Normal.copyWith(
+                          color: AppColors.darkGray,
+                          fontSize: viewModel.fontSize! - 2,
+                        ),
                         children: [
                           TextSpan(
                             text: "${model.phrases!.pWordClassComment ?? ""} ",
-                            style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
+                            style: AppTextStyle.font14W400Normal.copyWith(
+                              color: AppColors.paleGray,
+                              fontSize: viewModel.fontSize! - 2,
+                            ),
                           ),
                           TextSpan(
                             text: viewModel.conductToStringPhrasesTranslate(model.phrasesTranslate),
-                            style: AppTextStyle.font14W600Normal.copyWith(color: AppColors.darkGray),
+                            style: AppTextStyle.font14W600Normal.copyWith(
+                              color: AppColors.darkGray,
+                              fontSize: viewModel.fontSize! - 2,
+                            ),
                           )
                         ],
                       ),
@@ -93,7 +102,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: Text(
                   (viewModel.conductToStringPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml,
+                  style: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize!-2),
                 ),
               ),
             ),
@@ -101,9 +110,11 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           // Synonyms
           CustomExpandableWidget(
             title: "Synonyms",
+            viewModel: viewModel,
             containerColor: AppColors.lightBlue,
             body: HtmlWidget(
               (model.phrases!.pSynonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.phrases!.pSynonyms != null,
           ),

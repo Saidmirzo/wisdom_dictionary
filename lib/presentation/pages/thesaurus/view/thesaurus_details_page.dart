@@ -4,14 +4,13 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/core/di/app_locator.dart';
-import 'package:wisdom/data/model/word_with_theasurus_model.dart';
-import 'package:wisdom/presentation/pages/grammar/viewmodel/grammar_detail_page_viewmodel.dart';
 import 'package:wisdom/presentation/pages/thesaurus/viewmodel/thesaurus_detail_page_viewmodel.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_decoration.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../data/viewmodel/local_viewmodel.dart';
 import '../../../widgets/custom_app_bar.dart';
 
 class ThesaurusDetailPage extends ViewModelBuilderWidget<ThesaurusDetailPageViewModel> {
@@ -26,7 +25,7 @@ class ThesaurusDetailPage extends ViewModelBuilderWidget<ThesaurusDetailPageView
   @override
   Widget builder(BuildContext context, ThesaurusDetailPageViewModel viewModel, Widget? child) {
     return WillPopScope(
-      onWillPop: () => viewModel.goBack() ,
+      onWillPop: () => viewModel.goBack(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
         backgroundColor: AppColors.lightBackground,
@@ -51,7 +50,8 @@ class ThesaurusDetailPage extends ViewModelBuilderWidget<ThesaurusDetailPageView
                     Center(
                       child: Text(
                         viewModel.getThesaurus() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal
+                            .copyWith(color: AppColors.darkGray, fontSize: locator<LocalViewModel>().fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -63,6 +63,8 @@ class ThesaurusDetailPage extends ViewModelBuilderWidget<ThesaurusDetailPageView
                                 viewModel.categoryRepository.thesaurusDetailModel.tBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                                textStyle: AppTextStyle.font14W400NormalHtml
+                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize - 2),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

@@ -10,9 +10,11 @@ class CollocationDetailPageViewModel extends BaseViewModel {
     required super.context,
     required this.homeRepository,
     required this.categoryRepository,
+    required this.localViewModel,
   });
 
   final HomeRepository homeRepository;
+  final LocalViewModel localViewModel;
   final CategoryRepository categoryRepository;
   final String getCollocationDetailsTag = 'getThesaurusDetails';
 

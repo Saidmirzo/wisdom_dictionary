@@ -61,7 +61,8 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                               padding: EdgeInsets.only(right: 25.w),
                               child: Text(
                                 viewModel.wordEntityRepository.requiredWordWithAllModel.word!.word ?? "unknown",
-                                style: AppTextStyle.font16W700Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W700Normal
+                                    .copyWith(color: AppColors.blue, fontSize: viewModel.fontSize),
                               ),
                             ),
                             GestureDetector(
@@ -92,14 +93,16 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                         viewModel.wordEntityRepository.requiredWordWithAllModel.word!
                                                 .wordClasswordClass ??
                                             "",
-                                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                                        style: AppTextStyle.font14W500Normal
+                                            .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
                                       ),
                                       Flexible(
                                         child: Padding(
                                           padding: EdgeInsets.only(left: 5.w),
                                           child: HtmlWidget(
                                             "  ${viewModel.wordEntityRepository.requiredWordWithAllModel.word!.wordClassBody ?? ""}",
-                                            textStyle: const TextStyle(color: AppColors.paleGray),
+                                            textStyle:
+                                                TextStyle(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
                                           ),
                                         ),
                                       )
@@ -165,6 +168,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
         context: context,
         localViewModel: locator.get(),
         wordEntityRepository: locator.get(),
-        wordMapper: locator.get());
+        wordMapper: locator.get(),
+        preferenceHelper: locator.get());
   }
 }

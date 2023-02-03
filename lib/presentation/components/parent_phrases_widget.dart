@@ -35,7 +35,7 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
         children: [
           Text(
             "${model.parentPhrases!.word ?? ""} ",
-            style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.blue),
+            style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.blue, fontSize: viewModel.fontSize! - 2),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
@@ -57,18 +57,21 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     : const SizedBox.shrink(),
                 Flexible(
                   child: SelectionArea(
-                    child: RichText(
-                      text: TextSpan(
+                    child: Text.rich(
+                      TextSpan(
                         text: "$orderNum. ",
-                        style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font14W700Normal
+                            .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
                         children: [
                           TextSpan(
                             text: "${model.parentPhrases!.wordClassComment ?? ""} ",
-                            style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
+                            style: AppTextStyle.font14W400Normal
+                                .copyWith(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
                           ),
                           TextSpan(
                             text: viewModel.conductToStringParentPhrasesTranslate(model.parentPhrasesTranslate),
-                            style: AppTextStyle.font14W600Normal.copyWith(color: AppColors.darkGray),
+                            style: AppTextStyle.font14W600Normal
+                                .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
                           )
                         ],
                       ),
@@ -85,7 +88,7 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: Text(
                   (viewModel.conductToStringParentPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml,
+                  style: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
                 ),
               ),
             ),
@@ -93,9 +96,11 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           // Synonyms
           CustomExpandableWidget(
             title: "Synonyms",
+            viewModel: viewModel,
             containerColor: AppColors.lightBlue,
             body: HtmlWidget(
               (model.parentPhrases!.symonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parentPhrases!.symonyms != null,
           ),

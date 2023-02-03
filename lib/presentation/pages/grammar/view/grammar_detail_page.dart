@@ -10,6 +10,7 @@ import 'package:wisdom/presentation/widgets/loading_widget.dart';
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_decoration.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../data/viewmodel/local_viewmodel.dart';
 import '../../../widgets/custom_app_bar.dart';
 
 class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewModel> {
@@ -47,7 +48,8 @@ class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewMode
                     Center(
                       child: Text(
                         viewModel.getGrammar() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal
+                            .copyWith(color: AppColors.darkGray, fontSize: locator<LocalViewModel>().fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -59,6 +61,8 @@ class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewMode
                                 viewModel.categoryRepository.grammarDetailModel.gBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                                textStyle: AppTextStyle.font14W400NormalHtml
+                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize-2),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

@@ -1,12 +1,15 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/model/catalog_model.dart';
 import 'package:wisdom/data/model/recent_model.dart';
 import 'package:wisdom/data/model/word_bank_model.dart';
 
 class LocalViewModel extends BaseViewModel {
-  LocalViewModel({required super.context});
+  LocalViewModel({required super.context, required this.preferenceHelper});
+
+  final SharedPreferenceHelper preferenceHelper;
 
   PageController pageController = PageController();
 
@@ -31,6 +34,8 @@ class LocalViewModel extends BaseViewModel {
   GlobalKey<CartIconKey> cartKey = GlobalKey<CartIconKey>();
 
   late Function(GlobalKey) runAddToCartAnimation;
+
+  double get fontSize => preferenceHelper.getDouble(preferenceHelper.fontSize, 16);
 
   int subId = -1;
 

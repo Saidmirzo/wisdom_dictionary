@@ -10,7 +10,6 @@ import 'config/theme/themes.dart';
 import 'core/di/app_locator.dart';
 import 'presentation/routes/routes.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupConfigs(() async {
@@ -21,7 +20,6 @@ void main() async {
     setupLocator();
     await locator<DBHelper>().init();
     await locator<SharedPreferenceHelper>().getInstance();
-    
 
     runApp(const MyApp());
     AwesomeNotifications().initialize(

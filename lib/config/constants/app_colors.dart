@@ -8,8 +8,6 @@ abstract class AppColors {
   static const Color success = Color(0xFFBCF5CC);
   static const Color error = Color(0xFFFCD0D1);
 
-
-
   static const Color blue = Color(0xFF0063A4);
   static const Color paleBlue = Color(0xFF6782D8);
   static const Color lightBlue = Color(0xFF94BDDB);

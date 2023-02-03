@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wisdom/presentation/pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
 
 import '../../config/constants/app_colors.dart';
 import '../../config/constants/app_text_style.dart';
@@ -9,7 +10,7 @@ import '../../config/constants/assets.dart';
 
 class CustomExpandableWidget extends StatefulWidget {
   const CustomExpandableWidget(
-      {Key? key, required this.title, required this.body, required this.visible, this.containerColor, this.isExpanded})
+      {Key? key, required this.title, required this.body, required this.visible, this.containerColor, this.isExpanded, required this.viewModel})
       : super(key: key);
 
   final String title;
@@ -17,6 +18,7 @@ class CustomExpandableWidget extends StatefulWidget {
   final bool visible;
   final Color? containerColor;
   final bool? isExpanded;
+  final WordDetailPageViewModel viewModel;
 
   @override
   State<CustomExpandableWidget> createState() => _CustomExpandableWidgetState();
@@ -59,6 +61,8 @@ class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
                   },
                   child: SvgPicture.asset(
                     expandableController.value ? Assets.icons.expanded : Assets.icons.collapsed,
+                    height: 20.h + widget.viewModel.fontSize!-16,
+                    width: 20.h + widget.viewModel.fontSize!-16,
                   ),
                 ),
                 Flexible(
@@ -67,7 +71,7 @@ class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
                       padding: EdgeInsets.only(left: 10.w, top: 3.h),
                       child: Text(
                         widget.title,
-                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray, fontSize: widget.viewModel.fontSize! - 4),
                       ),
                     ),
                     collapsed: const SizedBox.shrink(),

@@ -10,6 +10,7 @@ class SharedPreferenceHelper {
   String index = "index";
   String dbVersion = "db_version";
   String isUpdated = "is_updated";
+  String fontSize = "font_size";
   String isFirstTime = "is_first_time";
 
   late SharedPreferences prefs;
@@ -62,11 +63,11 @@ class SharedPreferenceHelper {
     return prefs.getInt(key) ?? defValue;
   }
 
-  putFloat(String key, double value) {
+  putDouble(String key, double value) {
     prefs.setDouble(key, value);
   }
 
-  double getFloat(String key, double defValue) {
+  double getDouble(String key, double defValue) {
     return prefs.getDouble(key) ?? defValue;
   }
 

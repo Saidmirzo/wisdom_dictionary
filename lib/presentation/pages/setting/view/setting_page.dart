@@ -10,7 +10,6 @@ import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/core/domain/entities/def_enum.dart';
-import 'package:wisdom/core/services/local_notification_service.dart';
 import 'package:wisdom/presentation/components/custom_number_picker.dart';
 import 'package:wisdom/presentation/components/custom_oval_button.dart';
 import 'package:wisdom/presentation/components/locked.dart';
@@ -22,6 +21,12 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
   SettingPage({super.key});
 
   TimeOfDay? timeOfDay = const TimeOfDay(hour: 0, minute: 0);
+
+  @override
+  void onViewModelReady(SettingPageViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 
   @override
   Widget builder(BuildContext context, SettingPageViewModel viewModel, Widget? child) {
@@ -95,7 +100,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
               Container(
                 decoration: AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-                margin: const EdgeInsets.only(top: 16),
+                margin: EdgeInsets.only(top: 16.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,13 +187,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       ),
                     ),
                     Slider(
-                      min: 0,
-                      max: 14,
+                      min: 10.sp,
+                      max: 24.sp,
                       value: viewModel.fontSizeValue,
-                      onChanged: (value) {
-                        viewModel.fontSizeValue = value;
-                        viewModel.notifyListeners();
-                      },
+                      onChanged: (value) => viewModel.changeFontSize(value),
                       activeColor: AppColors.blue,
                       inactiveColor: AppColors.seekerBack.withOpacity(0.2),
                     ),
@@ -197,7 +199,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       child: Text(
                         'Wisdom Dictionary',
                         style: AppTextStyle.font14W500Normal
-                            .copyWith(fontSize: 10 + viewModel.fontSizeValue, color: AppColors.darkGray),
+                            .copyWith(fontSize: viewModel.fontSizeValue, color: AppColors.darkGray),
                       ),
                     )
                   ],
@@ -397,6 +399,6 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
 
   @override
   SettingPageViewModel viewModelBuilder(BuildContext context) {
-    return SettingPageViewModel(context: context);
+    return SettingPageViewModel(context: context, preferenceHelper: locator.get());
   }
 }

@@ -49,7 +49,8 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
                     Center(
                       child: Text(
                         viewModel.getCollocation() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal
+                            .copyWith(color: AppColors.darkGray, fontSize: viewModel.localViewModel.fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -61,6 +62,7 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
                                 viewModel.categoryRepository.collocationDetailModel.cBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                          textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: viewModel.localViewModel.fontSize),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),
@@ -78,6 +80,9 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
   @override
   CollocationDetailPageViewModel viewModelBuilder(BuildContext context) {
     return CollocationDetailPageViewModel(
-        context: context, homeRepository: locator.get(), categoryRepository: locator.get());
+        context: context,
+        homeRepository: locator.get(),
+        categoryRepository: locator.get(),
+        localViewModel: locator.get());
   }
 }

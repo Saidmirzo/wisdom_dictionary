@@ -6,6 +6,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/assets.dart';
+import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/model/parent_phrases_example_model.dart';
 import 'package:wisdom/data/model/parent_phrases_translate_model.dart';
 import 'package:wisdom/data/model/phrases_example_model.dart';
@@ -24,11 +25,13 @@ class WordDetailPageViewModel extends BaseViewModel {
     required super.context,
     required this.localViewModel,
     required this.wordEntityRepository,
+    required this.preferenceHelper,
     required this.wordMapper,
   });
 
   final LocalViewModel localViewModel;
   final WordEntityRepository wordEntityRepository;
+  final SharedPreferenceHelper preferenceHelper;
   final WordMapper wordMapper;
   final String initTag = 'initTag';
 
@@ -36,6 +39,7 @@ class WordDetailPageViewModel extends BaseViewModel {
   List<ParentsWithAll> parentsWithAllList = [];
   bool synonymsIsExpanded = false;
   bool phrasesIsExpanded = false;
+  double? fontSize;
 
   late AutoScrollController autoScrollController;
 
@@ -46,7 +50,7 @@ class WordDetailPageViewModel extends BaseViewModel {
         autoScrollController = AutoScrollController(
             viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context!).padding.bottom),
             axis: Axis.vertical);
-
+        fontSize = preferenceHelper.getDouble(preferenceHelper.fontSize, 16);
         await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();

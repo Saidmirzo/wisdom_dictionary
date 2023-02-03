@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/core/di/app_locator.dart';
+import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
 import '../../../../config/constants/app_colors.dart';
@@ -47,7 +48,8 @@ class CultureDetailPage extends ViewModelBuilderWidget<CultureDetailPageViewMode
                     Center(
                       child: Text(
                         viewModel.getCulture() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal
+                            .copyWith(color: AppColors.darkGray, fontSize: locator<LocalViewModel>().fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -59,6 +61,8 @@ class CultureDetailPage extends ViewModelBuilderWidget<CultureDetailPageViewMode
                                 viewModel.categoryRepository.cultureDetailModel.cBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                                textStyle: AppTextStyle.font14W400NormalHtml
+                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize - 2),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

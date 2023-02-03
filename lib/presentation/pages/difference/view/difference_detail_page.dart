@@ -10,6 +10,7 @@ import 'package:wisdom/presentation/widgets/loading_widget.dart';
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_decoration.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../data/viewmodel/local_viewmodel.dart';
 import '../../../widgets/custom_app_bar.dart';
 
 class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageViewModel> {
@@ -49,7 +50,8 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
                     Center(
                       child: Text(
                         viewModel.getDifference() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal
+                            .copyWith(color: AppColors.darkGray, fontSize: locator<LocalViewModel>().fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -61,6 +63,7 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
                                 viewModel.categoryRepository.differenceDetailModel.dBody!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
+                          textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: locator<LocalViewModel>().fontSize),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),
