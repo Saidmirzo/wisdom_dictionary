@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:jbaza/jbaza.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/data/model/parent_phrases_example_model.dart';
 import 'package:wisdom/data/model/parent_phrases_translate_model.dart';
@@ -36,18 +32,23 @@ class WordDetailPageViewModel extends BaseViewModel {
   List<ParentsWithAll> parentsWithAllList = [];
   bool synonymsIsExpanded = false;
   bool phrasesIsExpanded = false;
+  bool getFirstPhrase = true;
 
-  late AutoScrollController autoScrollController;
+  GlobalKey scrollKey = GlobalKey();
+
+  // late AutoScrollController autoScrollController;
 
   // taking searched word model from local viewmodel and collect all details of it from db
   init() {
     safeBlock(
       () async {
-        autoScrollController = AutoScrollController(
-            viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context!).padding.bottom),
-            axis: Axis.vertical);
+        // autoScrollController = AutoScrollController(
+        //     viewportBoundaryGetter: () =>
+        //         Rect.fromLTRB(0, 0, 0, MediaQuery.of(context!).padding.bottom),
+        //     axis: Axis.vertical);
 
-        await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
+        await wordEntityRepository
+            .getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();
           setSuccess(tag: initTag);
@@ -58,11 +59,19 @@ class WordDetailPageViewModel extends BaseViewModel {
     );
   }
 
-  void funcScrollByCtg(int index) async {
-    await autoScrollController.scrollToIndex(index,
-        duration: const Duration(milliseconds: 800), preferPosition: AutoScrollPosition.begin);
-    autoScrollController.highlight(index);
+  void firstAutoScroll() async {
+    getFirstPhrase = false;
+    await Future.delayed(const Duration(milliseconds: 50));
+    await Scrollable.ensureVisible(scrollKey.currentContext!,
+        duration: const Duration(milliseconds: 500));
   }
+
+  // void funcScrollByCtg(int index) async {
+  //   await autoScrollController.scrollToIndex(index,
+  //       duration: const Duration(milliseconds: 800),
+  //       preferPosition: AutoScrollPosition.begin);
+  //   autoScrollController.highlight(index);
+  // }
 
   void textToSpeech() {
     if (wordEntityRepository.requiredWordWithAllModel.word != null &&
@@ -75,10 +84,13 @@ class WordDetailPageViewModel extends BaseViewModel {
   }
 
   Future<void> splitingToParentWithAllModel() async {
-    parentsWithAllList.add(wordMapper.wordWithAllToParentsWithAll(wordEntityRepository.requiredWordWithAllModel));
+    parentsWithAllList.add(wordMapper.wordWithAllToParentsWithAll(
+        wordEntityRepository.requiredWordWithAllModel));
     if (wordEntityRepository.requiredWordWithAllModel.parentsWithAll != null &&
-        wordEntityRepository.requiredWordWithAllModel.parentsWithAll!.isNotEmpty) {
-      parentsWithAllList.addAll(wordEntityRepository.requiredWordWithAllModel.parentsWithAll!);
+        wordEntityRepository
+            .requiredWordWithAllModel.parentsWithAll!.isNotEmpty) {
+      parentsWithAllList.addAll(
+          wordEntityRepository.requiredWordWithAllModel.parentsWithAll!);
     }
   }
 
@@ -110,14 +122,16 @@ class WordDetailPageViewModel extends BaseViewModel {
     }, callFuncName: 'addToWordBankFromPhrase', inProgress: false);
   }
 
-  addToWordBankFromParentPhrase(ParentPhrasesWithAll model, String num, GlobalKey key) {
+  addToWordBankFromParentPhrase(
+      ParentPhrasesWithAll model, String num, GlobalKey key) {
     safeBlock(() async {
       int number = int.parse(num.isEmpty ? "0" : num);
       var wordBank = WordBankModel(
           id: model.parentPhrases!.id,
           word: model.parentPhrases!.word ?? "",
           example: model.phrasesExample![0].value,
-          translation: conductToStringParentPhrasesTranslate(model.parentPhrasesTranslate!),
+          translation: conductToStringParentPhrasesTranslate(
+              model.parentPhrasesTranslate!),
           createdAt: DateTime.now().toString(),
           number: number);
       funAddToWordBank(wordBank, key);
@@ -157,7 +171,8 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  String conductToStringPhrasesTranslate(List<PhrasesTranslateModel>? translateList) {
+  String conductToStringPhrasesTranslate(
+      List<PhrasesTranslateModel>? translateList) {
     if (translateList != null && translateList.isNotEmpty) {
       var concatenate = StringBuffer();
       for (var item in translateList) {
@@ -173,7 +188,8 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  String conductToStringParentPhrasesTranslate(List<ParentPhrasesTranslateModel>? translateList) {
+  String conductToStringParentPhrasesTranslate(
+      List<ParentPhrasesTranslateModel>? translateList) {
     if (translateList != null && translateList.isNotEmpty) {
       var concatenate = StringBuffer();
       for (var item in translateList) {
@@ -189,7 +205,8 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  String conductToStringPhrasesExamples(List<PhrasesExampleModel>? examplesList) {
+  String conductToStringPhrasesExamples(
+      List<PhrasesExampleModel>? examplesList) {
     if (examplesList != null && examplesList.isNotEmpty) {
       var concatenate = StringBuffer();
       for (var item in examplesList) {
@@ -205,7 +222,8 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  String conductToStringParentPhrasesExamples(List<ParentPhrasesExampleModel>? examplesList) {
+  String conductToStringParentPhrasesExamples(
+      List<ParentPhrasesExampleModel>? examplesList) {
     if (examplesList != null && examplesList.isNotEmpty) {
       var concatenate = StringBuffer();
       for (var item in examplesList) {
@@ -255,18 +273,19 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  void checkIfPhrase(PhrasesWithAll phraseModel, int index) async {
-    if (localViewModel.wordDetailModel.type == "phrase" || localViewModel.wordDetailModel.type == "phrases") {
-      if (isWordContained(phraseModel.phrases!.pWord ?? "")) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (phrasesIsExpanded == false) {
-            phrasesIsExpanded = true;
-            funcScrollByCtg(index);
-          }
-        });
-      }
-    }
-  }
+  // void checkIfPhrase(PhrasesWithAll phraseModel, int index) async {
+  //   if (localViewModel.wordDetailModel.type == "phrase" ||
+  //       localViewModel.wordDetailModel.type == "phrases") {
+  //     if (isWordContained(phraseModel.phrases!.pWord ?? "")) {
+  //       WidgetsBinding.instance.addPostFrameCallback((_) {
+  //         if (phrasesIsExpanded == false) {
+  //           phrasesIsExpanded = true;
+  //           funcScrollByCtg(index);
+  //         }
+  //       });
+  //     }
+  //   }
+  // }
 
   bool isWordContained(String word) {
     if (word == (localViewModel.wordDetailModel.word ?? "")) {
@@ -276,7 +295,8 @@ class WordDetailPageViewModel extends BaseViewModel {
   }
 
   bool hasToBeExpanded(List<PhrasesWithAll>? phrasesWithAll) {
-    if (localViewModel.wordDetailModel.type == "phrase" || localViewModel.wordDetailModel.type == "phrases") {
+    if (localViewModel.wordDetailModel.type == "phrase" ||
+        localViewModel.wordDetailModel.type == "phrases") {
       if (phrasesWithAll != null && phrasesWithAll.isNotEmpty) {
         for (var model in phrasesWithAll) {
           if (isWordContained(model.phrases!.pWord ?? "")) {

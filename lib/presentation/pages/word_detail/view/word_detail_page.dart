@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/components/parent_widget.dart';
@@ -26,11 +25,20 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
     if (!currentfocus.hasPrimaryFocus) {
       currentfocus.unfocus();
     }
+    
+
     super.onViewModelReady(viewModel);
   }
 
   @override
-  Widget builder(BuildContext context, WordDetailPageViewModel viewModel, Widget? child) {
+  void onDestroy(WordDetailPageViewModel model) {
+    model.getFirstPhrase = true;
+    super.onDestroy(model);
+  }
+
+  @override
+  Widget builder(
+      BuildContext context, WordDetailPageViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () => viewModel.goBackToSearch(),
       child: Scaffold(
@@ -43,14 +51,18 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
         ),
         body: viewModel.isSuccess(tag: viewModel.initTag)
             ? ListView(
-                padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w, bottom: 70.h),
+                padding: EdgeInsets.only(
+                    top: 16.h, left: 16.w, right: 16.w, bottom: 70.h),
                 shrinkWrap: true,
+                // controller: viewModel.autoScrollController,
+
                 physics: const BouncingScrollPhysics(),
-                controller: viewModel.autoScrollController,
+                // controller: viewModel.autoScrollController,
                 children: [
                   Container(
                     decoration: AppDecoration.bannerDecor,
-                    padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 28.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 22.w, vertical: 28.h),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,17 +72,28 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                             Padding(
                               padding: EdgeInsets.only(right: 25.w),
                               child: Text(
-                                viewModel.wordEntityRepository.requiredWordWithAllModel.word!.word ?? "unknown",
-                                style: AppTextStyle.font16W700Normal.copyWith(color: AppColors.darkGray),
+                                viewModel.wordEntityRepository
+                                        .requiredWordWithAllModel.word!.word ??
+                                    "unknown",
+                                style: AppTextStyle.font16W700Normal
+                                    .copyWith(color: AppColors.darkGray),
                               ),
                             ),
                             GestureDetector(
-                                onTap: () => viewModel.textToSpeech(), child: SvgPicture.asset(Assets.icons.sound)),
-                            viewModel.wordEntityRepository.requiredWordWithAllModel.word!.star != "0"
+                                onTap: () => viewModel.textToSpeech(),
+                                child: SvgPicture.asset(Assets.icons.sound)),
+                            viewModel.wordEntityRepository
+                                        .requiredWordWithAllModel.word!.star !=
+                                    "0"
                                 ? Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                    child: SvgPicture.asset(viewModel
-                                        .findRank(viewModel.wordEntityRepository.requiredWordWithAllModel.word!.star!)),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    child: SvgPicture.asset(viewModel.findRank(
+                                        viewModel
+                                            .wordEntityRepository
+                                            .requiredWordWithAllModel
+                                            .word!
+                                            .star!)),
                                   )
                                 : SizedBox(width: 10.w),
                             SvgPicture.asset(Assets.icons.saveWord),
@@ -86,20 +109,27 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                   alignment: Alignment.topLeft,
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        viewModel.wordEntityRepository.requiredWordWithAllModel.word!
+                                        viewModel
+                                                .wordEntityRepository
+                                                .requiredWordWithAllModel
+                                                .word!
                                                 .wordClasswordClass ??
                                             "",
-                                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                                        style: AppTextStyle.font14W500Normal
+                                            .copyWith(
+                                                color: AppColors.darkGray),
                                       ),
                                       Flexible(
                                         child: Padding(
                                           padding: EdgeInsets.only(left: 5.w),
                                           child: HtmlWidget(
                                             "  ${viewModel.wordEntityRepository.requiredWordWithAllModel.word!.wordClassBody ?? ""}",
-                                            textStyle: const TextStyle(color: AppColors.paleGray),
+                                            textStyle: const TextStyle(
+                                                color: AppColors.paleGray),
                                           ),
                                         ),
                                       )
@@ -108,7 +138,9 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                 ),
                               ),
                               Visibility(
-                                visible: viewModel.wordEntityRepository.requiredWordWithAllModel.word!.image != null,
+                                visible: viewModel.wordEntityRepository
+                                        .requiredWordWithAllModel.word!.image !=
+                                    null,
                                 child: Align(
                                   alignment: Alignment.centerRight,
                                   child: Container(
@@ -121,10 +153,19 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(9.r),
-                                      child: viewModel.wordEntityRepository.requiredWordWithAllModel.word!.image != null
+                                      child: viewModel
+                                                  .wordEntityRepository
+                                                  .requiredWordWithAllModel
+                                                  .word!
+                                                  .image !=
+                                              null
                                           ? Image.network(
                                               Urls.baseUrl +
-                                                  viewModel.wordEntityRepository.requiredWordWithAllModel.word!.image!,
+                                                  viewModel
+                                                      .wordEntityRepository
+                                                      .requiredWordWithAllModel
+                                                      .word!
+                                                      .image!,
                                               fit: BoxFit.scaleDown,
                                             )
                                           : const SizedBox.shrink(),
@@ -141,6 +182,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                           itemCount: viewModel.parentsWithAllList.length,
                           itemBuilder: (context, index) {
                             var item = viewModel.parentsWithAllList[index];
+
                             return ParentWidget(
                               model: item,
                               orderNum: "${index + 1}",
