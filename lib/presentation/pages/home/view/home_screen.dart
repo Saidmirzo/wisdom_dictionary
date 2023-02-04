@@ -2,6 +2,7 @@ import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:wisdom/config/constants/urls.dart';

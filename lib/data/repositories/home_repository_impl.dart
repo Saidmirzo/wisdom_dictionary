@@ -78,7 +78,10 @@ class HomeRepositoryImpl extends HomeRepository {
     var response = await get(Urls.getLenta);
     if (response.statusCode == 200) {
       var model = TimelineModel.fromJson(jsonDecode(response.body));
-      _ad = Ad(id: model.ad?.id, image: model.ad?.image!, link: model.ad?.link);
+      response = await get(Uri.parse(Urls.baseUrl + model.ad!.link!));
+      if (response.statusCode == 200) {
+        _ad = Ad(id: model.ad?.id, image: model.ad?.image!, link: model.ad?.link);
+      }
       return _ad;
     } else {
       throw VMException(response.body, callFuncName: 'getAd', response: response);

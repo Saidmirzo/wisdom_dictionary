@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -9,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
+import 'package:wisdom/core/domain/http_is_success.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 
@@ -51,6 +53,11 @@ class HomeViewModel extends BaseViewModel {
       }
       setSuccess(tag: getAdTag);
     }, callFuncName: 'getAd', tag: getAdTag, inProgress: false);
+  }
+
+  isAdHTTPWorking(String uri) async {
+    var result = await get(Uri.parse(uri));
+    return result.isSuccessful;
   }
 
   void onAdWebClicked() {

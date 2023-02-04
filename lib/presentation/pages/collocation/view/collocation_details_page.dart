@@ -60,8 +60,7 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
                         child: viewModel.isSuccess(tag: viewModel.getCollocationDetailsTag)
                             ? HtmlWidget(
                                 viewModel.categoryRepository.collocationDetailModel.cBody!
-                                    .replaceAll("\n", "")
-                                    .replaceAll("\n\n", ""),
+                                    .replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
                           textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: viewModel.localViewModel.fontSize),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),

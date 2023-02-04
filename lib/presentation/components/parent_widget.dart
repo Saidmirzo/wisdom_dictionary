@@ -77,10 +77,13 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           // Example
           Flexible(
             child: Padding(
-              padding: EdgeInsets.only(bottom: 10.h, left: 10.w),
+              padding: EdgeInsets.only(left: 10.w),
               child: SelectionArea(
                 child: HtmlWidget(
-                  (model.parents!.example ?? "").replaceAll("\n", ""),
+                  (model.parents!.example ?? "")
+                      .replaceAll("<br>", "")
+                      .replaceAll("<p>", "")
+                      .replaceAll("</p>", "<br>"),
                   textStyle: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
                 ),
               ),
@@ -92,7 +95,10 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               padding: EdgeInsets.only(left: 10.w),
               child: SelectionArea(
                 child: HtmlWidget(
-                  (model.parents!.examples ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
+                  (model.parents!.examples ?? "")
+                      .replaceAll("<br>", "")
+                      .replaceAll("<p>", "")
+                      .replaceAll("</p>", "<br>"),
                   textStyle: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
                 ),
               ),
@@ -102,7 +108,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "Synonyms",
             body: HtmlWidget(
-              (model.parents!.synonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
+              (model.parents!.synonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parents!.synonyms != null,
@@ -112,7 +118,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "Antonyms",
             body: HtmlWidget(
-              (model.parents!.anthonims ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
+              (model.parents!.anthonims ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parents!.anthonims != null,
@@ -123,8 +129,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Grammar",
             body: HtmlWidget(
               (model.grammar != null ? model.grammar!.first.body ?? "" : "")
-                  .replaceFirst("\n", "")
-                  .replaceAll("\n\n", "\n"),
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.grammar != null && model.grammar!.isNotEmpty,
@@ -146,8 +153,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   padding: EdgeInsets.only(top: 10.h),
                   child: HtmlWidget(
                     (model.difference != null ? model.difference!.first.body ?? "" : "")
-                        .replaceFirst("\n", "")
-                        .replaceAll("\n\n", ""),
+                        .replaceAll("<br>", "")
+                        .replaceAll("<p>", "")
+                        .replaceAll("</p>", "<br>"),
                     textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
                   ),
                 )
@@ -161,8 +169,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Collocations",
             body: HtmlWidget(
               (model.collocation != null ? model.collocation!.first.body ?? "" : "")
-                  .replaceFirst("\n", "")
-                  .replaceAll("\n\n", "\n"),
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.collocation != null && model.collocation!.isNotEmpty,
@@ -173,8 +182,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Thesaurus",
             body: HtmlWidget(
               (model.thesaurus != null ? model.thesaurus!.first.body ?? "" : "")
-                  .replaceFirst("\n", "")
-                  .replaceAll("\n\n", "\n"),
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.thesaurus != null && model.thesaurus!.isNotEmpty,
@@ -185,8 +195,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Metaphor",
             body: HtmlWidget(
               (model.metaphor != null ? model.metaphor!.first.body ?? "" : "")
-                  .replaceFirst("\n", "")
-                  .replaceAll("\n\n", "\n"),
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.metaphor != null && model.metaphor!.isNotEmpty,
@@ -197,8 +208,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Culture",
             body: HtmlWidget(
               (model.culture != null ? model.culture!.first.body ?? "" : "")
-                  .replaceFirst("\n", "")
-                  .replaceAll("\n\n", "\n"),
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.culture != null && model.culture!.isNotEmpty,
@@ -209,8 +221,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "More Examples",
             body: HtmlWidget(
               (model.parents!.moreExamples != null ? model.parents!.moreExamples ?? "" : "")
-                  .replaceFirst("\n", "")
-                  .replaceAll("\n\n", "\n"),
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.parents!.moreExamples != null && model.parents!.moreExamples!.isNotEmpty,
@@ -232,7 +245,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                           viewModel.isWordEqual(phraseModel.phrases!.pWord ?? "") && viewModel.getFirstPhrase;
                       if (viewModel.localViewModel.isSearchByUz) {
                         isSelected = viewModel.isWordContained(
-                                viewModel.conductToStringPhrasesTranslate(phraseModel.phrasesTranslate??[])) &&
+                                viewModel.conductToStringPhrasesTranslate(phraseModel.phrasesTranslate ?? [])) &&
                             viewModel.getFirstPhrase;
                       }
                       if (isSelected) {

@@ -54,10 +54,6 @@ class SearchRepositoryImpl extends SearchRepository {
         searchPhraseDtoParentPhraseTranslate1, searchText, "phrases");
 
 // TODO: ozbekcha sinoinim qo'shish
-    // for (var element in searchByWordUzList) {
-    //   var sameWords = await dbHelper.wordsUz(element.id!);
-    //   element.same = sameWords.isNotEmpty ? sameWords : [""];
-    // }
 
     _searchUzResult.clear();
     _searchUzResult.addAll(searchByWordUzList);
@@ -66,9 +62,17 @@ class SearchRepositoryImpl extends SearchRepository {
     _searchUzResult.addAll(searchPhraseParentUzList);
     _searchUzResult.addAll(searchPhraseDtoParentPhraseTranslate1List);
 
-    _searchUzResult.sort((a, b) => (b.star ?? 0).compareTo((a.star ?? 0)));
+    await findReleatedWords(_searchUzResult);
 
-    // print(_searchUzResult);
+    _searchUzResult.sort((a, b) => (b.star ?? 0).compareTo((a.star ?? 0)));
+  }
+
+  Future<List<SearchResultUzModel>> findReleatedWords(List<SearchResultUzModel> list) async {
+    for (var element in list) {
+      var sameWords = await dbHelper.wordsUz(element.id!);
+      element.same = sameWords.isNotEmpty ? sameWords : [""];
+    }
+    return list;
   }
 
   @override

@@ -77,6 +77,11 @@ class SearchResultUzModel {
     _same = value;
   }
 
+  @override
+  String toString() {
+    return _same.toString().replaceAll('[', '').replaceAll(']', '');
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;

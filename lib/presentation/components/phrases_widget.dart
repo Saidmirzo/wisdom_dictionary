@@ -51,7 +51,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   child: Container(
                     key: widgetKey,
                     child: Visibility(
-                      visible: (model.phrasesTranslate != null && model.phrasesTranslate!.isNotEmpty) ,
+                      visible: (model.phrasesTranslate != null && model.phrasesTranslate!.isNotEmpty),
                       child: GestureDetector(
                           onTap: () => viewModel.addToWordBankFromPhrase(model, orderNum, widgetKey),
                           child: Padding(
@@ -110,8 +110,9 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
             viewModel: viewModel,
             containerColor: AppColors.lightBlue,
             body: HtmlWidget(
-              (model.phrases!.pSynonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+              (model.phrases!.pSynonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(fontSize: viewModel.fontSize! - 4, color: AppColors.lightBackground),
             ),
             visible: model.phrases!.pSynonyms != null,
           ),
@@ -126,8 +127,8 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     bool isSelected =
                         viewModel.isWordEqual(phraseModel.parentPhrases!.word ?? "") && viewModel.getFirstPhrase;
                     if (viewModel.localViewModel.isSearchByUz) {
-                      isSelected = viewModel.isWordContained(
-                              viewModel.conductToStringParentPhrasesTranslate(phraseModel.parentPhrasesTranslate??[])) &&
+                      isSelected = viewModel.isWordContained(viewModel
+                              .conductToStringParentPhrasesTranslate(phraseModel.parentPhrasesTranslate ?? [])) &&
                           viewModel.getFirstPhrase;
                     }
                     if (isSelected) {

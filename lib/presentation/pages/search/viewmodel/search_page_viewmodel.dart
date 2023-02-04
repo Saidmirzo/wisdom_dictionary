@@ -99,7 +99,7 @@ class SearchPageViewModel extends BaseViewModel {
     localViewModel.changePageIndex(0);
   }
 
-  goOnDetail(var model) {
+  goToDetail(var model) {
     safeBlock(
       () async {
         localViewModel.isFromMain = false;
@@ -115,7 +115,7 @@ class SearchPageViewModel extends BaseViewModel {
               word: model.wordClass,
               wordClass: model.word,
               type: model.type,
-              same: model.same != null && model.same!.isNotEmpty ? model.same.toString() : "");
+              same: model.same != null && model.same!.isNotEmpty ? model.toString() : "");
         } else {
           localViewModel.isSearchByUz = false;
           if (searchLangMode == 'uz') localViewModel.isSearchByUz = true;
@@ -125,7 +125,7 @@ class SearchPageViewModel extends BaseViewModel {
         localViewModel.wordDetailModel = recentModel;
         localViewModel.changePageIndex(18);
       },
-      callFuncName: 'goOnDetail',
+      callFuncName: 'goToDetail',
     );
   }
 

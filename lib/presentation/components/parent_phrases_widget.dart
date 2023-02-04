@@ -98,7 +98,7 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
             viewModel: viewModel,
             containerColor: AppColors.lightBlue,
             body: HtmlWidget(
-              (model.parentPhrases!.symonyms ?? "").replaceFirst("\n", "").replaceAll("\n\n", "\n"),
+              (model.parentPhrases!.symonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parentPhrases!.symonyms != null,

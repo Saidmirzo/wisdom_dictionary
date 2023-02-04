@@ -26,7 +26,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
 
   @override
   Widget builder(BuildContext context, SearchPageViewModel viewModel, Widget? child) {
-    return WillPopScope(
+      return WillPopScope(
       onWillPop: () => viewModel.goBackToMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
@@ -66,7 +66,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                     return SearchHistoryItem(
                       firstText: itemRecent.word ?? "unknown",
                       secondText: itemRecent.wordClass ?? "",
-                      onTap: () => viewModel.goOnDetail(itemRecent),
+                      onTap: () => viewModel.goToDetail(itemRecent),
                     );
                   },
                 ),
@@ -88,7 +88,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                           return SearchWordItem(
                             firstText: item.word ?? "unknown",
                             secondText: item.wordClasswordClass ?? "",
-                            onTap: () => viewModel.goOnDetail(item),
+                            onTap: () => viewModel.goToDetail(item),
                           );
                         },
                       ),
@@ -112,7 +112,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                       secondText: itemRecent.wordClass ?? "",
                       thirdText:
                           itemRecent.same != null && itemRecent.same!.isNotEmpty ? itemRecent.same.toString() : "",
-                      onTap: () => viewModel.goOnDetail(itemRecent),
+                      onTap: () => viewModel.goToDetail(itemRecent),
                     );
                   },
                 ),
@@ -134,8 +134,8 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                           return SearchWordItem(
                             firstText: item.word ?? "unknown",
                             secondText: item.wordClass ?? "",
-                            thirdText: item.same != null && item.same!.isNotEmpty ? item.same.toString() : "",
-                            onTap: () => viewModel.goOnDetail(item),
+                            thirdText: item.same != null && item.same!.isNotEmpty ? item.toString() : "",
+                            onTap: () => viewModel.goToDetail(item),
                           );
                         },
                       ),

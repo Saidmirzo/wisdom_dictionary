@@ -61,8 +61,7 @@ class ThesaurusDetailPage extends ViewModelBuilderWidget<ThesaurusDetailPageView
                         child: viewModel.isSuccess(tag: viewModel.getThesaurusDetailsTag)
                             ? HtmlWidget(
                                 viewModel.categoryRepository.thesaurusDetailModel.tBody!
-                                    .replaceAll("\n", "")
-                                    .replaceAll("\n\n", ""),
+                                    .replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
                                 textStyle: AppTextStyle.font14W400NormalHtml
                                     .copyWith(fontSize: locator<LocalViewModel>().fontSize - 2),
                               )

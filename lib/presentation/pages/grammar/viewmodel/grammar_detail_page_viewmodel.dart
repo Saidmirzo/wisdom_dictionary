@@ -40,6 +40,5 @@ class GrammarDetailPageViewModel extends BaseViewModel {
     } else {
       locator<LocalViewModel>().changePageIndex(11);
     }
-    return Future.value(false);
   }
 }

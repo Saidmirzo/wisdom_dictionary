@@ -47,9 +47,7 @@ class WordDetailPageViewModel extends BaseViewModel {
     safeBlock(
       () async {
         fontSize = preferenceHelper.getDouble(preferenceHelper.fontSize, 16);
-
         await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
-
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();
           setSuccess(tag: initTag);
@@ -164,6 +162,7 @@ class WordDetailPageViewModel extends BaseViewModel {
 
   TextSpan conductAndHighlightUzWords(List<WordsUzModel>? wordList, List<PhrasesTranslateModel>? translate,
       List<ParentPhrasesTranslateModel>? phraseTranslate) {
+
     String sourceText = "";
     if (wordList != null) {
       sourceText = conductToString(wordList);
@@ -292,13 +291,14 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  goBackToSearch() {
+  Future<bool> goBackToSearch() async {
     if (localViewModel.isFromMain) {
       localViewModel.isFromMain = false;
       localViewModel.changePageIndex(0);
     } else {
       localViewModel.changePageIndex(2);
     }
+    return false;
   }
 
   @override
@@ -327,6 +327,35 @@ class WordDetailPageViewModel extends BaseViewModel {
     return false;
   }
 
+  isWordUzEqual(String wordUz){
+    if (wordUz == (localViewModel.wordDetailModel.wordClass ?? "")) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isPhraseTranslateContainsWord(List<PhrasesTranslateModel> list) {
+    for (var item in list) {
+      if (isWordUzEqual(item.word ?? "")) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  bool isParentPhraseTranslateContainsWord(List<ParentPhrasesTranslateModel> list) {
+    for (var item in list) {
+      if (isWordUzEqual(item.word ?? "")) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
+
   bool hasToBeExpanded(List<PhrasesWithAll>? phrasesWithAll) {
     if (localViewModel.wordDetailModel.type == "phrase" ||
         localViewModel.wordDetailModel.type == "phrases" ||
@@ -336,12 +365,12 @@ class WordDetailPageViewModel extends BaseViewModel {
           if (isWordEqual(model.phrases!.pWord ?? "")) {
             return true;
           }
-          if (isWordContained(conductToStringPhrasesTranslate(model.phrasesTranslate ?? []))) {
+          if (isPhraseTranslateContainsWord(model.phrasesTranslate ?? [])) {
             return true;
           }
           if (model.parentPhrasesWithAll != null && model.parentPhrasesWithAll!.isNotEmpty) {
             for (var item in model.parentPhrasesWithAll!) {
-              if (isWordContained(conductToStringParentPhrasesTranslate(item.parentPhrasesTranslate ?? []))) {
+              if (isParentPhraseTranslateContainsWord(item.parentPhrasesTranslate ?? [])) {
                 return true;
               }
             }

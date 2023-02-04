@@ -59,8 +59,7 @@ class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewMode
                         child: viewModel.isSuccess(tag: viewModel.getGrammarDetailsTag)
                             ? HtmlWidget(
                                 viewModel.categoryRepository.grammarDetailModel.gBody!
-                                    .replaceAll("\n", "")
-                                    .replaceAll("\n\n", ""),
+                                    .replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
                                 textStyle: AppTextStyle.font14W400NormalHtml
                                     .copyWith(fontSize: locator<LocalViewModel>().fontSize-2),
                               )
