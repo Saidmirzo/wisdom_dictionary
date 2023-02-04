@@ -16,6 +16,7 @@ class LocalViewModel extends BaseViewModel {
   ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
 
   RecentModel wordDetailModel = RecentModel();
+  bool isSearchByUz = false;
 
   List<WordBankModel> wordBankList = [];
 

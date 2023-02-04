@@ -98,7 +98,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            'SELECT we.id,we.word,g.id as g_id FROM word_entity we INNER JOIN grammar g ON we.id=g.word_id order by random() limit 1');
+            "SELECT we.id,we.word,g.id as g_id FROM word_entity we INNER JOIN grammar g ON we.id=g.word_id order by random() limit 1");
         var model = WordWithGrammarModel.fromJson(response.first);
         return model;
       }
@@ -126,7 +126,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            'SELECT we.id,we.word,t.id as t_id,t.body as t_body FROM word_entity we INNER JOIN thesaurus t ON we.id=t.word_id order by random() limit 1');
+            "SELECT we.id,we.word,t.id as t_id,t.body as t_body FROM word_entity we INNER JOIN thesaurus t ON we.id=t.word_id order by random() limit 1");
         var model = WordWithTheasurusModel.fromJson(response.first);
         return model;
       }
@@ -140,7 +140,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            'SELECT we.id,we.word,c.id as c_id FROM word_entity we INNER JOIN collocation c ON we.id=c.word_id order by random() limit 1');
+            "SELECT we.id,we.word,c.id as c_id FROM word_entity we INNER JOIN collocation c ON we.id=c.word_id order by random() limit 1");
         var model = WordWithCollocationModel.fromJson(response.first);
         return model;
       }
@@ -154,7 +154,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            'SELECT we.id,we.word,m.id as m_id FROM word_entity we INNER JOIN metaphor m ON we.id=m.word_id order by random() limit 1');
+            "SELECT we.id,we.word,m.id as m_id FROM word_entity we INNER JOIN metaphor m ON we.id=m.word_id order by random() limit 1");
         var model = WordWithMetaphorModel.fromJson(response.first);
         return model;
       }
@@ -320,7 +320,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database
-            .rawQuery("SELECT * FROM catalogue WHERE category= '$categoryId' AND wordenword LIKE '$query%'");
+            .rawQuery("SELECT * FROM catalogue WHERE category= '$categoryId' AND wordenword LIKE '${query.replaceAll("'", "''")}%'");
         var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
         return model;
       }
@@ -334,7 +334,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response =
-            await database.rawQuery("SELECT * FROM catalogue WHERE category= '$categoryId' AND word LIKE '$query%'");
+            await database.rawQuery("SELECT * FROM catalogue WHERE category= '$categoryId' AND word LIKE '${query.replaceAll("'", "''")}%'");
         var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
         return model;
       }
@@ -459,7 +459,7 @@ class DBHelper {
           ? List<ParentPhrasesTranslateModel>.from(
               responseParentPhrasesTranslate.map((e) => ParentPhrasesTranslateModel.fromJson(e)))
           : null;
-      if ((element.word != null && element.word!.isNotEmpty) &&
+      if ((element.word != null && element.word!.isNotEmpty) ||
           (element.wordClassComment != null && element.wordClassComment.isNotEmpty)) {
         _parentPhrasesWithAll
             .add(ParentPhrasesWithAll(element, wordPhraseParentPhrasesExample, wordPhraseParentPhrasesTranslate));
@@ -526,7 +526,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT id,word,word_classid,word_classword_id,word_classword_class FROM word_entity WHERE word LIKE '$word%' ORDER BY word COLLATE NOCASE ASC LIMIT 40");
+            "SELECT id,word,word_classid,word_classword_id,word_classword_class FROM word_entity WHERE word LIKE '${word.replaceAll("'", "''")}%' ORDER BY word COLLATE NOCASE ASC LIMIT 40");
         var words = List<WordModel>.from(response.map((e) => WordModel.fromJson(e)));
         return words;
       }
@@ -540,7 +540,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT id,word_classid,word_classword_id,word_classword_class,p_word FROM word_entity INNER JOIN phrases ON id=p_word_id AND p_word LIKE '$search%' ORDER BY word COLLATE NOCASE asc limit 40");
+            "SELECT id,word_classid,word_classword_id,word_classword_class,p_word FROM word_entity INNER JOIN phrases ON id=p_word_id AND p_word LIKE '${search.replaceAll("'", "''")}%' ORDER BY word COLLATE NOCASE asc limit 40");
         var wordWithPhrases = List<WordAndPhrasesModel>.from(response.map((e) => WordAndPhrasesModel.fromJson(e)));
         return wordWithPhrases;
       }
@@ -554,7 +554,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word_classid,w.word_classword_id,w.word_classword_class,ph.p_word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id AND ph.p_word LIKE '$parents%' order by  w.word COLLATE NOCASE asc  limit 40");
+            "SELECT w.id,w.word_classid,w.word_classword_id,w.word_classword_class,ph.p_word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id AND ph.p_word LIKE '${parents.replaceAll("'", "''")}%' order by  w.word COLLATE NOCASE asc  limit 40");
         var wordsAndParentsAndWordsUzModel =
             List<WordAndParentsAndPhrasesModel>.from(response.map((e) => WordAndParentsAndPhrasesModel.fromJson(e)));
         return wordsAndParentsAndWordsUzModel;
@@ -569,7 +569,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,p.star,wu.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN words_uz wu ON p.id=wu.word_id AND wu.word LIKE '$parents%' order by w.word COLLATE NOCASE asc limit 40");
+            "SELECT w.id,w.word as word_class,p.star,wu.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN words_uz wu ON p.id=wu.word_id AND wu.word LIKE '${parents.replaceAll("'", "''")}%' order by w.word COLLATE NOCASE asc limit 40");
         var wordsAndParentsAndWordsUzModel =
             List<WordsAndParentsAndWordsUzModel>.from(response.map((e) => WordsAndParentsAndWordsUzModel.fromJson(e)));
         return wordsAndParentsAndWordsUzModel;
@@ -584,7 +584,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,ph.p_word as word_class,ph.p_star,pt.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id INNER JOIN phrases_translate pt ON ph.p_id=pt.phrase_id AND pt.word LIKE '$parents%' order by w.word COLLATE NOCASE asc limit 40");
+            "SELECT w.id,ph.p_word as word_class,ph.p_star,pt.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id INNER JOIN phrases_translate pt ON ph.p_id=pt.phrase_id AND pt.word LIKE '${parents.replaceAll("'", "''")}%' order by w.word COLLATE NOCASE asc limit 40");
         var wordsAndParentsAndWordsUzModel = List<WordAndParentsAndPhrasesAndTranslateModel>.from(
             response.map((e) => WordAndParentsAndPhrasesAndTranslateModel.fromJson(e)));
         return wordsAndParentsAndWordsUzModel;
@@ -600,7 +600,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,p_ph.star,ppt.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id INNER JOIN parent_phrases p_ph ON ph.p_id=p_ph.phrase_id INNER JOIN parent_phrases_translate ppt ON p_ph.id=ppt.parent_phrase_id AND ppt.word LIKE '$parents%' order by  w.word COLLATE NOCASE asc limit 40");
+            "SELECT w.id,w.word as word_class,p_ph.star,ppt.word as word FROM word_entity w INNER JOIN parents p ON w.id=p.word_id INNER JOIN phrases ph ON p.id=ph.p_word_id INNER JOIN parent_phrases p_ph ON ph.p_id=p_ph.phrase_id INNER JOIN parent_phrases_translate ppt ON p_ph.id=ppt.parent_phrase_id AND ppt.word LIKE '${parents.replaceAll("'", "''")}%' order by  w.word COLLATE NOCASE asc limit 40");
         var wordAndParentsAndPhrasesParentPhrasesAndTranslateModel =
             List<WordAndParentsAndPhrasesParentPhrasesAndTranslateModel>.from(
                 response.map((e) => WordAndParentsAndPhrasesParentPhrasesAndTranslateModel.fromJson(e)));
@@ -616,7 +616,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,w.star,wu.word as word FROM word_entity w INNER JOIN words_uz wu ON w.id=wu.word_id and wu.word LIKE '$word%' ORDER BY wu.word COLLATE NOCASE asc,star desc LIMIT 40");
+            "SELECT w.id,w.word as word_class,w.star,wu.word as word FROM word_entity w INNER JOIN words_uz wu ON w.id=wu.word_id and wu.word LIKE '${word.replaceAll("'", "''")}%' ORDER BY wu.word COLLATE NOCASE asc,star desc LIMIT 40");
         var wordAndWordsUzModel = List<WordAndWordsUzModel>.from(response.map((e) => WordAndWordsUzModel.fromJson(e)));
         return wordAndWordsUzModel;
       }
@@ -638,7 +638,7 @@ class DBHelper {
     try {
       if (database.isOpen) {
         var response = await database.rawQuery(
-            "SELECT w.id,w.word as word_class,p.p_star,pt.word as word FROM word_entity w INNER JOIN phrases p ON w.id=p.p_word_id INNER JOIN phrases_translate pt ON p.p_id=pt.phrase_id AND p.p_word LIKE '$phrases%' order by w.word COLLATE NOCASE asc,w.star desc limit 40");
+            "SELECT w.id,w.word as word_class,p.p_star,pt.word as word FROM word_entity w INNER JOIN phrases p ON w.id=p.p_word_id INNER JOIN phrases_translate pt ON p.p_id=pt.phrase_id AND p.p_word LIKE '${phrases.replaceAll("'", "''")}%' order by w.word COLLATE NOCASE asc,w.star desc limit 40");
         var wordAndPhrasesAndTranslateModel = List<WordAndPhrasesAndTranslateModel>.from(
             response.map((e) => WordAndPhrasesAndTranslateModel.fromJson(e)));
         return wordAndPhrasesAndTranslateModel;

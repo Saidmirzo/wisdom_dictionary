@@ -5,6 +5,7 @@ import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/model/recent_model.dart';
+import 'package:wisdom/data/model/search_result_uz_model.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/search_repository.dart';
 
@@ -59,14 +60,14 @@ class SearchPageViewModel extends BaseViewModel {
           } else {
             await searchRepository.searchByUzWord(searchText.toString());
           }
-          if ((searchRepository.searchResultList.isNotEmpty && searchLangMode =='en') || (searchRepository.searchResultUzList.isNotEmpty && searchLangMode=='uz')) {
+          if ((searchRepository.searchResultList.isNotEmpty && searchLangMode == 'en') ||
+              (searchRepository.searchResultUzList.isNotEmpty && searchLangMode == 'uz')) {
             setSuccess(tag: searchTag);
           }
         } else {
           await searchRepository.cleanList(searchLangMode);
           await init();
         }
-
       },
       callFuncName: 'searchByWord',
     );
@@ -76,6 +77,7 @@ class SearchPageViewModel extends BaseViewModel {
     safeBlock(
       () async {
         recentList.clear();
+        recentListUz.clear();
         await getSearchLanguageMode();
         var result = await getRecentHistory();
         if (result.isNotEmpty) {
@@ -103,9 +105,20 @@ class SearchPageViewModel extends BaseViewModel {
         localViewModel.isFromMain = false;
         RecentModel recentModel = RecentModel();
         if (model is SearchResultModel) {
+          localViewModel.isSearchByUz = false;
           recentModel =
               RecentModel(id: model.id, word: model.word, wordClass: model.wordClasswordClass, type: model.type);
+        } else if (model is SearchResultUzModel) {
+          localViewModel.isSearchByUz = true;
+          recentModel = RecentModel(
+              id: model.id,
+              word: model.wordClass,
+              wordClass: model.word,
+              type: model.type,
+              same: model.same != null && model.same!.isNotEmpty ? model.same.toString() : "");
         } else {
+          localViewModel.isSearchByUz = false;
+          if (searchLangMode == 'uz') localViewModel.isSearchByUz = true;
           recentModel = model as RecentModel;
         }
         saveRecentHistory(recentModel);

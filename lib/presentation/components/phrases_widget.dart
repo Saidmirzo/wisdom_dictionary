@@ -39,7 +39,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 color: AppColors.blue,
                 fontSize: viewModel.fontSize! - 2,
                 backgroundColor:
-                    viewModel.isWordContained(model.phrases!.pWord ?? "") ? AppColors.success : Colors.transparent),
+                    viewModel.isWordEqual(model.phrases!.pWord ?? "") ? AppColors.success : Colors.transparent),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
@@ -47,12 +47,17 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  key: widgetKey,
-                  child: GestureDetector(
-                      onTap: () => viewModel.addToWordBankFromPhrase(model, orderNum, widgetKey),
-                      child: Padding(
-                          padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord))),
+                Visibility(
+                  child: Container(
+                    key: widgetKey,
+                    child: Visibility(
+                      visible: (model.phrasesTranslate != null && model.phrasesTranslate!.isNotEmpty) ,
+                      child: GestureDetector(
+                          onTap: () => viewModel.addToWordBankFromPhrase(model, orderNum, widgetKey),
+                          child: Padding(
+                              padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord))),
+                    ),
+                  ),
                 ),
                 (model.phrases!.pStar ?? 0).toString() != "0"
                     ? Padding(
@@ -78,13 +83,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                               fontSize: viewModel.fontSize! - 2,
                             ),
                           ),
-                          TextSpan(
-                            text: viewModel.conductToStringPhrasesTranslate(model.phrasesTranslate),
-                            style: AppTextStyle.font14W600Normal.copyWith(
-                              color: AppColors.darkGray,
-                              fontSize: viewModel.fontSize! - 2,
-                            ),
-                          )
+                          viewModel.conductAndHighlightUzWords(null, model.phrasesTranslate, null),
                         ],
                       ),
                     ),
@@ -100,7 +99,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: Text(
                   (viewModel.conductToStringPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize!-2),
+                  style: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
                 ),
               ),
             ),
@@ -124,7 +123,20 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   itemCount: model.parentPhrasesWithAll!.length,
                   itemBuilder: (context, index) {
                     var phraseModel = model.parentPhrasesWithAll![index];
-                    return ParentPhrasesWidget(model: phraseModel, orderNum: "${index + 2}");
+                    bool isSelected =
+                        viewModel.isWordEqual(phraseModel.parentPhrases!.word ?? "") && viewModel.getFirstPhrase;
+                    if (viewModel.localViewModel.isSearchByUz) {
+                      isSelected = viewModel.isWordContained(
+                              viewModel.conductToStringParentPhrasesTranslate(phraseModel.parentPhrasesTranslate??[])) &&
+                          viewModel.getFirstPhrase;
+                    }
+                    if (isSelected) {
+                      viewModel.firstAutoScroll();
+                    }
+                    return Container(
+                      key: isSelected ? viewModel.scrollKey : null,
+                      child: ParentPhrasesWidget(model: phraseModel, orderNum: "${index + 2}"),
+                    );
                   },
                 )
               : const SizedBox.shrink(),

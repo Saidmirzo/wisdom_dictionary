@@ -40,8 +40,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 Container(
                   key: widgetKey,
                   child: GestureDetector(
-                    onTap: () => viewModel.addToWordBankFromParent(
-                        model, orderNum, widgetKey),
+                    onTap: () => viewModel.addToWordBankFromParent(model, orderNum, widgetKey),
                     child: Padding(
                       padding: EdgeInsets.only(right: 10.w),
                       child: SvgPicture.asset(Assets.icons.saveWord),
@@ -51,32 +50,25 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 model.parents!.star != "0"
                     ? Padding(
                         padding: EdgeInsets.only(right: 10.w),
-                        child: SvgPicture.asset(
-                            viewModel.findRank(model.parents!.star!)))
+                        child: SvgPicture.asset(viewModel.findRank(model.parents!.star!)))
                     : const SizedBox.shrink(),
                 Flexible(
                   child: SelectionArea(
-                    child: Text.rich(
+                    child: Text.rich(TextSpan(
+                      text: "$orderNum. ",
+                      style: AppTextStyle.font14W700Normal
+                          .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                      children: [
                         TextSpan(
-                          text: "$orderNum. ",
-                          style: AppTextStyle.font14W700Normal
-                              .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
-                          children: [
-                            TextSpan(
-                              text: orderNum == "1"
-                                  ? "${model.parents!.wordClassBodyMeaning ?? ""} "
-                                  : "${model.parents!.wordClassBody ?? ""} ",
-                              style: AppTextStyle.font14W400Normal
-                                  .copyWith(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
-                            ),
-                            TextSpan(
-                              text: viewModel.conductToString(model.wordsUz),
-                              style: AppTextStyle.font14W600Normal
-                                  .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
-                            )
-                          ],
-                        )
-                    ),
+                          text: orderNum == "1"
+                              ? "${model.parents!.wordClassBodyMeaning ?? ""} "
+                              : "${model.parents!.wordClassBody ?? ""} ",
+                          style: AppTextStyle.font14W400Normal
+                              .copyWith(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
+                        ),
+                        viewModel.conductAndHighlightUzWords(model.wordsUz, null, null),
+                      ],
+                    )),
                   ),
                 )
               ],
@@ -153,9 +145,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
                   child: HtmlWidget(
-                    (model.difference != null
-                            ? model.difference!.first.body ?? ""
-                            : "")
+                    (model.difference != null ? model.difference!.first.body ?? "" : "")
                         .replaceFirst("\n", "")
                         .replaceAll("\n\n", ""),
                     textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
@@ -170,9 +160,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "Collocations",
             body: HtmlWidget(
-              (model.collocation != null
-                      ? model.collocation!.first.body ?? ""
-                      : "")
+              (model.collocation != null ? model.collocation!.first.body ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
@@ -220,9 +208,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "More Examples",
             body: HtmlWidget(
-              (model.parents!.moreExamples != null
-                      ? model.parents!.moreExamples ?? ""
-                      : "")
+              (model.parents!.moreExamples != null ? model.parents!.moreExamples ?? "" : "")
                   .replaceFirst("\n", "")
                   .replaceAll("\n\n", "\n"),
               textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
@@ -235,32 +221,31 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Phrases and Idioms",
             viewModel: viewModel,
             isExpanded: viewModel.hasToBeExpanded(model.phrasesWithAll),
-            body: (model.phrasesWithAll != null &&
-                    model.phrasesWithAll!.isNotEmpty)
+            body: (model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty)
                 ? ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: model.phrasesWithAll!.length,
                     itemBuilder: (context, index) {
                       var phraseModel = model.phrasesWithAll![index];
-                      // viewModel.checkIfPhrase(phraseModel, index);
-                      bool isSelected=viewModel.isWordContained(
-                                phraseModel.phrases!.pWord ?? "")&&viewModel.getFirstPhrase;
-                      if(isSelected) {
+                      bool isSelected =
+                          viewModel.isWordEqual(phraseModel.phrases!.pWord ?? "") && viewModel.getFirstPhrase;
+                      if (viewModel.localViewModel.isSearchByUz) {
+                        isSelected = viewModel.isWordContained(
+                                viewModel.conductToStringPhrasesTranslate(phraseModel.phrasesTranslate??[])) &&
+                            viewModel.getFirstPhrase;
+                      }
+                      if (isSelected) {
                         viewModel.firstAutoScroll();
                       }
                       return Container(
-                        key: isSelected
-                            ? viewModel.scrollKey
-                            : null,
-                        child: PhrasesWidget(
-                            model: phraseModel, orderNum: '1', index: index),
+                        key: isSelected ? viewModel.scrollKey : null,
+                        child: PhrasesWidget(model: phraseModel, orderNum: '1', index: index),
                       );
                     },
                   )
                 : const SizedBox.shrink(),
-            visible: model.phrasesWithAll != null &&
-                model.phrasesWithAll!.isNotEmpty,
+            visible: model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty,
           ),
         ],
       ),

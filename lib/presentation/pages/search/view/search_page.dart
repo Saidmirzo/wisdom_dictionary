@@ -110,8 +110,9 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                     return SearchHistoryItem(
                       firstText: itemRecent.word ?? "unknown",
                       secondText: itemRecent.wordClass ?? "",
-                      thirdText: "just same  words appear here",
-                      onTap: () {},
+                      thirdText:
+                          itemRecent.same != null && itemRecent.same!.isNotEmpty ? itemRecent.same.toString() : "",
+                      onTap: () => viewModel.goOnDetail(itemRecent),
                     );
                   },
                 ),
@@ -134,7 +135,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
                             firstText: item.word ?? "unknown",
                             secondText: item.wordClass ?? "",
                             thirdText: item.same != null && item.same!.isNotEmpty ? item.same.toString() : "",
-                            onTap: () {},
+                            onTap: () => viewModel.goOnDetail(item),
                           );
                         },
                       ),

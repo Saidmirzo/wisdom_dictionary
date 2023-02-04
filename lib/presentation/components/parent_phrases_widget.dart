@@ -45,10 +45,13 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               children: [
                 Container(
                   key: widgetKey,
-                  child: GestureDetector(
-                      onTap: () => viewModel.addToWordBankFromParentPhrase(model, orderNum, widgetKey),
-                      child: Padding(
-                          padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord))),
+                  child: Visibility(
+                    visible: (model.parentPhrasesTranslate != null && model.parentPhrasesTranslate!.isNotEmpty) ,
+                    child: GestureDetector(
+                        onTap: () => viewModel.addToWordBankFromParentPhrase(model, orderNum, widgetKey),
+                        child: Padding(
+                            padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord))),
+                  ),
                 ),
                 (model.parentPhrases!.star ?? 0).toString() != "0"
                     ? Padding(
@@ -68,11 +71,7 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                             style: AppTextStyle.font14W400Normal
                                 .copyWith(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
                           ),
-                          TextSpan(
-                            text: viewModel.conductToStringParentPhrasesTranslate(model.parentPhrasesTranslate),
-                            style: AppTextStyle.font14W600Normal
-                                .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
-                          )
+                          viewModel.conductAndHighlightUzWords(null, null, model.parentPhrasesTranslate)
                         ],
                       ),
                     ),

@@ -1,10 +1,6 @@
-import 'dart:developer';
-
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:jbaza/jbaza.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/model/parent_phrases_example_model.dart';
@@ -17,6 +13,8 @@ import 'package:wisdom/data/model/words_uz_model.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 
+import '../../../../config/constants/app_colors.dart';
+import '../../../../config/constants/app_text_style.dart';
 import '../../../../core/utils/word_mapper.dart';
 import '../../../widgets/loading_widget.dart';
 
@@ -44,20 +42,14 @@ class WordDetailPageViewModel extends BaseViewModel {
 
   GlobalKey scrollKey = GlobalKey();
 
-  // late AutoScrollController autoScrollController;
-
   // taking searched word model from local viewmodel and collect all details of it from db
   init() {
     safeBlock(
       () async {
-        // autoScrollController = AutoScrollController(
-        //     viewportBoundaryGetter: () =>
-        //         Rect.fromLTRB(0, 0, 0, MediaQuery.of(context!).padding.bottom),
-        //     axis: Axis.vertical);
-
         fontSize = preferenceHelper.getDouble(preferenceHelper.fontSize, 16);
 
         await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
+
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();
           setSuccess(tag: initTag);
@@ -69,10 +61,12 @@ class WordDetailPageViewModel extends BaseViewModel {
   }
 
   void firstAutoScroll() async {
-    getFirstPhrase = false;
-    await Future.delayed(const Duration(milliseconds: 50));
-    await Scrollable.ensureVisible(scrollKey.currentContext!,
-        duration: const Duration(milliseconds: 500));
+    if (getFirstPhrase == true) {
+      getFirstPhrase = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Scrollable.ensureVisible(scrollKey.currentContext!, duration: const Duration(milliseconds: 300));
+      });
+    }
   }
 
   void textToSpeech() {
@@ -121,8 +115,7 @@ class WordDetailPageViewModel extends BaseViewModel {
     }, callFuncName: 'addToWordBankFromPhrase', inProgress: false);
   }
 
-  addToWordBankFromParentPhrase(
-      ParentPhrasesWithAll model, String num, GlobalKey key) {
+  addToWordBankFromParentPhrase(ParentPhrasesWithAll model, String num, GlobalKey key) {
     safeBlock(() async {
       int number = int.parse(num.isEmpty ? "0" : num);
       var wordBank = WordBankModel(
@@ -167,6 +160,59 @@ class WordDetailPageViewModel extends BaseViewModel {
     } else {
       return "";
     }
+  }
+
+  TextSpan conductAndHighlightUzWords(List<WordsUzModel>? wordList, List<PhrasesTranslateModel>? translate,
+      List<ParentPhrasesTranslateModel>? phraseTranslate) {
+    String sourceText = "";
+    if (wordList != null) {
+      sourceText = conductToString(wordList);
+    } else if (translate != null) {
+      sourceText = conductToStringPhrasesTranslate(translate);
+    } else {
+      sourceText = conductToStringParentPhrasesTranslate(phraseTranslate);
+    }
+
+    if (localViewModel.isSearchByUz &&
+        localViewModel.wordDetailModel.word != null &&
+        localViewModel.wordDetailModel.word!.isNotEmpty) {
+      String targetHighlight = localViewModel.wordDetailModel.wordClass ?? "";
+      List<TextSpan> spans = [];
+      int start = 0;
+      int indexOfHighlight;
+      do {
+        indexOfHighlight = sourceText.indexOf(targetHighlight, start);
+        if (indexOfHighlight < 0) {
+          // no highlight
+          spans.add(_normalSpan(sourceText.substring(start)));
+          break;
+        }
+        if (indexOfHighlight > start) {
+          // normal text before highlight
+          spans.add(_normalSpan(sourceText.substring(start, indexOfHighlight)));
+        }
+        start = indexOfHighlight + targetHighlight.length;
+        spans.add(_highlightSpan(sourceText.substring(indexOfHighlight, start)));
+      } while (true);
+
+      return TextSpan(children: spans);
+    } else {
+      return TextSpan(children: [_normalSpan(sourceText)]);
+    }
+  }
+
+  TextSpan _highlightSpan(String content) {
+    return TextSpan(
+        text: content,
+        style: AppTextStyle.font14W600Normal
+            .copyWith(color: AppColors.darkGray, fontSize: fontSize! - 2, backgroundColor: AppColors.success));
+  }
+
+  TextSpan _normalSpan(String content) {
+    return TextSpan(
+        text: content,
+        style: AppTextStyle.font14W600Normal
+            .copyWith(color: AppColors.darkGray, fontSize: fontSize! - 2, backgroundColor: Colors.transparent));
   }
 
   String conductToStringPhrasesTranslate(List<PhrasesTranslateModel>? translateList) {
@@ -267,22 +313,15 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  // void checkIfPhrase(PhrasesWithAll phraseModel, int index) async {
-  //   if (localViewModel.wordDetailModel.type == "phrase" ||
-  //       localViewModel.wordDetailModel.type == "phrases") {
-  //     if (isWordContained(phraseModel.phrases!.pWord ?? "")) {
-  //       WidgetsBinding.instance.addPostFrameCallback((_) {
-  //         if (phrasesIsExpanded == false) {
-  //           phrasesIsExpanded = true;
-  //           funcScrollByCtg(index);
-  //         }
-  //       });
-  //     }
-  //   }
-  // }
+  bool isWordEqual(String word) {
+    if (word == (localViewModel.wordDetailModel.word ?? "") && !localViewModel.isSearchByUz) {
+      return true;
+    }
+    return false;
+  }
 
   bool isWordContained(String word) {
-    if (word == (localViewModel.wordDetailModel.word ?? "")) {
+    if (word.contains(localViewModel.wordDetailModel.wordClass ?? "_@@")) {
       return true;
     }
     return false;
@@ -290,11 +329,22 @@ class WordDetailPageViewModel extends BaseViewModel {
 
   bool hasToBeExpanded(List<PhrasesWithAll>? phrasesWithAll) {
     if (localViewModel.wordDetailModel.type == "phrase" ||
-        localViewModel.wordDetailModel.type == "phrases") {
+        localViewModel.wordDetailModel.type == "phrases" ||
+        localViewModel.isSearchByUz) {
       if (phrasesWithAll != null && phrasesWithAll.isNotEmpty) {
         for (var model in phrasesWithAll) {
-          if (isWordContained(model.phrases!.pWord ?? "")) {
+          if (isWordEqual(model.phrases!.pWord ?? "")) {
             return true;
+          }
+          if (isWordContained(conductToStringPhrasesTranslate(model.phrasesTranslate ?? []))) {
+            return true;
+          }
+          if (model.parentPhrasesWithAll != null && model.parentPhrasesWithAll!.isNotEmpty) {
+            for (var item in model.parentPhrasesWithAll!) {
+              if (isWordContained(conductToStringParentPhrasesTranslate(item.parentPhrasesTranslate ?? []))) {
+                return true;
+              }
+            }
           }
         }
       }

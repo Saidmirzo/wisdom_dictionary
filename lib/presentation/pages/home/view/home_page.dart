@@ -24,7 +24,9 @@ class HomePage extends ViewModelBuilderWidget<HomeViewModel> {
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return WillPopScope(
-      onWillPop: () {return Future.value(false);},
+      onWillPop: () {
+        return Future.value(false);
+      },
       child: ZoomDrawer(
         menuScreen: DrawerScreen(),
         mainScreen: HomeScreen(),
