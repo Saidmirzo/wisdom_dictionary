@@ -9,11 +9,13 @@ import 'package:wisdom/core/db/preference_helper.dart';
 
 import 'config/theme/themes.dart';
 import 'core/di/app_locator.dart';
+import 'core/services/push_notifications_service.dart';
 import 'presentation/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await PushNotificationService().setupInteractedMessage();
   setupConfigs(() async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

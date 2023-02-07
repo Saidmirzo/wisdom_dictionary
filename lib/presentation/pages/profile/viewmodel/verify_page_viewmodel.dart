@@ -1,15 +1,13 @@
-import 'dart:html';
-import 'dart:io';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
+import 'package:wisdom/data/model/verify_model.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/profile_repository.dart';
-import 'package:device_info/device_info.dart';
 
 import '../../../../config/constants/constants.dart';
 
@@ -42,7 +40,8 @@ class VerifyPageViewModel extends BaseViewModel {
             sharedPreferenceHelper.putInt(Constants.KEY_PROFILE_STATE, Constants.STATE_INACTIVE);
 
             // Adding device id into firebase Messaging to send notification message;
-
+            var tokenF = await FirebaseMessaging.instance.getToken();
+            addDeviceToFirebase(verifyModel, tokenF);
           }
         }
         // viewModel.navigateTo(Routes.paymentPage);
@@ -51,6 +50,11 @@ class VerifyPageViewModel extends BaseViewModel {
       inProgress: false,
     );
   }
+
+  void addDeviceToFirebase(VerifyModel verifyModel, String? tokenF) {
+
+  }
+
 
   void onReSendPressed() {
     safeBlock(
@@ -75,4 +79,5 @@ class VerifyPageViewModel extends BaseViewModel {
       ),
     );
   }
+
 }
