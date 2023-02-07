@@ -26,7 +26,7 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
 
   @override
   Widget builder(BuildContext context, SearchPageViewModel viewModel, Widget? child) {
-      return WillPopScope(
+    return WillPopScope(
       onWillPop: () => viewModel.goBackToMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,

@@ -44,17 +44,20 @@ class CustomNumberPicker extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          NumberPicker(
-            value: currentValue,
-            minValue: minValue,
-            maxValue: maxValue,
-            infiniteLoop: infiniteLoop,
-            textStyle: AppTextStyle.font14W500Normal
-                .copyWith(color: AppColors.lightGray),
-            selectedTextStyle: AppTextStyle.font14W500Normal.copyWith(
-                color: AppColors.darkGray, fontWeight: FontWeight.w600),
-            zeroPad: zeroPad,
-            onChanged: (value) => onChange(value),
+          Center(
+            child: NumberPicker(
+              value: currentValue,
+              itemHeight: 50.h,
+              minValue: minValue,
+              maxValue: maxValue,
+              infiniteLoop: infiniteLoop,
+              textStyle: AppTextStyle.font14W500Normal
+                  .copyWith(color: AppColors.lightGray),
+              selectedTextStyle: AppTextStyle.font14W500Normal.copyWith(
+                  color: AppColors.darkGray, fontWeight: FontWeight.w600),
+              zeroPad: zeroPad,
+              onChanged: (value) => onChange(value),
+            ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

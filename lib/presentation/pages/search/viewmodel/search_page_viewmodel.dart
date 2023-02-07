@@ -47,7 +47,6 @@ class SearchPageViewModel extends BaseViewModel {
     }
     preferenceHelper.putString(searchLangKey, searchLangMode);
     init();
-    // notifyListeners();
   }
 
   void searchByWord(String searchText) {

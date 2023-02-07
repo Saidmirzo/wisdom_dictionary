@@ -9,6 +9,7 @@ import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../core/di/app_locator.dart';
 import '../../../components/custom_banner.dart';
 
 class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
@@ -87,6 +88,6 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
 
   @override
   ProfilePageViewModel viewModelBuilder(BuildContext context) {
-    return ProfilePageViewModel(context: context);
+    return ProfilePageViewModel(context: context ,profileRepository: locator.get(), localViewModel: locator.get(),sharedPreferenceHelper: locator.get());
   }
 }

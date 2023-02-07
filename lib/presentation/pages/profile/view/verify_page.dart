@@ -11,7 +11,10 @@ import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmod
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
-class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
+import '../../../../core/di/app_locator.dart';
+import '../viewmodel/verify_page_viewmodel.dart';
+
+class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
   VerifyPage({
     super.key,
     required this.phoneNumber,
@@ -21,8 +24,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   TextEditingController editingController = TextEditingController();
 
   @override
-  Widget builder(
-      BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, VerifyPageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       appBar: CustomAppBar(
@@ -47,8 +49,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: RichText(
                   text: TextSpan(
                       text: 'Verifikatsiya kodi ',
-                      style: AppTextStyle.font12W400Normal
-                          .copyWith(color: AppColors.darkGray),
+                      style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
                       children: [
                         TextSpan(
                           text: phoneNumber.substring(4, phoneNumber.length),
@@ -58,8 +59,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         ),
                         TextSpan(
                           text: ' raqamiga sms tarzda yuborildi',
-                          style: AppTextStyle.font12W400Normal
-                              .copyWith(color: AppColors.darkGray),
+                          style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
                         ),
                       ]),
                   textAlign: TextAlign.center,
@@ -71,9 +71,8 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                 child: Column(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40.r),
-                          color: AppColors.lightBackground),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.lightBackground),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 24.h, bottom: 12.h),
                       padding: EdgeInsets.only(left: 22.w, right: 22.w),
@@ -84,8 +83,7 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                           appContext: context,
                           length: 5,
                           keyboardType: TextInputType.number,
-                          textStyle: AppTextStyle.font18W500Normal
-                              .copyWith(color: AppColors.blue),
+                          textStyle: AppTextStyle.font18W500Normal.copyWith(color: AppColors.blue),
                           onChanged: (String value) {},
                           cursorColor: Colors.transparent,
                           pinTheme: PinTheme(
@@ -101,20 +99,17 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40.r),
-                          color: AppColors.blue),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
                       height: 45.h,
-                      margin: EdgeInsets.only(top: 20.h, bottom: 12.h),
+                      margin: EdgeInsets.only(top: 20.h, bottom: 10.h),
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
                             if (editingController.text.length == 5) {
-                              viewModel.navigateTo(Routes.paymentPage);
+                              viewModel.onNextPressed(editingController.text);
                             } else {
-                              viewModel.callBackError(
-                                  'Something went wrong. Please check sms code');
+                              viewModel.callBackError('Something went wrong. Please check sms code');
                             }
                           },
                           borderRadius: BorderRadius.circular(40.r),
@@ -130,18 +125,16 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                     Text(
                       'Agar siz 60 soniya ichida kodni olmagan bo\'lsangiz, Qayta yuborish tugmasini bosing!',
                       textAlign: TextAlign.center,
-                      style: AppTextStyle.font12W400Normal
-                          .copyWith(color: const Color(0xFF919399)),
+                      style: AppTextStyle.font12W400Normal.copyWith(color: const Color(0xFF919399)),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
                       child: GestureDetector(
                         onTap: () {},
                         child: Text(
                           'Qayta yuborish',
                           textAlign: TextAlign.center,
-                          style: AppTextStyle.font14W500Normal
-                              .copyWith(color: AppColors.gray),
+                          style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.gray),
                         ),
                       ),
                     ),
@@ -156,7 +149,12 @@ class VerifyPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   }
 
   @override
-  ProfilePageViewModel viewModelBuilder(BuildContext context) {
-    return ProfilePageViewModel(context: context);
+  VerifyPageViewModel viewModelBuilder(BuildContext context) {
+    return VerifyPageViewModel(
+        context: context,
+        profileRepository: locator.get(),
+        localViewModel: locator.get(),
+        sharedPreferenceHelper: locator.get(),
+        phoneNumber: phoneNumber);
   }
 }

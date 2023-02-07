@@ -10,6 +10,7 @@ import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmod
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../core/di/app_locator.dart';
 import '../../../components/custom_banner.dart';
 
 class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
@@ -197,6 +198,6 @@ class PaymentPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
 
   @override
   ProfilePageViewModel viewModelBuilder(BuildContext context) {
-    return ProfilePageViewModel(context: context);
+    return ProfilePageViewModel(context: context, profileRepository: locator.get(), localViewModel: locator.get(),sharedPreferenceHelper: locator.get());
   }
 }
