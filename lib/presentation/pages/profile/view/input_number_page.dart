@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,9 +29,9 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
   @override
   Widget builder(BuildContext context, InputNumberPageViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Registratsiya',
+        title: 'register'.tr(),
         onTap: () => viewModel.pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -55,13 +56,14 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
                 ),
               ),
               Container(
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
                 child: Column(
                   children: [
                     Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.lightBackground),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.r),
+                          color: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 24.h, bottom: 12.h),
                       padding: EdgeInsets.only(left: 22.w),

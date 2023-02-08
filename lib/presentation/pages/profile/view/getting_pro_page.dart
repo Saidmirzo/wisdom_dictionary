@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,10 +25,10 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
   @override
   Widget builder(BuildContext context, GettingProPageViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
-        title: 'Wisdom Dictionary',
+        title: "app_name".tr(),
         onTap: () => viewModel.pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -50,11 +51,11 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
                   child: Text(
                     'Eng yaxshi sarmoya bilimga bo\'lgan sarmoyadir!\nIshonavering siz kerakli joyga sarmoya qilmoqdasiz.',
                     textAlign: TextAlign.center,
-                    style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                    style: AppTextStyle.font12W400Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                   ),
                 ),
                 Container(
-                  decoration: AppDecoration.bannerDecor,
+                  decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                   padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
                   child: Column(
                     children: [
@@ -125,7 +126,7 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
                           onTap: () => viewModel.navigateTo(Routes.registrationPage),
                           child: RichText(
                             text: TextSpan(
-                              style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                              style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                               text: 'Ro\'yhatdan o\'tganmisiz ?',
                               children: [
                                 TextSpan(

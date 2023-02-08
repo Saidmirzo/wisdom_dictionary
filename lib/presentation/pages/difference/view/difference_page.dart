@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -29,13 +30,13 @@ class DifferencePage extends ViewModelBuilderWidget<DifferencePageViewModel> {
       onWillPop: () => viewModel.goMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goMain(),
           isSearch: true,
           onChange: (value) => viewModel.getDifferenceWordsList(value),
-          title: "Differences",
+          title: "differences".tr(),
         ),
         body: viewModel.isSuccess(tag: viewModel.getDifferenceTag)
             ? ListView.builder(

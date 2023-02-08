@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,9 +28,9 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
     return WillPopScope(
       onWillPop: () => viewModel.goBackToMenu(),
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
-          title: 'Shaxsiy kabinet',
+          title: "personal_cabinet".tr(),
           onTap: () => viewModel.goBackToMenu(),
           leadingIcon: Assets.icons.arrowLeft,
         ),
@@ -47,7 +48,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                             height: 144.h,
                             margin: EdgeInsets.only(top: 80.h),
                             padding: const EdgeInsets.symmetric(vertical: 32),
-                            decoration: AppDecoration.bannerDecor,
+                            decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,,
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
@@ -57,7 +58,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                                   alignment: Alignment.bottomCenter,
                                   child: Text(
                                     viewModel.sharedPreferenceHelper.getString(Constants.KEY_PHONE, ""),
-                                    style: AppTextStyle.font18W500Normal.copyWith(color: AppColors.blue, fontSize: 20),
+                                    style: AppTextStyle.font18W500Normal.copyWith(color:isDarkTheme ? AppColors.white : AppColors.blue, fontSize: 20),
                                   ),
                                 ),
                               ),
@@ -124,10 +125,6 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
 
   @override
   ProfilePageViewModel viewModelBuilder(BuildContext context) {
-    return ProfilePageViewModel(
-        context: context,
-        profileRepository: locator.get(),
-        localViewModel: locator.get(),
-        sharedPreferenceHelper: locator.get());
+    return ProfilePageViewModel(context: context);
   }
 }

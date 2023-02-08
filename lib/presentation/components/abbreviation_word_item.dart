@@ -5,6 +5,7 @@ import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 
 import '../../core/di/app_locator.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class AbbreviationWordItem extends StatelessWidget {
   const AbbreviationWordItem({super.key, required this.firstText, required this.secondText});
@@ -23,7 +24,8 @@ class AbbreviationWordItem extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 style: AppTextStyle.font14W500Normal
-                    .copyWith(color: AppColors.darkGray, fontSize: locator<LocalViewModel>().fontSize - 2),
+                    .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                    fontSize: locator<LocalViewModel>().fontSize - 2),
                 text: firstText,
                 children: [
                   TextSpan(
@@ -39,8 +41,8 @@ class AbbreviationWordItem extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: const Divider(
-                color: AppColors.borderWhite,
+              child: Divider(
+                color:isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite,
                 height: 1,
                 thickness: 0.75,
               ),

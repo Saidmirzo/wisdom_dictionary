@@ -1,10 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
-import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
-import 'package:wisdom/config/constants/assets.dart';
 
 class SearchCleanButton extends StatelessWidget {
   const SearchCleanButton({
@@ -28,7 +26,7 @@ class SearchCleanButton extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 30.w),
                 child: Text(
-                  'So\'ngi qidiruvlar',
+                  "recent_searches".tr(),
                   style: AppTextStyle.font18W500Normal
                       .copyWith(color: AppColors.blue),
                 ),
@@ -48,7 +46,7 @@ class SearchCleanButton extends StatelessWidget {
                         borderRadius: BorderRadius.circular(21.r),
                         child: Center(
                           child: Text(
-                            'Tozalash',
+                            "clear".tr(),
                             style: AppTextStyle.font14W500Normal,
                           ),
                         )),

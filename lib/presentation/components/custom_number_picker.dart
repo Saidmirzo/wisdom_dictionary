@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 import '../../config/constants/app_colors.dart';
 import '../../config/constants/app_text_style.dart';
@@ -33,11 +34,17 @@ class CustomNumberPicker extends StatelessWidget {
         borderRadius: BorderRadius.circular(33.r),
         color: const Color(0xFFECF2FF),
         gradient: LinearGradient(
-          colors: [
-            const Color(0xFFECF2FF).withOpacity(0.38),
-            const Color(0xFFECF2FF),
-            const Color(0xFFECF2FF).withOpacity(0.38),
-          ],
+          colors: isDarkTheme
+              ? [
+                  const Color(0xFF0063A4).withOpacity(0.38),
+                  const Color(0xFF0063A4),
+                  const Color(0xFF0063A4).withOpacity(0.38),
+                ]
+              : [
+                  const Color(0xFFECF2FF).withOpacity(0.38),
+                  const Color(0xFFECF2FF),
+                  const Color(0xFFECF2FF).withOpacity(0.38),
+                ],
           begin: FractionalOffset.topCenter,
           end: FractionalOffset.bottomCenter,
         ),
@@ -52,25 +59,36 @@ class CustomNumberPicker extends StatelessWidget {
               maxValue: maxValue,
               infiniteLoop: infiniteLoop,
               textStyle: AppTextStyle.font14W500Normal
-                  .copyWith(color: AppColors.lightGray),
+                  .copyWith(color: isDarkTheme ? AppColors.darkGray : AppColors.lightGray),
               selectedTextStyle: AppTextStyle.font14W500Normal.copyWith(
-                  color: AppColors.darkGray, fontWeight: FontWeight.w600),
+                  color: isDarkTheme ? AppColors.white : AppColors.darkGray, fontWeight: FontWeight.w600),
               zeroPad: zeroPad,
               onChanged: (value) => onChange(value),
             ),
+          NumberPicker(
+            value: currentValue,
+            minValue: minValue,
+            maxValue: maxValue,
+            infiniteLoop: infiniteLoop,
+            textStyle:
+                AppTextStyle.font14W500Normal.copyWith(color: isDarkTheme ? AppColors.darkGray : AppColors.lightGray),
+            selectedTextStyle: AppTextStyle.font14W500Normal
+                .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray, fontWeight: FontWeight.w600),
+            zeroPad: zeroPad,
+            onChanged: (value) => onChange(value),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
+            children: [
               Divider(
-                color: AppColors.blue,
+                color: isDarkTheme ? AppColors.white.withOpacity(.3) : AppColors.blue,
                 height: 1,
                 thickness: 1,
                 indent: 10,
                 endIndent: 10,
               ),
               Divider(
-                color: AppColors.blue,
+                color: isDarkTheme ? AppColors.white.withOpacity(.3) : AppColors.blue,
                 height: 1,
                 thickness: 1,
                 indent: 10,

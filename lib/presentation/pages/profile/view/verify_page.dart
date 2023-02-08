@@ -24,9 +24,9 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
   TextEditingController editingController = TextEditingController();
 
   @override
-  Widget builder(BuildContext context, VerifyPageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         title: 'Verifikatsiya kodi',
         onTap: () => viewModel.pop(),
@@ -66,13 +66,14 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
                 ),
               ),
               Container(
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
                 child: Column(
                   children: [
                     Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.lightBackground),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.r),
+                          color: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground),
                       height: 45.h,
                       margin: EdgeInsets.only(top: 24.h, bottom: 12.h),
                       padding: EdgeInsets.only(left: 22.w, right: 22.w),

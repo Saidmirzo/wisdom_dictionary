@@ -6,10 +6,12 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
-import 'package:wisdom/data/model/verify_model.dart';
+import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
+import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
 import '../../../../core/di/app_locator.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../components/custom_banner.dart';
 import '../viewmodel/payment_page_viewmodel.dart';
 
@@ -21,21 +23,13 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
   });
 
   TextEditingController editingController = TextEditingController();
-  final VerifyModel? verifyModel;
-  final String? phoneNumber;
-
-  @override
-  void onViewModelReady(PaymentPageViewModel viewModel) {
-    viewModel.init();
-    super.onViewModelReady(viewModel);
-  }
 
   @override
   Widget builder(BuildContext context, PaymentPageViewModel viewModel, Widget? child) {
     return WillPopScope(
       onWillPop: () => viewModel.goToProfile(),
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           title: 'To\'lov',
           onTap: () => viewModel.goToProfile(),
@@ -50,7 +44,7 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        decoration: AppDecoration.bannerDecor,
+                        decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 27.h),
                         child: Column(
                           children: [

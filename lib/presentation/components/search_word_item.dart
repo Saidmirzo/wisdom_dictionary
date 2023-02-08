@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class SearchWordItem extends StatelessWidget {
   const SearchWordItem({
@@ -40,22 +41,21 @@ class SearchWordItem extends StatelessWidget {
                       RichText(
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
-                          style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                          style: AppTextStyle.font14W500Normal.copyWith(color:  isDarkTheme ? AppColors.white : AppColors.darkGray),
                           text: firstText,
                           children: [
                             TextSpan(
                                 text: '   $secondText',
-                                style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleBlue)),
+                                style: AppTextStyle.font14W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue)),
                           ],
                         ),
                       ),
-                      // todo : qo'shimcha o'zbekcha manolar qo'shish
                       Visibility(
                         visible: (thirdText??"").isNotEmpty,
                         child: Text(
                           thirdText ?? "",
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                          style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue),
                         ),
                       ),
                     ],

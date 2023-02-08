@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class CatalogButton extends StatelessWidget {
   const CatalogButton({
@@ -20,7 +21,10 @@ class CatalogButton extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       width: double.infinity,
       decoration: AppDecoration.bannerDecor.copyWith(
-          borderRadius: BorderRadius.circular(30.r), color: AppColors.blue),
+        borderRadius: BorderRadius.circular(30.r),
+        color: isDarkTheme ? AppColors.darkForm : AppColors.blue,
+        boxShadow: isDarkTheme ? [] : null,
+      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

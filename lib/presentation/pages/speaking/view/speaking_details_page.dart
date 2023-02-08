@@ -1,16 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/core/di/app_locator.dart';
-import 'package:wisdom/presentation/pages/collocation/viewmodel/collocation_detail_page_viewmodel.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_decoration.dart';
 import '../../../../config/constants/assets.dart';
 import '../../../../data/viewmodel/local_viewmodel.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../viewmodel/speaking_detail_page_viewmodel.dart';
 
@@ -29,12 +30,12 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
       onWillPop: () => viewModel.goBack(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.arrowLeft,
           onTap: () => viewModel.goBack(),
           isSearch: false,
-          title: "Speaking",
+          title: "speaking".tr(),
         ),
         body: ListView(
           padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 16.h, bottom: 75.h),
@@ -43,7 +44,7 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
           children: [
             Column(mainAxisSize: MainAxisSize.min, children: [
               Container(
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -53,7 +54,7 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
                       child: Text(
                         viewModel.getSpeaking() ?? "Unknown",
                         style: AppTextStyle.font16W600Normal
-                            .copyWith(color: AppColors.darkGray, fontSize: locator<LocalViewModel>().fontSize - 2),
+                            .copyWith(color:  isDarkTheme ? AppColors.white : AppColors.darkGray,, fontSize: locator<LocalViewModel>().fontSize - 2),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -66,7 +67,7 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
                                 textStyle: AppTextStyle.font14W400NormalHtml
-                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize - 2),
+                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize - 2,  color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

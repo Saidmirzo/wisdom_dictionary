@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
-import 'package:wisdom/config/constants/assets.dart';
 
 class CustomOvalButton extends StatelessWidget {
   const CustomOvalButton({
@@ -28,9 +27,7 @@ class CustomOvalButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: isActive
-          ? AppDecoration.activeButtonDecor
-          : AppDecoration.inactiveButtonDecor,
+      decoration: isActive ? AppDecoration.activeButtonDecor : AppDecoration.inactiveButtonDecor,
       height: height ?? 45.h,
       child: Material(
         color: Colors.transparent,
@@ -45,16 +42,12 @@ class CustomOvalButton extends StatelessWidget {
                     ? Padding(
                         padding: EdgeInsets.only(right: 8.w),
                         child: SvgPicture.asset(imgAssets,
-                            height: 16.h,
-                            fit: BoxFit.scaleDown,
-                            color:
-                                isActive ? AppColors.white : AppColors.black),
+                            height: 16.h, fit: BoxFit.scaleDown, color: isActive ? AppColors.white : AppColors.black),
                       )
                     : const SizedBox.shrink(),
                 Text(
                   label,
-                  style: textStyle.copyWith(
-                      color: isActive ? AppColors.white : AppColors.black),
+                  style: textStyle.copyWith(color: isActive ? AppColors.white : AppColors.black),
                 ),
               ],
             ),

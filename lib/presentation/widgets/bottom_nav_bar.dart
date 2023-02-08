@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/presentation/pages/home/viewmodel/home_viewmodel.dart';
 
@@ -11,7 +12,7 @@ import '../../config/constants/assets.dart';
 import '../components/navigation_button.dart';
 
 class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
-  HomeBottomNavBar({Key? key, required this.onTap}) : super(key: key);
+  const HomeBottomNavBar({Key? key, required this.onTap}) : super(key: key);
 
   final Function(int index) onTap;
 
@@ -27,7 +28,7 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.r),
-              color: AppColors.blue,
+              color: isDarkTheme ? AppColors.darkBottomBar : AppColors.blue,
             ),
             padding: EdgeInsets.symmetric(horizontal: 30.w),
             margin: const EdgeInsets.all(8),

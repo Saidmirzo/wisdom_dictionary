@@ -1,10 +1,12 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/config/constants/urls.dart';
 import 'package:wisdom/data/model/recent_model.dart';
 import 'package:wisdom/presentation/pages/collocation/view/collocation_details_page.dart';
@@ -87,7 +89,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
 }
 
 class Home extends ViewModelWidget<HomeViewModel> {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
@@ -97,12 +99,12 @@ class Home extends ViewModelWidget<HomeViewModel> {
       },
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
           isSearch: false,
-          title: 'Wisdom Dictionary',
+          title: "app_name".tr(),
         ),
         body: SwipeRefresh.adaptive(
           stateStream: viewModel.stream,
@@ -130,7 +132,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Container(
-                                              decoration: AppDecoration.bannerDecor,
+                                              decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                                               child: viewModel.homeRepository.timelineModel.ad!.image != null
                                                   ? ClipRRect(
                                                       borderRadius: BorderRadius.circular(18.r),
@@ -171,7 +173,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             },
                           ),
                           CustomBanner(
-                            title: 'Grammar',
+                            title: 'grammar_label'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -181,13 +183,13 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.grammar!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal.copyWith( color: isDarkTheme ? AppColors.white : AppColors.darkGray,),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                           ),
                           CustomBanner(
-                            title: 'Differences',
+                            title: 'differences'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -197,7 +199,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: RichText(
                                 text: TextSpan(
-                                  style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                  style: AppTextStyle.font16W500Normal.copyWith(color: color: isDarkTheme ? AppColors.white : AppColors.darkGray,),
                                   text: viewModel.separateDifference(
                                       true, viewModel.homeRepository.timelineModel.difference!.word!),
                                   children: [
@@ -215,7 +217,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                           ),
                           CustomBanner(
                             contentPadding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                            title: 'Do you know this ?',
+                            title: "do_you_know".tr(),
                             onTap: () {
                               viewModel.localViewModel.wordDetailModel = RecentModel(
                                   id: viewModel.homeRepository.timelineModel.image!.id!,
@@ -254,7 +256,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                       Padding(
                                         padding: EdgeInsets.only(top: 15.h),
                                         child: Text(
-                                          "oops! no connection",
+                                          "no_internet".tr(),
                                           style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.error),
                                         ),
                                       )
@@ -265,7 +267,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             ),
                           ),
                           CustomBanner(
-                            title: 'Thesaurus',
+                            title: 'thesaurus'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -275,12 +277,12 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.thesaurus!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                               ),
                             ),
                           ),
                           CustomBanner(
-                            title: 'Collocation',
+                            title: 'collocation_label'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -290,12 +292,13 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.collocation!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal
+                                    .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                               ),
                             ),
                           ),
                           CustomBanner(
-                            title: 'Metaphor',
+                            title: 'metaphor_label'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -305,12 +308,12 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.metaphor!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                               ),
                             ),
                           ),
                           CustomBanner(
-                            title: 'Speaking',
+                            title: 'speaking'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -320,7 +323,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.speaking!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                                 textAlign: TextAlign.center,
                               ),
                             ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,12 +13,14 @@ import '../../../../config/constants/constants.dart';
 import '../../../components/drawer_menu_item.dart';
 
 class DrawerScreen extends ViewModelWidget<HomeViewModel> {
+  const DrawerScreen({super.key});
+
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(5),
@@ -50,7 +53,7 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
             Visibility(
               visible: viewModel.sharedPref.getString(Constants.KEY_SUBSCRIBE, "") == "",
               child: DrawerMenuItem(
-                title: 'Get PRO',
+                title: 'subscribe'.tr(),
                 imgAssets: Assets.icons.proVersion,
                 onTap: () => Navigator.of(context).pushNamed(Routes.gettingProPage),
               ),
@@ -58,33 +61,35 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
             Visibility(
               visible: viewModel.sharedPref.getString(Constants.KEY_SUBSCRIBE, "") != "",
               child: DrawerMenuItem(
-                title: 'Profile',
+                title: 'personal_cabinet'.tr(),
                 imgAssets: Assets.icons.person,
                 onTap: () => Navigator.of(context).pushNamed(Routes.profilePage),
               ),
             ),
             DrawerMenuItem(
-              title: 'Place advertisement',
+              title: 'place_ad'.tr(),
               imgAssets: Assets.icons.giveAd,
               onTap: () => Navigator.of(context).pushNamed(Routes.givingAdPage),
             ),
             DrawerMenuItem(
-              title: 'Settings',
+              title: 'settings'.tr(),
               imgAssets: Assets.icons.setting,
-              onTap: () => Navigator.of(context).pushNamed(Routes.settingPage),
+              onTap: () => Navigator.of(context).pushNamed(Routes.settingPage).then(
+                    (value) => viewModel.notifyListeners(),
+                  ),
             ),
             DrawerMenuItem(
-              title: 'Abbreviations',
+              title: 'abbreviations'.tr(),
               imgAssets: Assets.icons.abbreviations,
               onTap: () => Navigator.of(context).pushNamed(Routes.abbreviationPage),
             ),
             DrawerMenuItem(
-              title: 'Rate the app',
+              title: 'rate_app'.tr(),
               imgAssets: Assets.icons.rate,
               onTap: () {},
             ),
             DrawerMenuItem(
-              title: 'Share the app',
+              title: 'share_app'.tr(),
               imgAssets: Assets.icons.share,
               onTap: () {},
             ),

@@ -6,24 +6,24 @@ import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/config/constants/constants.dart';
 
-class SearchHistoryItem extends StatelessWidget {
-  const SearchHistoryItem({
+class WordJarItem extends StatelessWidget {
+  const WordJarItem({
     super.key,
     required this.firstText,
     required this.secondText,
-    this.thirdText,
-    required this.onTap,
+    required this.onDelete,
+    required this.onView,
   });
 
   final String firstText;
   final String secondText;
-  final String? thirdText;
-  final Function() onTap;
+  final Function() onDelete;
+  final Function() onView;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap(),
+      onTap: () => onView,
       child: SizedBox(
         height: 52.h,
         child: Column(
@@ -35,26 +35,21 @@ class SearchHistoryItem extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 34.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          style: AppTextStyle.font14W500Normal.copyWith(isDarkTheme ? AppColors.white : AppColors.darkGray),
-                          text: firstText,
-                          children: [
-                            TextSpan(
-                                text: '   $secondText',
-                                style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleBlue)),
-                          ],
+                  child: RichText(
+                    text: TextSpan(
+                      style: AppTextStyle.font14W500Normal.copyWith(
+                        color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                      ),
+                      text: firstText,
+                      children: [
+                        TextSpan(
+                          text: ' - $secondText',
+                          style: AppTextStyle.font14W400Normal.copyWith(
+                            color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                          ),
                         ),
-                      ),
-                      Text(
-                        thirdText ?? "",
-                        style: AppTextStyle.font12W500Normal.copyWith(isDarkTheme ? AppColors.lightGray : AppColors.blue),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -65,10 +60,10 @@ class SearchHistoryItem extends StatelessWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () => onTap(),
+                        onTap: () => onDelete,
                         borderRadius: BorderRadius.circular(24.r),
                         child: SvgPicture.asset(
-                          Assets.icons.arrowCircleRight,
+                          Assets.icons.trash,
                           height: 24.h,
                           width: 24.h,
                           fit: BoxFit.scaleDown,
@@ -81,8 +76,8 @@ class SearchHistoryItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w),
-              child: const Divider(
-                color: AppColors.borderWhite,
+              child: Divider(
+                color: isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite,
                 height: 1,
                 thickness: 0.5,
               ),

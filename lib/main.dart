@@ -1,13 +1,15 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 
-import 'config/theme/themes.dart';
+import 'app.dart';
 import 'core/di/app_locator.dart';
 import 'core/services/push_notifications_service.dart';
 import 'presentation/routes/routes.dart';
@@ -24,8 +26,7 @@ void main() async {
     setupLocator();
     await locator<DBHelper>().init();
     await locator<SharedPreferenceHelper>().getInstance();
-
-    runApp(const MyApp());
+    await EasyLocalization.ensureInitialized();
     AwesomeNotifications().initialize(
       null,
       [
@@ -38,6 +39,14 @@ void main() async {
           ledColor: Colors.lime,
         ),
       ],
+    );
+    runApp(
+      EasyLocalization(
+        supportedLocales: const [Locale('en', 'US'), Locale('uz', 'UZ')],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('en', 'US'),
+        child: const MyApp(),
+      ),
     );
   }, appVersion: '1.0.0');
 }

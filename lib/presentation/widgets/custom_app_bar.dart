@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import '../../config/constants/app_colors.dart';
 import '../../config/constants/app_text_style.dart';
 import '../../config/constants/assets.dart';
@@ -45,8 +47,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.blue,
-      shadowColor: const Color(0xFF6D8DAD).withOpacity(0.15),
+      backgroundColor: isDarkTheme ? AppColors.darkForm : AppColors.blue,
+      shadowColor: isDarkTheme ? null : const Color(0xFF6D8DAD).withOpacity(0.15),
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -81,7 +83,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               child: Container(
                 height: 47.h,
                 margin: EdgeInsets.all(14.r),
-                decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
+                decoration: BoxDecoration(color: isDarkTheme ? AppColors.darkBackground : AppColors.white, borderRadius: BorderRadius.circular(23.5.r)),
                 child: TextField(
                   autofocus: widget.focus,
                   focusNode: widget.focusNode,
@@ -117,7 +119,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         ),
                       ),
                     ),
-                    hintText: 'Search',
+                    hintText: 'search_hint'.tr(),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(vertical: 14.h),
                     hintStyle: AppTextStyle.font14W400Normal.copyWith(

@@ -1,4 +1,5 @@
 import 'package:jbaza/jbaza.dart';
+import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/core/services/custom_client.dart';
@@ -16,13 +17,16 @@ import 'package:wisdom/data/repositories/profile_repository_impl.dart';
 import 'package:wisdom/domain/repositories/search_repository.dart';
 import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 
+import '../services/local_notification_service.dart';
+
+
 final locator = JbazaLocator.instance;
 
 void setupLocator() {
   locator.registerSingleton<NetWorkChecker>(NetWorkChecker());
   locator.registerSingleton<WordMapper>(WordMapper());
-  locator.registerSingleton<LocalNotificationService>(LocalNotificationService());
   locator.registerSingleton<DBHelper>(DBHelper(locator.get()));
+  locator.registerSingleton<LocalNotificationService>(LocalNotificationService());
   locator.registerSingleton<SharedPreferenceHelper>(SharedPreferenceHelper());
   locator.registerSingleton<CustomClient>(CustomClient(sharedPreferenceHelper: locator.get()));
   locator.registerSingleton<LocalViewModel>(LocalViewModel(context: null, preferenceHelper: locator.get()));

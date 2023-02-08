@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class CatalogItem extends StatelessWidget {
   const CatalogItem({
@@ -30,7 +31,10 @@ class CatalogItem extends StatelessWidget {
                 padding: EdgeInsets.only(left: 34.w, right: 78.w),
                 child: Text(
                   firstText,
-                  style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray, overflow: TextOverflow.fade),
+                  style: AppTextStyle.font14W500Normal.copyWith(
+                    color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                    overflow: TextOverflow.fade,
+                  ),
                 ),
               ),
             ),
@@ -54,8 +58,8 @@ class CatalogItem extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.w),
-                child: const Divider(
-                  color: AppColors.borderWhite,
+                child: Divider(
+                  color: isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite,
                   height: 1,
                   thickness: 0.5,
                 ),

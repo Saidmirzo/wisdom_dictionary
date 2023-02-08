@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:wisdom/config/constants/app_colors.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/components/catalog_item.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
@@ -9,6 +12,7 @@ import '../../../../config/constants/assets.dart';
 import '../../../widgets/loading_widget.dart';
 import '../viewmodel/grammar_page_viewmodel.dart';
 
+// ignore: must_be_immutable
 class GrammarPage extends ViewModelBuilderWidget<GrammarPageViewModel> {
   GrammarPage({super.key});
 
@@ -24,9 +28,9 @@ class GrammarPage extends ViewModelBuilderWidget<GrammarPageViewModel> {
       onWillPop: () => viewModel.goMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor: const Color(0XFFF6F9FF),
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
-          title: 'Grammar',
+          title: 'grammar'.tr(),
           onTap: () => viewModel.goMain(),
           leadingIcon: Assets.icons.arrowLeft,
           isSearch: true,

@@ -7,6 +7,7 @@ import 'package:wisdom/config/constants/app_text_style.dart';
 
 import '../../../config/constants/app_decoration.dart';
 import '../../../config/constants/assets.dart';
+import '../../../config/constants/constants.dart';
 import '../../widgets/custom_app_bar.dart';
 
 class GivingAdPage extends StatelessWidget {
@@ -15,7 +16,7 @@ class GivingAdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
         title: 'Reklama berish',
         onTap: () => Navigator.of(context).pop(),
@@ -37,14 +38,14 @@ class GivingAdPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(top: 30.h),
                 padding: EdgeInsets.symmetric(vertical: 32.h, horizontal: 20.w),
-                decoration: AppDecoration.bannerDecor,
+                decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       'Reklama berish uchun quyidagi manzillarga murojaat qiling:',
-                      style: AppTextStyle.font16W500Normal
-                          .copyWith(color: AppColors.blue),
+                      style:
+                          AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.blue),
                       textAlign: TextAlign.center,
                     ),
                     Padding(
@@ -63,16 +64,15 @@ class GivingAdPage extends StatelessWidget {
                             Text(
                               'Telefon: ',
                               style: AppTextStyle.font14W500Normal.copyWith(
-                                color: AppColors.blue,
+                                color: isDarkTheme ? AppColors.white : AppColors.blue,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 40.w),
                               child: Text(
                                 '+998996901673',
-                                style: AppTextStyle.font14W500Normal.copyWith(
-                                    color: AppColors.blue,
-                                    decoration: TextDecoration.underline),
+                                style: AppTextStyle.font14W500Normal
+                                    .copyWith(color: AppColors.blue, decoration: TextDecoration.underline),
                               ),
                             )
                           ],
@@ -94,16 +94,15 @@ class GivingAdPage extends StatelessWidget {
                             Text(
                               'Telegram: ',
                               style: AppTextStyle.font14W500Normal.copyWith(
-                                color: AppColors.blue,
+                                color: isDarkTheme ? AppColors.white : AppColors.blue,
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 20.w),
                               child: Text(
-                                '\@Wisdom_reklama',
-                                style: AppTextStyle.font14W500Normal.copyWith(
-                                    color: AppColors.blue,
-                                    decoration: TextDecoration.underline),
+                                '@Wisdom_reklama',
+                                style: AppTextStyle.font14W500Normal
+                                    .copyWith(color: AppColors.blue, decoration: TextDecoration.underline),
                               ),
                             )
                           ],
