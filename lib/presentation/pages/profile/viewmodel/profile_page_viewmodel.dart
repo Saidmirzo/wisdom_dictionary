@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
+import 'package:wisdom/data/model/tariffs_model.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/profile_repository.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
@@ -19,36 +22,37 @@ class ProfilePageViewModel extends BaseViewModel {
   });
 
   Future? dialog;
-  String? radioValue = '';
   final ProfileRepository profileRepository;
   final LocalViewModel localViewModel;
   final SharedPreferenceHelper sharedPreferenceHelper;
+  TariffsModel tariffsModel = TariffsModel();
   String getTariffsTag = 'getTariffsTag';
-  String tariffsValue = '';
 
   getTariffs() {
     safeBlock(() async {
-      await profileRepository.getTariffs();
+      tariffsModel = await TariffsModel.fromJson(jsonDecode(sharedPreferenceHelper.getString(Constants.KEY_TARIFFS, '')));
       setSuccess(tag: getTariffsTag);
-      tariffsValue = profileRepository.tariffsModel.first.id.toString();
-    }, callFuncName: 'getTariffs', tag: getTariffsTag);
+    }, callFuncName: 'getTariffs', inProgress: false);
   }
 
-  bool haveAccount() => sharedPreferenceHelper.getString(Constants.KEY_TOKEN, "") == "";
-
-  void onBuyPremiumPressed() {
-    if (haveAccount()) {
-      if (tariffsValue != '') {
-        navigateTo(Routes.registrationPage);
-      }
-    } else {
-      navigateTo(Routes.profilePage2);
-    }
-  }
-
-  void onRegistrationPressed() {
-    navigateTo(Routes.registrationPage);
-  }
+  // bool haveAccount() => sharedPreferenceHelper.getString(Constants.KEY_TOKEN, "") == "";
+  // bool subscribed() => sharedPreferenceHelper.getString(Constants.KEY_SUBSCRIBE, "") == "";
+  //
+  // void onBuyPremiumPressed() {
+  //   if (subscribed()) {
+  //     if (tariffsValue != '') {
+  //       sharedPreferenceHelper.putInt(Constants.KEY_TARIFID, int.parse(tariffsValue));
+  //       sharedPreferenceHelper.putString(Constants.KEY_TARIFFS, jsonEncode(profileRepository.tariffsModel.first));
+  //       navigateTo(Routes.registrationPage);
+  //     }
+  //   } else {
+  //     navigateTo(Routes.profilePage2);
+  //   }
+  // }
+  //
+  // void onRegistrationPressed() {
+  //   navigateTo(Routes.registrationPage);
+  // }
 
   @override
   callBackBusy(bool value, String? tag) {
@@ -75,5 +79,13 @@ class ProfilePageViewModel extends BaseViewModel {
         message: text,
       ),
     );
+  }
+
+  onPaymentPressed() {
+    navigateTo(Routes.paymentPage, arg: {'verifyModel': null, 'phoneNumber': null});
+  }
+
+  goBackToMenu() {
+    navigateTo(Routes.mainPage, isRemoveStack: true);
   }
 }

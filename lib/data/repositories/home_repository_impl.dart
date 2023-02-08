@@ -3,15 +3,19 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/core/db/db_helper.dart';
+import 'package:wisdom/core/domain/http_is_success.dart';
+import 'package:wisdom/core/services/custom_client.dart';
+import 'package:wisdom/data/model/subscribe_check_model.dart';
 import 'package:wisdom/data/model/timeline_model.dart';
 
 import '../../config/constants/urls.dart';
 import '../../domain/repositories/home_repository.dart';
 
 class HomeRepositoryImpl extends HomeRepository {
-  HomeRepositoryImpl(this.dbHelper);
+  HomeRepositoryImpl(this.dbHelper, this.customClient);
 
   final DBHelper dbHelper;
+  final CustomClient customClient;
   TimelineModel _timeLineModel = TimelineModel();
   Ad _ad = Ad();
 
@@ -85,6 +89,18 @@ class HomeRepositoryImpl extends HomeRepository {
       return _ad;
     } else {
       throw VMException(response.body, callFuncName: 'getAd', response: response);
+    }
+  }
+
+  @override
+  Future<SubscribeCheckModel?> checkSubscription() async {
+    var response = await customClient.get(Urls.subscribeCheck);
+    if (response.isSuccessful) {
+      var subscribeModel = SubscribeCheckModel.fromJson(jsonDecode(response.body));
+      return subscribeModel;
+    } else {
+      return null;
+      throw VMException(response.body, callFuncName: 'checkSubscription', response: response);
     }
   }
 

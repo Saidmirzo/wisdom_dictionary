@@ -1,3 +1,4 @@
+import 'package:wisdom/data/model/subscribe_check_model.dart';
 import 'package:wisdom/data/model/timeline_model.dart';
 
 abstract class HomeRepository {
@@ -5,7 +6,9 @@ abstract class HomeRepository {
 
   Future<Ad> getAd();
 
-  TimelineModel get timelineModel;
+  Future<SubscribeCheckModel?> checkSubscription();
 
   set timeLineModel(TimelineModel model);
+
+  TimelineModel get timelineModel;
 }

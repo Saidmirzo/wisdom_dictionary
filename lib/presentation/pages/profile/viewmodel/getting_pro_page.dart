@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/profile_repository.dart';
@@ -9,32 +12,46 @@ import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
 import '../../../routes/routes.dart';
 
-class InputNumberPageViewModel extends BaseViewModel {
-  InputNumberPageViewModel({
+class GettingProPageViewModel extends BaseViewModel {
+  GettingProPageViewModel({
     required super.context,
     required this.profileRepository,
     required this.localViewModel,
     required this.sharedPreferenceHelper,
   });
 
+  Future? dialog;
   final ProfileRepository profileRepository;
   final LocalViewModel localViewModel;
   final SharedPreferenceHelper sharedPreferenceHelper;
-  String loginTag = 'loginTag';
-  Future? dialog;
+  String getTariffsTag = 'getTariffsTag';
+  String tariffsValue = '';
 
-  Future<void> onNextPressed(String phoneNumber) async {
-    safeBlock(
-      () async {
-        var status = await profileRepository
-            .login(phoneNumber.replaceAll('+', '').replaceAll(' ', '').replaceAll('(', '').replaceAll(')', ''));
-        if (status) {
-          navigateTo(Routes.verifyPage, arg: {'number': phoneNumber});
-        }
-      },
-      callFuncName: 'onNextPressed',
-      inProgress: true,
-    );
+  getTariffs() {
+    safeBlock(() async {
+      await profileRepository.getTariffs();
+      setSuccess(tag: getTariffsTag);
+      tariffsValue = profileRepository.tariffsModel.first.id.toString();
+    }, callFuncName: 'getTariffs', tag: getTariffsTag);
+  }
+
+  bool haveAccount() => sharedPreferenceHelper.getString(Constants.KEY_TOKEN, "") == "";
+  bool subscribed() => sharedPreferenceHelper.getString(Constants.KEY_SUBSCRIBE, "") == "";
+
+  void onBuyPremiumPressed() {
+    if (subscribed()) {
+      if (tariffsValue != '') {
+        sharedPreferenceHelper.putInt(Constants.KEY_TARIFID, int.parse(tariffsValue));
+        sharedPreferenceHelper.putString(Constants.KEY_TARIFFS, jsonEncode(profileRepository.tariffsModel.first));
+        navigateTo(Routes.registrationPage);
+      }
+    } else {
+      navigateTo(Routes.profilePage);
+    }
+  }
+
+  void onRegistrationPressed() {
+    navigateTo(Routes.registrationPage);
   }
 
   @override

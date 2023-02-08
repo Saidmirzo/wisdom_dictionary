@@ -7,6 +7,10 @@ class Urls {
 
   static var login = Uri.parse('${baseUrl}api/auth/login');
   static var verify = Uri.parse('${baseUrl}api/auth/verify');
+  static var applyFirebaseId = Uri.parse('${baseUrl}api/auth/firebase');
+  static var subscribeCheck = Uri.parse('${baseUrl}api/subscribe/check');
+
+  static subscribe(int id) => Uri.parse('${baseUrl}api/subscribe/set/$id');
 
   static getSpeakingView(int id) => Uri.parse("${baseUrl}api/catalogue/speaking/word/view/$id");
 }

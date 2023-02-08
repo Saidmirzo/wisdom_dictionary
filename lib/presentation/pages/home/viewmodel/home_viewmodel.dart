@@ -14,6 +14,7 @@ import 'package:wisdom/core/domain/http_is_success.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 
+import '../../../../config/constants/constants.dart';
 import '../../../../core/di/app_locator.dart';
 import '../../../../data/model/timeline_model.dart';
 import '../../../../domain/repositories/word_entity_repository.dart';
@@ -35,6 +36,7 @@ class HomeViewModel extends BaseViewModel {
 
   final String getDailyWordsTag = "getDailyWordsTag";
   final String getAdTag = "getAdTag";
+  final String checkSubscriptionTag = "checkSubscriptionTag";
 
   void getRandomDailyWords() {
     safeBlock(() async {
@@ -115,4 +117,40 @@ class HomeViewModel extends BaseViewModel {
       localViewModel.changeBadgeCount(wordEntity.wordBankList.length);
     }, callFuncName: 'getWordBank', inProgress: false);
   }
+
+  void checkStatus() {
+    safeBlock(() async {
+      var token = sharedPref.getString(Constants.KEY_TOKEN, '');
+      if (token.isEmpty) {
+        onProfileStateChanged(Constants.STATE_NOT_REGISTERED);
+      } else {
+        onProfileStateChanged(sharedPref.getInt(Constants.KEY_PROFILE_STATE, Constants.STATE_NOT_REGISTERED));
+        var subscribeModel = await homeRepository.checkSubscription();
+        if (subscribeModel != null && subscribeModel.status!) {
+          if (subscribeModel.expiryStatus!) {
+            onProfileStateChanged(Constants.STATE_ACTIVE);
+          } else {
+            onProfileStateChanged(Constants.STATE_INACTIVE);
+          }
+        }
+      }
+    }, callFuncName: 'checkStatus');
+  }
+
+  void onProfileStateChanged(int state) {
+    safeBlock(
+      () async {
+        localViewModel.profileState = state;
+        sharedPref.putInt(Constants.KEY_PROFILE_STATE, state);
+        if (state != Constants.STATE_ACTIVE) {
+          // Show google ads banner due to profile state;
+          setupAds();
+        }
+        notifyListeners();
+      },
+      callFuncName: 'onProfileStateChanged',
+    );
+  }
+
+  void setupAds() {}
 }

@@ -15,7 +15,7 @@ class VerifyModel {
   VerifyModel({
     bool? status,
     String? token,
-    String? expiryTariff,
+    int? expiryTariff,
     List<TariffsModel>? tariffs,
   }) {
     _status = status;
@@ -38,13 +38,13 @@ class VerifyModel {
 
   bool? _status;
   String? _token;
-  String? _expiryTariff;
+  int? _expiryTariff;
   List<TariffsModel>? _tariffs;
 
   VerifyModel copyWith({
     bool? status,
     String? token,
-    String? expiryTariff,
+    int? expiryTariff,
     List<TariffsModel>? tariffs,
   }) =>
       VerifyModel(
@@ -58,7 +58,7 @@ class VerifyModel {
 
   String? get token => _token;
 
-  String? get expiryTariff => _expiryTariff;
+  int? get expiryTariff => _expiryTariff;
 
   List<TariffsModel>? get tariffs => _tariffs;
 

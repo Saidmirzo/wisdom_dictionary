@@ -8,21 +8,21 @@ import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/components/pro_info.dart';
-import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
+import 'package:wisdom/presentation/pages/profile/viewmodel/getting_pro_page.dart';
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
-class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
+class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
   GettingProPage({super.key});
 
   @override
-  void onViewModelReady(ProfilePageViewModel viewModel) {
+  void onViewModelReady(GettingProPageViewModel viewModel) {
     viewModel.getTariffs();
     super.onViewModelReady(viewModel);
   }
 
   @override
-  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, GettingProPageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       resizeToAvoidBottomInset: true,
@@ -150,8 +150,8 @@ class GettingProPage extends ViewModelBuilderWidget<ProfilePageViewModel> {
   }
 
   @override
-  ProfilePageViewModel viewModelBuilder(BuildContext context) {
-    return ProfilePageViewModel(
+  GettingProPageViewModel viewModelBuilder(BuildContext context) {
+    return GettingProPageViewModel(
         context: context,
         localViewModel: locator.get(),
         profileRepository: locator.get(),

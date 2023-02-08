@@ -7,7 +7,7 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
-import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
+import 'package:wisdom/presentation/pages/profile/viewmodel/getting_pro_page.dart';
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
@@ -82,6 +82,7 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
                           controller: editingController,
                           appContext: context,
                           length: 5,
+                          autoFocus: true,
                           keyboardType: TextInputType.number,
                           textStyle: AppTextStyle.font18W500Normal.copyWith(color: AppColors.blue),
                           onChanged: (String value) {},
@@ -155,6 +156,7 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
         profileRepository: locator.get(),
         localViewModel: locator.get(),
         sharedPreferenceHelper: locator.get(),
+        homeRepository: locator.get(),
         phoneNumber: phoneNumber);
   }
 }

@@ -1,14 +1,19 @@
 import 'package:jbaza/jbaza.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:wisdom/config/constants/constants.dart';
+import 'package:wisdom/core/db/preference_helper.dart';
 
 class CustomClient extends JClient {
-  CustomClient();
+  CustomClient({required this.sharedPreferenceHelper});
+
+  final SharedPreferenceHelper sharedPreferenceHelper;
 
   @override
   Map<String, String>? getGlobalHeaders() {
-    // if (tokenModel != null && tokenModel?.access != null) {
-    //   return {'token': '${tokenModel?.access}'};
-    // }
+    var token = sharedPreferenceHelper.getString(Constants.KEY_TOKEN, '');
+    if (token != '') {
+      return {'token': token};
+    }
     return {'token': ''};
   }
 

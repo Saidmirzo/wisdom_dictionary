@@ -11,6 +11,8 @@ class LocalViewModel extends BaseViewModel {
 
   final SharedPreferenceHelper preferenceHelper;
 
+  int profileState = -1;
+
   PageController pageController = PageController();
 
   ValueNotifier<int> currentIndex = ValueNotifier<int>(0);

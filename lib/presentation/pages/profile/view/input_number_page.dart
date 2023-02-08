@@ -8,8 +8,6 @@ import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/di/app_locator.dart';
-import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
-import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
 import '../viewmodel/input_number_page_viewmodel.dart';
@@ -70,6 +68,7 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: TextField(
+                          autofocus: true,
                           controller: editingController,
                           keyboardType: TextInputType.number,
                           style: AppTextStyle.font16W400Normal.copyWith(color: AppColors.blue),

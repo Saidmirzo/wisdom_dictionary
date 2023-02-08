@@ -122,7 +122,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             builder: (context) {
                               return viewModel.isSuccess(tag: viewModel.getDailyWordsTag)
                                   ? Visibility(
-                                      visible: viewModel.homeRepository.timelineModel.ad != null,
+                                      visible: viewModel.homeRepository.timelineModel.ad != null &&
+                                          viewModel.localViewModel.profileState != 1,
                                       child: GestureDetector(
                                         onTap: () => viewModel.onAdWebClicked(),
                                         child: Column(

@@ -153,7 +153,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   ],
                 ),
               ),
-              const Locked(),
+              Visibility(
+                visible: viewModel.localViewModel.profileState != 1,
+                child: const Locked(),
+              ),
             ],
           ),
           // Change word size
@@ -205,7 +208,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   ],
                 ),
               ),
-              // const Locked(),
+              Visibility(
+                visible: viewModel.localViewModel.profileState != 1,
+                child: const Locked(),
+              ),
             ],
           ),
           // Word Reminder
@@ -389,7 +395,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   ],
                 ),
               ),
-              // Locked(),
+              Visibility(
+                visible: viewModel.localViewModel.profileState != 1,
+                child: const Locked(),
+              ),
             ],
           ),
         ],
@@ -399,6 +408,6 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
 
   @override
   SettingPageViewModel viewModelBuilder(BuildContext context) {
-    return SettingPageViewModel(context: context, preferenceHelper: locator.get());
+    return SettingPageViewModel(context: context, preferenceHelper: locator.get(), localViewModel: locator.get(), sharedPreferenceHelper: locator.get());
   }
 }

@@ -3,17 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jbaza/jbaza.dart';
-import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/presentation/pages/home/viewmodel/home_viewmodel.dart';
 import 'package:wisdom/presentation/routes/routes.dart';
-import 'package:wisdom/presentation/widgets/custom_dialog.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../components/drawer_menu_item.dart';
 
 class DrawerScreen extends ViewModelWidget<HomeViewModel> {
-
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return Scaffold(
@@ -49,15 +47,21 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
                 width: 152.w,
               ),
             ),
-            DrawerMenuItem(
-              title: 'Get PRO',
-              imgAssets: Assets.icons.proVersion,
-              onTap: () => Navigator.of(context).pushNamed(Routes.profilePage),
+            Visibility(
+              visible: viewModel.sharedPref.getString(Constants.KEY_SUBSCRIBE, "") == "",
+              child: DrawerMenuItem(
+                title: 'Get PRO',
+                imgAssets: Assets.icons.proVersion,
+                onTap: () => Navigator.of(context).pushNamed(Routes.gettingProPage),
+              ),
             ),
-            DrawerMenuItem(
-              title: 'Profile',
-              imgAssets: Assets.icons.person,
-              onTap: () => Navigator.of(context).pushNamed(Routes.profilePage2),
+            Visibility(
+              visible: viewModel.sharedPref.getString(Constants.KEY_SUBSCRIBE, "") != "",
+              child: DrawerMenuItem(
+                title: 'Profile',
+                imgAssets: Assets.icons.person,
+                onTap: () => Navigator.of(context).pushNamed(Routes.profilePage),
+              ),
             ),
             DrawerMenuItem(
               title: 'Place advertisement',
@@ -84,30 +88,13 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
               imgAssets: Assets.icons.share,
               onTap: () {},
             ),
-            // DrawerMenuItem(
-            //   title: 'Download',
-            //   imgAssets: Assets.icons.download,
-            //   onTap: () {
-            //     showCustomDialog(
-            //       context: context,
-            //       title: 'So\'zlarni yuklash',
-            //       contentText: Text(
-            //         'So\'zlarni offline qidirish uchun yuklab oling',
-            //         style: AppTextStyle.font14W400Normal.copyWith(
-            //           color: AppColors.paleGray,
-            //         ),
-            //         textAlign: TextAlign.center,
-            //       ),
-            //       positive: 'Yuklash',
-            //       onPositiveTap: () => viewModel.updateWords(),
-            //       negative: 'Bekor qilish',
-            //       onNegativeTap: () {
-            //         Navigator.pop(context);
-            //       },
-            //       icon: Assets.icons.download,
-            //     );
-            //   },
-            // ),
+            DrawerMenuItem(
+              title: 'About Wisdom',
+              imgAssets: Assets.icons.info,
+              onTap: () {
+                Navigator.of(context).pushNamed(Routes.aboutUsPage);
+              },
+            ),
           ],
         ),
       ),

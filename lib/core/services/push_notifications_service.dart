@@ -8,8 +8,8 @@ class PushNotificationService {
 // It is assumed that all messages contain a data field with the key 'type'
   Future<void> setupInteractedMessage() async {
     await Firebase.initializeApp();
-    var tokenF = await FirebaseMessaging.instance.getToken();
-    log(tokenF.toString());
+    // var tokenF = await FirebaseMessaging.instance.getToken();
+    // log(tokenF.toString());
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Get.toNamed(NOTIFICATIONS_ROUTE);
       if (message.data['type'] == 'chat') {

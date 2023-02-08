@@ -108,6 +108,8 @@ class _Icons extends _AssetsHolder {
   String get starHalf => '$basePath/rank_half.svg';
 
   String get starLow => '$basePath/rank_low.svg';
+
+  String get info => '$basePath/info.svg';
 }
 
 class _Images extends _AssetsHolder {
