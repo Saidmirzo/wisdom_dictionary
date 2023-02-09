@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/components/parent_widget.dart';
 import 'package:wisdom/presentation/pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
@@ -39,7 +40,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
     return WillPopScope(
       onWillPop: () => viewModel.goBackToSearch(),
       child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         resizeToAvoidBottomInset: true,
         appBar: CustomAppBar(
           title: viewModel.localViewModel.wordDetailModel.word ?? "unknown",
@@ -48,18 +49,17 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
         ),
         body: viewModel.isSuccess(tag: viewModel.initTag)
             ? Scrollbar(
-          isAlwaysShown: true,
-              scrollbarOrientation: ScrollbarOrientation.right,
-              thickness: 10.w,
-              radius: Radius.circular(20.r),
-              child: ListView(
+                isAlwaysShown: true,
+                scrollbarOrientation: ScrollbarOrientation.right,
+                thickness: 10.w,
+                radius: Radius.circular(20.r),
+                child: ListView(
                   padding: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w, bottom: 70.h),
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
-                  // controller: viewModel.autoScrollController,
                   children: [
                     Container(
-                      decoration: AppDecoration.bannerDecor,
+                      decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                       padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 28.h),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -71,19 +71,21 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                 padding: EdgeInsets.only(right: 25.w),
                                 child: Text(
                                   viewModel.wordEntityRepository.requiredWordWithAllModel.word!.word ?? "unknown",
-                                  style: AppTextStyle.font16W700Normal.copyWith(color: AppColors.darkGray),
+                                  style: AppTextStyle.font16W700Normal
+                                      .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                                 ),
                               ),
                               GestureDetector(
-                                  onTap: () => viewModel.textToSpeech(), child: SvgPicture.asset(Assets.icons.sound)),
+                                  onTap: () => viewModel.textToSpeech(),
+                                  child: SvgPicture.asset(Assets.icons.sound, color: AppColors.blue)),
                               viewModel.wordEntityRepository.requiredWordWithAllModel.word!.star != "0"
                                   ? Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 10.w),
-                                      child: SvgPicture.asset(viewModel
-                                          .findRank(viewModel.wordEntityRepository.requiredWordWithAllModel.word!.star!)),
+                                      child: SvgPicture.asset(viewModel.findRank(
+                                          viewModel.wordEntityRepository.requiredWordWithAllModel.word!.star!)),
                                     )
                                   : SizedBox(width: 10.w),
-                              SvgPicture.asset(Assets.icons.saveWord),
+                              SvgPicture.asset(Assets.icons.saveWord, color: AppColors.blue),
                             ],
                           ),
                           Padding(
@@ -102,7 +104,8 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                           viewModel.wordEntityRepository.requiredWordWithAllModel.word!
                                                   .wordClasswordClass ??
                                               "",
-                                          style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                                          style: AppTextStyle.font14W500Normal
+                                              .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                                         ),
                                         Flexible(
                                           child: Padding(
@@ -131,13 +134,15 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(9.r),
-                                        child: viewModel.wordEntityRepository.requiredWordWithAllModel.word!.image != null
-                                            ? Image.network(
-                                                Urls.baseUrl +
-                                                    viewModel.wordEntityRepository.requiredWordWithAllModel.word!.image!,
-                                                fit: BoxFit.scaleDown,
-                                              )
-                                            : const SizedBox.shrink(),
+                                        child:
+                                            viewModel.wordEntityRepository.requiredWordWithAllModel.word!.image != null
+                                                ? Image.network(
+                                                    Urls.baseUrl +
+                                                        viewModel
+                                                            .wordEntityRepository.requiredWordWithAllModel.word!.image!,
+                                                    fit: BoxFit.scaleDown,
+                                                  )
+                                                : const SizedBox.shrink(),
                                       ),
                                     ),
                                   ),
@@ -170,7 +175,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                     ),
                   ],
                 ),
-            )
+              )
             : const Center(
                 child: LoadingWidget(),
               ),

@@ -11,6 +11,7 @@ import 'package:wisdom/presentation/components/custom_expandable_widget.dart';
 import 'package:wisdom/presentation/components/phrases_widget.dart';
 
 import '../../config/constants/assets.dart';
+import '../../config/constants/constants.dart';
 import '../pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
 
 class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
@@ -43,7 +44,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     onTap: () => viewModel.addToWordBankFromParent(model, orderNum, widgetKey),
                     child: Padding(
                       padding: EdgeInsets.only(right: 10.w),
-                      child: SvgPicture.asset(Assets.icons.saveWord),
+                      child: SvgPicture.asset(Assets.icons.saveWord, color: AppColors.blue,),
                     ),
                   ),
                 ),
@@ -56,8 +57,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   child: SelectionArea(
                     child: Text.rich(TextSpan(
                       text: "$orderNum. ",
-                      style: AppTextStyle.font14W700Normal
-                          .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                      style: AppTextStyle.font14W700Normal.copyWith(
+                          color: isDarkTheme ? AppColors.white : AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
                       children: [
                         TextSpan(
                           text: orderNum == "1"
@@ -84,7 +85,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                       .replaceAll("<br>", "")
                       .replaceAll("<p>", "")
                       .replaceAll("</p>", "<br>"),
-                  textStyle: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+                  textStyle: AppTextStyle.font14W400ItalicHtml
+                      .copyWith(fontSize: viewModel.fontSize! - 2, color: isDarkTheme ? AppColors.lightGray : null),
                 ),
               ),
             ),
@@ -99,7 +101,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                       .replaceAll("<br>", "")
                       .replaceAll("<p>", "")
                       .replaceAll("</p>", "<br>"),
-                  textStyle: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+                  textStyle: AppTextStyle.font14W400ItalicHtml
+                      .copyWith(fontSize: viewModel.fontSize! - 2, color: isDarkTheme ? AppColors.lightGray : null),
                 ),
               ),
             ),
@@ -109,7 +112,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Synonyms",
             body: HtmlWidget(
               (model.parents!.synonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parents!.synonyms != null,
             viewModel: viewModel,
@@ -119,7 +123,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
             title: "Antonyms",
             body: HtmlWidget(
               (model.parents!.anthonims ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.parents!.anthonims != null,
             viewModel: viewModel,
@@ -132,7 +137,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   .replaceAll("<br>", "")
                   .replaceAll("<p>", "")
                   .replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.grammar != null && model.grammar!.isNotEmpty,
             viewModel: viewModel,
@@ -146,8 +152,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
               children: [
                 Text(
                   (model.difference != null ? model.difference!.first.word ?? "" : ""),
-                  style: AppTextStyle.font14W400Normal
-                      .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                  style: AppTextStyle.font14W400Normal.copyWith(
+                      color: isDarkTheme ? AppColors.white : AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10.h),
@@ -156,7 +162,9 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                         .replaceAll("<br>", "")
                         .replaceAll("<p>", "")
                         .replaceAll("</p>", "<br>"),
-                    textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+                    textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(
+                        color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                        fontSize: viewModel.fontSize! - 4),
                   ),
                 )
               ],
@@ -172,7 +180,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   .replaceAll("<br>", "")
                   .replaceAll("<p>", "")
                   .replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 4),
             ),
             visible: model.collocation != null && model.collocation!.isNotEmpty,
             viewModel: viewModel,
@@ -185,7 +194,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   .replaceAll("<br>", "")
                   .replaceAll("<p>", "")
                   .replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.thesaurus != null && model.thesaurus!.isNotEmpty,
             viewModel: viewModel,
@@ -198,7 +208,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   .replaceAll("<br>", "")
                   .replaceAll("<p>", "")
                   .replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.metaphor != null && model.metaphor!.isNotEmpty,
             viewModel: viewModel,
@@ -211,7 +222,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   .replaceAll("<br>", "")
                   .replaceAll("<p>", "")
                   .replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.culture != null && model.culture!.isNotEmpty,
             viewModel: viewModel,
@@ -224,7 +236,8 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
                   .replaceAll("<br>", "")
                   .replaceAll("<p>", "")
                   .replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+              textStyle: AppTextStyle.font12W400ItalicHtml
+                  .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
             ),
             visible: model.parents!.moreExamples != null && model.parents!.moreExamples!.isNotEmpty,
             viewModel: viewModel,

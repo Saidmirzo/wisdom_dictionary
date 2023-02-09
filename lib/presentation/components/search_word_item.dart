@@ -41,21 +41,23 @@ class SearchWordItem extends StatelessWidget {
                       RichText(
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
-                          style: AppTextStyle.font14W500Normal.copyWith(color:  isDarkTheme ? AppColors.white : AppColors.darkGray),
+                          style: AppTextStyle.font14W500Normal
+                              .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                           text: firstText,
                           children: [
                             TextSpan(
                                 text: '   $secondText',
-                                style: AppTextStyle.font14W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue)),
+                                style: AppTextStyle.font14W500Normal
+                                    .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue)),
                           ],
                         ),
                       ),
                       Visibility(
-                        visible: (thirdText??"").isNotEmpty,
+                        visible: (thirdText ?? "").isNotEmpty,
                         child: Text(
                           thirdText ?? "",
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.blue),
+                          style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
                         ),
                       ),
                     ],

@@ -53,8 +53,9 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
                     Center(
                       child: Text(
                         viewModel.getSpeaking() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal
-                            .copyWith(color:  isDarkTheme ? AppColors.white : AppColors.darkGray,, fontSize: locator<LocalViewModel>().fontSize - 2),
+                        style: AppTextStyle.font16W600Normal.copyWith(
+                            color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                            fontSize: locator<LocalViewModel>().fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -66,8 +67,10 @@ class SpeakingDetailPage extends ViewModelBuilderWidget<SpeakingDetailPageViewMo
                                 viewModel.categoryRepository.speakingDetailModel.body!
                                     .replaceAll("\n", "")
                                     .replaceAll("\n\n", ""),
-                                textStyle: AppTextStyle.font14W400NormalHtml
-                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize - 2,  color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,),
+                                textStyle: AppTextStyle.font14W400NormalHtml.copyWith(
+                                  fontSize: locator<LocalViewModel>().fontSize - 2,
+                                  color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                                ),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

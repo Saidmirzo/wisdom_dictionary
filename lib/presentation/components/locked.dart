@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/presentation/pages/setting/viewmodel/setting_page_viewmodel.dart';
 
 class Locked extends ViewModelWidget<SettingPageViewModel> {
@@ -21,16 +22,16 @@ class Locked extends ViewModelWidget<SettingPageViewModel> {
         margin: EdgeInsets.only(top: 16.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18.r),
-          color: AppColors.borderWhite.withOpacity(0.8),
+          color: (isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite).withOpacity(0.8),
         ),
         child: TextButton.icon(
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r))),
           ),
-          icon: const Icon(
+          icon: Icon(
             Icons.lock_outline_rounded,
-            color: AppColors.blue,
+            color: isDarkTheme ? AppColors.white : AppColors.blue,
           ),
           onPressed: () {
             viewModel.goToByPro();
@@ -38,7 +39,7 @@ class Locked extends ViewModelWidget<SettingPageViewModel> {
           label: Text(
             "subscribe_plan".tr(),
             style: AppTextStyle.font14W500Normal.copyWith(
-              color: AppColors.blue,
+              color: isDarkTheme ? AppColors.white : AppColors.blue,
             ),
           ),
         ),

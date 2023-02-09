@@ -55,6 +55,7 @@ class MetaphorDetailPage extends ViewModelBuilderWidget<MetaphorDetailPageViewMo
                         viewModel.getMetaphor() ?? "Unknown",
                         style: AppTextStyle.font16W600Normal.copyWith(
                           color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                            fontSize: locator<LocalViewModel>().fontSize
                         ),
                         textAlign: TextAlign.center,
                       ),

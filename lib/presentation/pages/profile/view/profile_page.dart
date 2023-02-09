@@ -8,9 +8,9 @@ import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/config/constants/constants.dart';
+import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
-import '../../../../core/di/app_locator.dart';
 import '../../../components/custom_banner.dart';
 import '../viewmodel/profile_page_viewmodel.dart';
 
@@ -48,7 +48,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                             height: 144.h,
                             margin: EdgeInsets.only(top: 80.h),
                             padding: const EdgeInsets.symmetric(vertical: 32),
-                            decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,,
+                            decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
@@ -58,7 +58,8 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                                   alignment: Alignment.bottomCenter,
                                   child: Text(
                                     viewModel.sharedPreferenceHelper.getString(Constants.KEY_PHONE, ""),
-                                    style: AppTextStyle.font18W500Normal.copyWith(color:isDarkTheme ? AppColors.white : AppColors.blue, fontSize: 20),
+                                    style: AppTextStyle.font18W500Normal
+                                        .copyWith(color: isDarkTheme ? AppColors.white : AppColors.blue, fontSize: 20),
                                   ),
                                 ),
                               ),
@@ -71,19 +72,17 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         ],
                       ),
                       CustomBanner(
-                        title: 'Holat',
+                        title: 'current_plan'.tr(),
                         contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
                         child: RichText(
                           text: TextSpan(
-                              text: 'Mening hozirgi holatim: \n',
+                              text: 'current_plan'.tr()+'\n',
                               style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleGray),
                               children: [
                                 TextSpan(
                                   text: (viewModel.localViewModel.profileState == 1)
-                                      ? (viewModel.tariffsModel.name!.en ??
-                                              "Connect with developers")
-                                          .toUpperCase()
-                                      : "Not purchased yet",
+                                      ? ((context.locale.toString() == "en_US" ? viewModel.tariffsModel.name!.en : viewModel.tariffsModel.name!.uz) ?? "Connect with developers").toUpperCase()
+                                      : "not_purchased".tr(),
                                   style: TextStyle(
                                       color: viewModel.localViewModel.profileState == 1
                                           ? AppColors.blue
@@ -94,7 +93,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                         ),
                       ),
                       Visibility(
-                        visible: viewModel.localViewModel.profileState!= 1,
+                        visible: viewModel.localViewModel.profileState != 1,
                         child: Container(
                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
                           height: 45.h,
@@ -106,7 +105,7 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                               borderRadius: BorderRadius.circular(40.r),
                               child: Center(
                                 child: Text(
-                                  'To\'lovni amalga oshirish',
+                                  'do_payment'.tr(),
                                   style: AppTextStyle.font14W500Normal,
                                 ),
                               ),
@@ -125,6 +124,11 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
 
   @override
   ProfilePageViewModel viewModelBuilder(BuildContext context) {
-    return ProfilePageViewModel(context: context);
+    return ProfilePageViewModel(
+      context: context,
+      profileRepository: locator.get(),
+      localViewModel: locator.get(),
+      sharedPreferenceHelper: locator.get(),
+    );
   }
 }

@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var widgetKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -39,6 +40,12 @@ class _MyAppState extends State<MyApp> {
                     localizationsDelegates: context.localizationDelegates,
                     supportedLocales: context.supportedLocales,
                     locale: context.locale,
+                    builder: (context, child) {
+                      return MediaQuery(
+                        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                        child: child!,
+                      );
+                    },
                     onGenerateRoute: (setting) => Routes.generateRoutes(setting),
                   );
                 },
@@ -52,6 +59,7 @@ class _MyAppState extends State<MyApp> {
 class MainProvider extends ChangeNotifier {
   ThemePreferences preferences = ThemePreferences();
   var isDark = true;
+
   loadTheme() async {
     isDark = await preferences.getTheme();
     isDarkTheme = isDark;

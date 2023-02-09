@@ -43,20 +43,13 @@ dependencies:
   firebase_messaging: ^14.2.1
 #  awesome_notifications_fcm: ^0.7.4+1
 
-
-  # for push notifications
-  awesome_notifications: ^0.7.4+1
-  workmanager: ^0.5.1
-  flutter_local_notifications: ^13.0.0
   easy_localization: ^3.0.1
   provider: ^6.0.5
 
   flutter_local_notifications: ^13.0.0
   awesome_notifications: ^0.7.4+1
   workmanager: ^0.5.1
-  firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
-  firebase_messaging: ^14.2.1
 
   # path_provider: ^2.0.11
   # path: ^1.8.3

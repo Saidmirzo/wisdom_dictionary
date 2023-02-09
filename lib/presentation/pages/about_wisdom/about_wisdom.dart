@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +18,9 @@ class AboutWisdomPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Wisdom haqida',
+        title: 'about'.tr(),
         onTap: () => Navigator.of(context).pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -35,20 +36,20 @@ class AboutWisdomPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
-                  Assets.icons.logoBlueText,
+                  isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                   height: 52.h,
                   fit: BoxFit.scaleDown,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 30.h),
                   padding: EdgeInsets.symmetric(vertical: 32.h, horizontal: 20.w),
-                  decoration: AppDecoration.bannerDecor,
+                  decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       HtmlWidget(
-                        Constants.about_uz,
-                        textStyle: AppTextStyle.font14W400NormalHtml,
+                        "about_content".tr(),
+                        textStyle: AppTextStyle.font14W400NormalHtml.copyWith(color: isDarkTheme ? AppColors.white : null),
                       ),
                     ],
                   ),

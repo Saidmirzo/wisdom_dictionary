@@ -27,6 +27,7 @@ class CatalogsPage extends ViewModelBuilderWidget<CatalogsPageViewModel> {
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
           isSearch: false,
+          focus: false,
           title: 'navigation_catalogue'.tr(),
         ),
         body: Padding(

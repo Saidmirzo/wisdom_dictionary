@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/presentation/components/custom_oval_button.dart';
 import '../../config/constants/app_colors.dart';
 import '../../config/constants/app_text_style.dart';
@@ -27,6 +28,7 @@ showCustomDialog({
       titlePadding: EdgeInsets.only(top: 32.h, bottom: 8.h),
       contentPadding: EdgeInsets.only(bottom: 48.h, left: 24.w, right: 24.w),
       actionsPadding: EdgeInsets.only(bottom: 32.h, left: 24.w, right: 24.w),
+      backgroundColor: AppColors.darkBackground,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(16.0),
@@ -49,8 +51,7 @@ showCustomDialog({
           ),
           Text(
             title,
-            style:
-                AppTextStyle.font16W600Normal.copyWith(color: AppColors.gray),
+            style: AppTextStyle.font16W600Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.gray),
             textAlign: TextAlign.center,
           )
         ],

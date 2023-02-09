@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/presentation/pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
 
 import '../../config/constants/app_colors.dart';
@@ -47,7 +48,7 @@ class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
         ? Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
-              color: widget.containerColor ?? AppColors.lightBackground,
+              color: widget.containerColor ?? (isDarkTheme ? AppColors.blue : AppColors.lightBackground),
             ),
             margin: EdgeInsets.only(top: 15.h),
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
@@ -63,6 +64,7 @@ class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
                     expandableController.value ? Assets.icons.expanded : Assets.icons.collapsed,
                     height: 20.h + widget.viewModel.fontSize!-16,
                     width: 20.h + widget.viewModel.fontSize!-16,
+                    color: isDarkTheme ? AppColors.white : AppColors.blue,
                   ),
                 ),
                 Flexible(
@@ -71,7 +73,7 @@ class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
                       padding: EdgeInsets.only(left: 10.w, top: 3.h),
                       child: Text(
                         widget.title,
-                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray, fontSize: widget.viewModel.fontSize! - 4),
+                        style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray, fontSize: widget.viewModel.fontSize! - 4),
                       ),
                     ),
                     collapsed: const SizedBox.shrink(),

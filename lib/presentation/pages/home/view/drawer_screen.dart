@@ -44,7 +44,7 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
             Padding(
               padding: EdgeInsets.only(left: 0, top: 40.h, bottom: 50.h),
               child: SvgPicture.asset(
-                Assets.icons.logoBlueText,
+                isDarkTheme ? Assets.icons.logoWhiteText :Assets.icons.logoBlueText,
                 fit: BoxFit.scaleDown,
                 height: 45.h,
                 width: 152.w,
@@ -94,7 +94,7 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
               onTap: () {},
             ),
             DrawerMenuItem(
-              title: 'About Wisdom',
+              title: 'about'.tr(),
               imgAssets: Assets.icons.info,
               onTap: () {
                 Navigator.of(context).pushNamed(Routes.aboutUsPage);

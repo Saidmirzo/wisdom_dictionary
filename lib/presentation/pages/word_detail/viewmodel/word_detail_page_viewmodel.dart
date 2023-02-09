@@ -15,6 +15,7 @@ import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_text_style.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../../core/utils/word_mapper.dart';
 import '../../../widgets/loading_widget.dart';
 
@@ -48,6 +49,7 @@ class WordDetailPageViewModel extends BaseViewModel {
       () async {
         fontSize = preferenceHelper.getDouble(preferenceHelper.fontSize, 16);
         await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
+        // TODO add link word thought
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();
           setSuccess(tag: initTag);
@@ -162,7 +164,6 @@ class WordDetailPageViewModel extends BaseViewModel {
 
   TextSpan conductAndHighlightUzWords(List<WordsUzModel>? wordList, List<PhrasesTranslateModel>? translate,
       List<ParentPhrasesTranslateModel>? phraseTranslate) {
-
     String sourceText = "";
     if (wordList != null) {
       sourceText = conductToString(wordList);
@@ -203,15 +204,19 @@ class WordDetailPageViewModel extends BaseViewModel {
   TextSpan _highlightSpan(String content) {
     return TextSpan(
         text: content,
-        style: AppTextStyle.font14W600Normal
-            .copyWith(color: AppColors.darkGray, fontSize: fontSize! - 2, backgroundColor: AppColors.success));
+        style: AppTextStyle.font14W600Normal.copyWith(
+            color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+            fontSize: fontSize! - 2,
+            backgroundColor: AppColors.success));
   }
 
   TextSpan _normalSpan(String content) {
     return TextSpan(
         text: content,
-        style: AppTextStyle.font14W600Normal
-            .copyWith(color: AppColors.darkGray, fontSize: fontSize! - 2, backgroundColor: Colors.transparent));
+        style: AppTextStyle.font14W600Normal.copyWith(
+            color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+            fontSize: fontSize! - 2,
+            backgroundColor: Colors.transparent));
   }
 
   String conductToStringPhrasesTranslate(List<PhrasesTranslateModel>? translateList) {
@@ -327,7 +332,7 @@ class WordDetailPageViewModel extends BaseViewModel {
     return false;
   }
 
-  isWordUzEqual(String wordUz){
+  isWordUzEqual(String wordUz) {
     if (wordUz == (localViewModel.wordDetailModel.wordClass ?? "")) {
       return true;
     }

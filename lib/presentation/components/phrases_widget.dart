@@ -10,6 +10,7 @@ import 'package:wisdom/presentation/components/custom_expandable_widget.dart';
 import 'package:wisdom/presentation/components/parent_phrases_widget.dart';
 
 import '../../config/constants/assets.dart';
+import '../../config/constants/constants.dart';
 import '../pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
 
 class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
@@ -36,7 +37,7 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           Text(
             "${model.phrases!.pWord ?? ""} ",
             style: AppTextStyle.font14W700Normal.copyWith(
-                color: AppColors.blue,
+                color: isDarkTheme ? AppColors.white : AppColors.blue,
                 fontSize: viewModel.fontSize! - 2,
                 backgroundColor:
                     viewModel.isWordEqual(model.phrases!.pWord ?? "") ? AppColors.success : Colors.transparent),
@@ -55,7 +56,9 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                       child: GestureDetector(
                           onTap: () => viewModel.addToWordBankFromPhrase(model, orderNum, widgetKey),
                           child: Padding(
-                              padding: EdgeInsets.only(right: 10.w), child: SvgPicture.asset(Assets.icons.saveWord))),
+                              padding: EdgeInsets.only(right: 10.w),
+                              child: SvgPicture.asset(Assets.icons.saveWord,
+                                  color: isDarkTheme ? AppColors.white : AppColors.blue))),
                     ),
                   ),
                 ),
@@ -72,14 +75,14 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                             ? "$orderNum. "
                             : "",
                         style: AppTextStyle.font14W700Normal.copyWith(
-                          color: AppColors.darkGray,
+                          color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
                           fontSize: viewModel.fontSize! - 2,
                         ),
                         children: [
                           TextSpan(
                             text: "${model.phrases!.pWordClassComment ?? ""} ",
                             style: AppTextStyle.font14W400Normal.copyWith(
-                              color: AppColors.paleGray,
+                              color: isDarkTheme ? AppColors.lightGray : AppColors.paleGray,
                               fontSize: viewModel.fontSize! - 2,
                             ),
                           ),
@@ -99,7 +102,8 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: Text(
                   (viewModel.conductToStringPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+                  style: AppTextStyle.font14W400ItalicHtml
+                      .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
                 ),
               ),
             ),
@@ -108,11 +112,11 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "Synonyms",
             viewModel: viewModel,
-            containerColor: AppColors.lightBlue,
+            containerColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBlue,
             body: HtmlWidget(
               (model.phrases!.pSynonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml
-                  .copyWith(fontSize: viewModel.fontSize! - 4, color: AppColors.lightBackground),
+                  .copyWith(fontSize: viewModel.fontSize! - 4, color: isDarkTheme ? AppColors.blue : AppColors.lightBackground),
             ),
             visible: model.phrases!.pSynonyms != null,
           ),

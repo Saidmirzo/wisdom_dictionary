@@ -53,8 +53,9 @@ class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewMode
                     Center(
                       child: Text(
                         viewModel.getGrammar() ?? "Unknown",
-                        style: AppTextStyle.font16W600Normal
-                            .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                        style: AppTextStyle.font16W600Normal.copyWith(
+                            color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                            fontSize: locator<LocalViewModel>().fontSize),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -64,9 +65,12 @@ class GrammarDetailPage extends ViewModelBuilderWidget<GrammarDetailPageViewMode
                         child: viewModel.isSuccess(tag: viewModel.getGrammarDetailsTag)
                             ? HtmlWidget(
                                 viewModel.categoryRepository.grammarDetailModel.gBody!
-                                    .replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
-                                textStyle: AppTextStyle.font14W400NormalHtml
-                                    .copyWith(fontSize: locator<LocalViewModel>().fontSize-2,                                   color: isDarkTheme ? AppColors.lightGray : null,
+                                    .replaceAll("<br>", "")
+                                    .replaceAll("<p>", "")
+                                    .replaceAll("</p>", "<br>"),
+                                textStyle: AppTextStyle.font14W400NormalHtml.copyWith(
+                                  fontSize: locator<LocalViewModel>().fontSize - 2,
+                                  color: isDarkTheme ? AppColors.lightGray : null,
                                 ),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),

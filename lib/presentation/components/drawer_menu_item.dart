@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
+import 'package:wisdom/config/constants/constants.dart';
 
 class DrawerMenuItem extends StatelessWidget {
   const DrawerMenuItem(
@@ -23,7 +24,6 @@ class DrawerMenuItem extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          // borderRadius: BorderRadius.circular(24),
           onTap: onTap,
           child: SizedBox(
             height: 48.h,
@@ -36,13 +36,14 @@ class DrawerMenuItem extends StatelessWidget {
                     height: 24.h,
                     width: 24.w,
                     fit: BoxFit.scaleDown,
+                      color: isDarkTheme ? AppColors.white: AppColors.blue
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 12.w),
                     child: Text(
                       title,
                       style: AppTextStyle.font14W500Normal
-                          .copyWith(color: AppColors.blue),
+                          .copyWith(color: isDarkTheme ? AppColors.white: AppColors.blue),
                     ),
                   )
                 ],

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/local_data.dart';
@@ -14,7 +15,7 @@ class AbbreviationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Qisqartmalar',
+        title: 'abbreviations'.tr(),
         onTap: () => Navigator.of(context).pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),

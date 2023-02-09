@@ -41,7 +41,8 @@ class SearchHistoryItem extends StatelessWidget {
                     children: [
                       RichText(
                         text: TextSpan(
-                          style: AppTextStyle.font14W500Normal.copyWith(isDarkTheme ? AppColors.white : AppColors.darkGray),
+                          style: AppTextStyle.font14W500Normal
+                              .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                           text: firstText,
                           children: [
                             TextSpan(
@@ -52,7 +53,8 @@ class SearchHistoryItem extends StatelessWidget {
                       ),
                       Text(
                         thirdText ?? "",
-                        style: AppTextStyle.font12W500Normal.copyWith(isDarkTheme ? AppColors.lightGray : AppColors.blue),
+                        style: AppTextStyle.font12W500Normal
+                            .copyWith(color: AppColors.lightGray),
                       ),
                     ],
                   ),

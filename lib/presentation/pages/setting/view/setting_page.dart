@@ -126,7 +126,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                               onTap: () {
                                 // viewModel.currentTheme = ThemeOption.day;
                                 Provider.of<MainProvider>(context, listen: false).changeToLightTheme();
-                                // viewModel.notifyListeners();
+                                viewModel.notifyListeners();
                               },
                               height: 38.h,
                               prefixIcon: true,
@@ -146,7 +146,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                               onTap: () {
                                 // viewModel.currentTheme = ThemeOption.night;
                                 Provider.of<MainProvider>(context, listen: false).changeToDarkTheme();
-                                // viewModel.notifyListeners();
+                                viewModel.notifyListeners();
                               },
                               height: 38.h,
                             ),
@@ -210,7 +210,7 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                     Padding(
                       padding: EdgeInsets.only(left: 20.w, right: 16.w, top: 10.h),
                       child: Text(
-                        "notif_name".tr(),
+                        "lorem_text".tr(),
                         style: AppTextStyle.font14W500Normal
                             .copyWith(fontSize: viewModel.fontSizeValue, color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                       ),

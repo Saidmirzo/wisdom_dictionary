@@ -45,14 +45,13 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
                       viewModel.localViewModel.changePageIndex(0);
                     }),
                 Material(
-                  color: AppColors.blue,
+                  color: isDarkTheme ? AppColors.darkBottomBar : AppColors.blue,
                   child: AddToCartIcon(
                     badgeOptions: const BadgeOptions(
-                      active: true,
-                      fontSize: 12,
-                      backgroundColor: AppColors.accentLight,
-                      foregroundColor: AppColors.white
-                    ),
+                        active: true,
+                        fontSize: 12,
+                        backgroundColor: AppColors.accentLight,
+                        foregroundColor: AppColors.white),
                     key: viewModel.localViewModel.cartKey,
                     icon: BottomNavButton(
                         isTabSelected: value == 1,

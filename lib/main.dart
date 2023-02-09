@@ -1,15 +1,15 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 
 import 'app.dart';
+import 'config/theme/themes.dart';
 import 'core/di/app_locator.dart';
 import 'core/services/push_notifications_service.dart';
 import 'presentation/routes/routes.dart';
@@ -50,43 +50,32 @@ void main() async {
     );
   }, appVersion: '1.0.0');
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-  static final navigatorKey = GlobalKey<NavigatorState>();
-
-  @override
-  Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //     statusBarColor: Colors.transparent,
-    //     systemNavigationBarIconBrightness: Brightness.dark,
-    //     statusBarBrightness: Brightness.dark,
-    //     statusBarIconBrightness: Brightness.dark));
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          title: 'Wisdom Dictionary',
-          debugShowCheckedModeBanner: false,
-          theme: Themes.lightTheme,
-          navigatorKey: navigatorKey,
-          // supportedLocales: const <Locale>[Locale('en', '')],
-          // localizationsDelegates: const [
-          //   GlobalMaterialLocalizations.delegate,
-          //   GlobalWidgetsLocalizations.delegate,
-          //   GlobalCupertinoLocalizations.delegate,
-          // ],
-          builder: (context, child) {
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              child: child!,
-            );
-          },
-          onGenerateRoute: (setting) => Routes.generateRoutes(setting),
-        );
-      },
-    );
-  }
-}
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//   static final navigatorKey = GlobalKey<NavigatorState>();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ScreenUtilInit(
+//       designSize: const Size(375, 812),
+//       minTextAdapt: true,
+//       splitScreenMode: true,
+//       builder: (BuildContext context, Widget? child) {
+//         return MaterialApp(
+//           title: 'Wisdom Dictionary',
+//           debugShowCheckedModeBanner: false,
+//           theme: Themes.lightTheme,
+//           navigatorKey: navigatorKey,
+//           builder: (context, child) {
+//             return MediaQuery(
+//               data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+//               child: child!,
+//             );
+//           },
+//           onGenerateRoute: (setting) => Routes.generateRoutes(setting),
+//         );
+//       },
+//     );
+//   }
+// }

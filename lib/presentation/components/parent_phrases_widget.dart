@@ -12,6 +12,7 @@ import 'package:wisdom/data/model/phrases_with_all.dart';
 import 'package:wisdom/presentation/components/custom_expandable_widget.dart';
 
 import '../../config/constants/assets.dart';
+import '../../config/constants/constants.dart';
 import '../pages/word_detail/viewmodel/word_detail_page_viewmodel.dart';
 
 class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
@@ -35,7 +36,8 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
         children: [
           Text(
             "${model.parentPhrases!.word ?? ""} ",
-            style: AppTextStyle.font14W700Normal.copyWith(color: AppColors.blue, fontSize: viewModel.fontSize! - 2),
+            style: AppTextStyle.font14W700Normal
+                .copyWith(color: isDarkTheme ? AppColors.white : AppColors.blue, fontSize: viewModel.fontSize! - 2),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
@@ -46,7 +48,7 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                 Container(
                   key: widgetKey,
                   child: Visibility(
-                    visible: (model.parentPhrasesTranslate != null && model.parentPhrasesTranslate!.isNotEmpty) ,
+                    visible: (model.parentPhrasesTranslate != null && model.parentPhrasesTranslate!.isNotEmpty),
                     child: GestureDetector(
                         onTap: () => viewModel.addToWordBankFromParentPhrase(model, orderNum, widgetKey),
                         child: Padding(
@@ -63,13 +65,15 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                     child: Text.rich(
                       TextSpan(
                         text: "$orderNum. ",
-                        style: AppTextStyle.font14W700Normal
-                            .copyWith(color: AppColors.darkGray, fontSize: viewModel.fontSize! - 2),
+                        style: AppTextStyle.font14W700Normal.copyWith(
+                            color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                            fontSize: viewModel.fontSize! - 2),
                         children: [
                           TextSpan(
                             text: "${model.parentPhrases!.wordClassComment ?? ""} ",
-                            style: AppTextStyle.font14W400Normal
-                                .copyWith(color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
+                            style: AppTextStyle.font14W400Normal.copyWith(
+                                color: isDarkTheme ? AppColors.lightGray : AppColors.paleGray,
+                                fontSize: viewModel.fontSize! - 2),
                           ),
                           viewModel.conductAndHighlightUzWords(null, null, model.parentPhrasesTranslate)
                         ],
@@ -87,7 +91,8 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
               child: SelectionArea(
                 child: Text(
                   (viewModel.conductToStringParentPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 2),
+                  style: AppTextStyle.font14W400ItalicHtml
+                      .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
                 ),
               ),
             ),
@@ -96,10 +101,14 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           CustomExpandableWidget(
             title: "Synonyms",
             viewModel: viewModel,
-            containerColor: AppColors.lightBlue,
+            containerColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBlue,
             body: HtmlWidget(
-              (model.parentPhrases!.symonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
-              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(fontSize: viewModel.fontSize! - 4),
+              (model.parentPhrases!.symonyms ?? "")
+                  .replaceAll("<br>", "")
+                  .replaceAll("<p>", "")
+                  .replaceAll("</p>", "<br>"),
+              textStyle: AppTextStyle.font12W400ItalicHtml.copyWith(
+                  fontSize: viewModel.fontSize! - 4, color: isDarkTheme ? AppColors.blue : AppColors.lightBackground),
             ),
             visible: model.parentPhrases!.symonyms != null,
           ),

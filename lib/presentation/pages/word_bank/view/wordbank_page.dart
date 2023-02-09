@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import 'package:wisdom/presentation/widgets/loading_widget.dart';
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../widgets/custom_app_bar.dart';
 import '../viewmodel/wordbank_viewmodel.dart';
 
@@ -30,7 +32,7 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
         resizeToAvoidBottomInset: true,
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
@@ -73,7 +75,7 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'Exercise',
+                    'start_exercise'.tr(),
                     style: AppTextStyle.font14W500Normal,
                   ),
                 )

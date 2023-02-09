@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:wisdom/config/constants/constants.dart';
@@ -42,7 +41,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
   HomeScreen({super.key});
 
   late final List<Widget> pages = [
-    Home(), // 0
+    const Home(), // 0
     WordBankPage(), // 1
     SearchPage(), // 2
     CatalogsPage(), // 3
@@ -199,7 +198,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: RichText(
                                 text: TextSpan(
-                                  style: AppTextStyle.font16W500Normal.copyWith(color: color: isDarkTheme ? AppColors.white : AppColors.darkGray,),
+                                  style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray,),
                                   text: viewModel.separateDifference(
                                       true, viewModel.homeRepository.timelineModel.difference!.word!),
                                   children: [

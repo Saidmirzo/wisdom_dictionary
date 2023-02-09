@@ -13,6 +13,8 @@ import 'package:wisdom/presentation/pages/profile/viewmodel/getting_pro_page.dar
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../config/constants/constants.dart';
+
 class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
   GettingProPage({super.key});
 
@@ -42,16 +44,17 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  Assets.icons.logoBlueText,
+                  isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                   height: 52.h,
                   fit: BoxFit.scaleDown,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16.h, bottom: 36.h),
                   child: Text(
-                    'Eng yaxshi sarmoya bilimga bo\'lgan sarmoyadir!\nIshonavering siz kerakli joyga sarmoya qilmoqdasiz.',
+                    'get_pro1'.tr(),
                     textAlign: TextAlign.center,
-                    style: AppTextStyle.font12W400Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
+                    style: AppTextStyle.font12W400Normal
+                        .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                   ),
                 ),
                 Container(
@@ -60,21 +63,20 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
                   child: Column(
                     children: [
                       Text(
-                        'Pro versiya quyidagilarni o\'z ichiga oladi:',
+                        'get_pro2'.tr(),
                         style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.blue),
                         textAlign: TextAlign.center,
                       ),
-                      ProInfo(label: "Reklamalarsiz foydalanish"),
-                      ProInfo(label: "Translatordan cheksiz foydalanish"),
-                      ProInfo(label: "Cheklanmagan miqdorda mashqlar ishlash"),
-                      ProInfo(label: "Lug\'at daftariga 30 dan ko\'p so\'z qo\'shish"),
-                      ProInfo(label: "Reklamalarsiz foydalanish"),
-                      ProInfo(label: "Shriftni o\'zgartirish"),
-                      ProInfo(label: "So\'zni eslatuvchi funksyasini yoqish"),
+                      ProInfo(label: "get_pro3".tr()),
+                      ProInfo(label: "get_pro4".tr()),
+                      ProInfo(label: "get_pro5".tr()),
+                      ProInfo(label: "get_pro6".tr()),
+                      ProInfo(label: "get_pro7".tr()),
+                      ProInfo(label: "get_pro8".tr()),
                       Padding(
                         padding: EdgeInsets.only(top: 20.h),
                         child: Text(
-                          'Bir martalik to\'lov:',
+                          'one_time_purchase'.tr(),
                           style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.blue),
                         ),
                       ),
@@ -87,8 +89,11 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
                                 var item = viewModel.profileRepository.tariffsModel[index];
                                 return RadioListTile(
                                   title: Text(
-                                    (item.name!.en ?? "Contact with developers").toUpperCase(),
-                                    style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                                    ((context.locale.toString() == "en_US" ? item.name!.en : item.name!.uz) ??
+                                            "Contact with developers")
+                                        .toUpperCase(),
+                                    style: AppTextStyle.font14W500Normal
+                                        .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                                   ),
                                   contentPadding: EdgeInsets.zero,
                                   value: item.id.toString(),
@@ -112,7 +117,7 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
                             borderRadius: BorderRadius.circular(40.r),
                             child: Center(
                               child: Text(
-                                'Sotib olish',
+                                'buy'.tr(),
                                 style: AppTextStyle.font14W500Normal,
                               ),
                             ),
@@ -126,11 +131,12 @@ class GettingProPage extends ViewModelBuilderWidget<GettingProPageViewModel> {
                           onTap: () => viewModel.navigateTo(Routes.registrationPage),
                           child: RichText(
                             text: TextSpan(
-                              style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
-                              text: 'Ro\'yhatdan o\'tganmisiz ?',
+                              style: AppTextStyle.font12W500Normal
+                                  .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
+                              text: 'haveAccount'.tr(),
                               children: [
                                 TextSpan(
-                                  text: ' Ro\'yhatdan o\'tish',
+                                  text: 'getAccount'.tr(),
                                   style: AppTextStyle.font12W500Normal
                                       .copyWith(color: AppColors.blue, decoration: TextDecoration.underline),
                                 ),

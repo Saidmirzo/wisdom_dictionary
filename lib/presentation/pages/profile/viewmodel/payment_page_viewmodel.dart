@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,25 +82,28 @@ class PaymentPageViewModel extends BaseViewModel {
       case "paynet":
         showCustomDialog(
           context: context!,
-          title: "To'lov",
+          title: "payment".tr(),
           positive: "Ok",
-          onPositiveTap: () {Navigator.of(context!).pop();},
+          onPositiveTap: () {
+            Navigator.of(context!).pop();
+          },
           contentText: Container(
-            decoration: AppDecoration.bannerDecor,
+            decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 27.h),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
-                  Assets.icons.logoBlueText,
+                  isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                   height: 32.h,
                   fit: BoxFit.scaleDown,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.h),
                   child: Text(
-                    'To\'lovni Payme, Click yoki Paynet ilovalari orqali Wisdom ilovasini qidirib topib quyidagi ko\'rsatilgan hisob raqam va summani kiritgan holda ham amalga oshirishingiz mumkin!',
-                    style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                    'payment_full_descr'.tr(),
+                    style: AppTextStyle.font12W500Normal
+                        .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -107,8 +111,9 @@ class PaymentPageViewModel extends BaseViewModel {
                   padding: EdgeInsets.only(top: 20.h),
                   child: RichText(
                     text: TextSpan(
-                        text: 'Sizing hisob raqamingiz: ',
-                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                        text: 'order_id'.tr(),
+                        style: AppTextStyle.font12W500Normal
+                            .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                         children: [
                           TextSpan(
                             text: subscribeModel.billingId.toString(),
@@ -124,8 +129,9 @@ class PaymentPageViewModel extends BaseViewModel {
                   padding: EdgeInsets.only(top: 20.h),
                   child: RichText(
                     text: TextSpan(
-                        text: 'Tanlangan obuna tarifi: \n',
-                        style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                        text: 'selected_subs'.tr(),
+                        style: AppTextStyle.font12W500Normal
+                            .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                         children: [
                           TextSpan(
                             text: (tariffsList.name!.en ?? "Contact with developers").toUpperCase(),

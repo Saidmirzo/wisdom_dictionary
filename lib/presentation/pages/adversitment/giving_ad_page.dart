@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,7 +19,7 @@ class GivingAdPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Reklama berish',
+        title: 'place_ad'.tr(),
         onTap: () => Navigator.of(context).pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -31,7 +32,7 @@ class GivingAdPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                Assets.icons.logoBlueText,
+                isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                 height: 52.h,
                 fit: BoxFit.scaleDown,
               ),
@@ -43,26 +44,25 @@ class GivingAdPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Reklama berish uchun quyidagi manzillarga murojaat qiling:',
+                      'disc_local_ad'.tr(),
                       style:
                           AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.blue),
                       textAlign: TextAlign.center,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.h, horizontal: 10.w),
+                      padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
                       child: TextButton.icon(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.call_rounded,
-                          color: AppColors.blue,
+                          color: isDarkTheme ? AppColors.white : AppColors.blue,
                         ),
                         onPressed: () {
-                          launchUrl(Uri.parse('tel://+998996901673'));
+                          launchUrl(Uri.parse('tel://+998999042367'));
                         },
                         label: Row(
                           children: [
                             Text(
-                              'Telefon: ',
+                              'telefon'.tr(),
                               style: AppTextStyle.font14W500Normal.copyWith(
                                 color: isDarkTheme ? AppColors.white : AppColors.blue,
                               ),
@@ -70,9 +70,10 @@ class GivingAdPage extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 40.w),
                               child: Text(
-                                '+998996901673',
-                                style: AppTextStyle.font14W500Normal
-                                    .copyWith(color: AppColors.blue, decoration: TextDecoration.underline),
+                                '+998999042367',
+                                style: AppTextStyle.font14W500Normal.copyWith(
+                                    color: isDarkTheme ? AppColors.white : AppColors.blue,
+                                    decoration: TextDecoration.underline),
                               ),
                             )
                           ],
@@ -82,9 +83,9 @@ class GivingAdPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: TextButton.icon(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.telegram,
-                          color: AppColors.blue,
+                          color: isDarkTheme ? AppColors.white : AppColors.blue,
                         ),
                         onPressed: () {
                           launchUrl(Uri.parse('https://t.me/wisdom_reklama'));
@@ -101,8 +102,9 @@ class GivingAdPage extends StatelessWidget {
                               padding: EdgeInsets.only(left: 20.w),
                               child: Text(
                                 '@Wisdom_reklama',
-                                style: AppTextStyle.font14W500Normal
-                                    .copyWith(color: AppColors.blue, decoration: TextDecoration.underline),
+                                style: AppTextStyle.font14W500Normal.copyWith(
+                                    color: isDarkTheme ? AppColors.white : AppColors.blue,
+                                    decoration: TextDecoration.underline),
                               ),
                             )
                           ],

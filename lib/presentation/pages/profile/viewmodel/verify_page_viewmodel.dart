@@ -70,9 +70,13 @@ class VerifyPageViewModel extends BaseViewModel {
           var subscribeModel = await homeRepository.checkSubscription();
           if (subscribeModel != null && subscribeModel.status!) {
             if (subscribeModel.expiryStatus!) {
-              localViewModel.profileState = Constants.STATE_ACTIVE;
-              sharedPreferenceHelper.putInt(Constants.KEY_PROFILE_STATE, Constants.STATE_ACTIVE);
-              navigateTo(Routes.profilePage, isRemoveStack: true);
+              var tariffId = sharedPreferenceHelper.getInt(Constants.KEY_TARIFID, 0);
+              profileRepository.subscribe(tariffId).then((value) {
+                sharedPreferenceHelper.putString(Constants.KEY_SUBSCRIBE, jsonEncode(subscribeModel));
+                localViewModel.profileState = Constants.STATE_ACTIVE;
+                sharedPreferenceHelper.putInt(Constants.KEY_PROFILE_STATE, Constants.STATE_ACTIVE);
+                navigateTo(Routes.profilePage, isRemoveStack: true);
+              });
             } else {
               localViewModel.profileState = Constants.STATE_INACTIVE;
               sharedPreferenceHelper.putInt(Constants.KEY_PROFILE_STATE, Constants.STATE_INACTIVE);

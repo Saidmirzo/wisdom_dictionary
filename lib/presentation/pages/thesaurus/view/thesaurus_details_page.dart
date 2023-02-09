@@ -54,6 +54,7 @@ class ThesaurusDetailPage extends ViewModelBuilderWidget<ThesaurusDetailPageView
                         viewModel.getThesaurus() ?? "Unknown",
                         style: AppTextStyle.font16W600Normal.copyWith(
                           color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                            fontSize: locator<LocalViewModel>().fontSize
                         ),
                         textAlign: TextAlign.center,
                       ),

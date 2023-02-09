@@ -62,7 +62,7 @@ class CollocationDetailPage extends ViewModelBuilderWidget<CollocationDetailPage
                             ? HtmlWidget(
                                 viewModel.categoryRepository.collocationDetailModel.cBody!
                                     .replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
-                          textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: viewModel.localViewModel.fontSize, color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,),
+                          textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: viewModel.localViewModel.fontSize-2, color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

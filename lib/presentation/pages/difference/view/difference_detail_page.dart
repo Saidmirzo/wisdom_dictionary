@@ -64,7 +64,7 @@ class DifferenceDetailPage extends ViewModelBuilderWidget<DifferenceDetailPageVi
                             ? HtmlWidget(
                                 viewModel.categoryRepository.differenceDetailModel.dBody!
                                     .replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
-                          textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: locator<LocalViewModel>().fontSize, color: isDarkTheme ? AppColors.lightGray : null),
+                          textStyle: AppTextStyle.font14W400NormalHtml.copyWith(fontSize: locator<LocalViewModel>().fontSize-2, color: isDarkTheme ? AppColors.lightGray : null),
                               )
                             : const LoadingWidget(color: AppColors.paleBlue, width: 2),
                       ),

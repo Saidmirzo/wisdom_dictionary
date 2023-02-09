@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,8 +7,7 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
-import 'package:wisdom/presentation/pages/profile/viewmodel/profile_page_viewmodel.dart';
-import 'package:wisdom/presentation/routes/routes.dart';
+import 'package:wisdom/data/model/verify_model.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
 import '../../../../core/di/app_locator.dart';
@@ -22,7 +22,16 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
     required this.phoneNumber,
   });
 
+  VerifyModel? verifyModel;
+  String? phoneNumber;
+
   TextEditingController editingController = TextEditingController();
+
+  @override
+  void onViewModelReady(PaymentPageViewModel viewModel) {
+    viewModel.init();
+    super.onViewModelReady(viewModel);
+  }
 
   @override
   Widget builder(BuildContext context, PaymentPageViewModel viewModel, Widget? child) {
@@ -31,7 +40,7 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
       child: Scaffold(
         backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
-          title: 'To\'lov',
+          title: 'payment'.tr(),
           onTap: () => viewModel.goToProfile(),
           leadingIcon: Assets.icons.arrowLeft,
         ),
@@ -49,15 +58,15 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              Assets.icons.logoBlueText,
+                              isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                               height: 32.h,
                               fit: BoxFit.scaleDown,
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 20.h),
                               child: Text(
-                                'To\'lovni Payme, Click yoki Paynet ilovalari orqali Wisdom ilovasini qidirib topib quyidagi ko\'rsatilgan hisob raqam va summani kiritgan holda ham amalga oshirishingiz mumkin!',
-                                style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                                'payment_full_descr'.tr(),
+                                style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray: AppColors.darkGray),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -65,8 +74,8 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                               padding: EdgeInsets.only(top: 20.h),
                               child: RichText(
                                 text: TextSpan(
-                                    text: 'Sizing hisob raqamingiz: ',
-                                    style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                                    text: 'order_id'.tr(),
+                                    style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray: AppColors.darkGray),
                                     children: [
                                       TextSpan(
                                         text: viewModel.subscribeModel.billingId.toString(),
@@ -82,8 +91,8 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                               padding: EdgeInsets.only(top: 20.h),
                               child: RichText(
                                 text: TextSpan(
-                                    text: 'Tanlangan obuna tarifi: \n',
-                                    style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
+                                    text: 'selected_subs'.tr(),
+                                    style: AppTextStyle.font12W500Normal.copyWith(color: isDarkTheme ? AppColors.lightGray: AppColors.darkGray),
                                     children: [
                                       TextSpan(
                                         text:
@@ -92,10 +101,6 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                                           color: AppColors.blue,
                                         ),
                                       ),
-                                      // TextSpan(
-                                      //   text: ' evaziga butunlay sotib olishingiz mumkin.',
-                                      //   style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.darkGray),
-                                      // ),
                                     ]),
                                 textAlign: TextAlign.center,
                               ),
@@ -104,7 +109,7 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                         ),
                       ),
                       CustomBanner(
-                        title: 'To\'lov turi',
+                        title: 'choose_payment'.tr(),
                         height: 330.h,
                         contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
                         child: Column(
@@ -179,7 +184,7 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
                                   borderRadius: BorderRadius.circular(40.r),
                                   child: Center(
                                     child: Text(
-                                      'To\'lovni amalga oshirish',
+                                      'do_payment'.tr(),
                                       style: AppTextStyle.font14W500Normal,
                                     ),
                                   ),
@@ -201,11 +206,12 @@ class PaymentPage extends ViewModelBuilderWidget<PaymentPageViewModel> {
   @override
   PaymentPageViewModel viewModelBuilder(BuildContext context) {
     return PaymentPageViewModel(
-        context: context,
-        profileRepository: locator.get(),
-        localViewModel: locator.get(),
-        sharedPreferenceHelper: locator.get(),
-        phoneNumber: phoneNumber,
-        verifyModel: verifyModel);
+      context: context,
+      profileRepository: locator.get(),
+      localViewModel: locator.get(),
+      sharedPreferenceHelper: locator.get(),
+      phoneNumber: phoneNumber,
+      verifyModel: verifyModel,
+    );
   }
 }

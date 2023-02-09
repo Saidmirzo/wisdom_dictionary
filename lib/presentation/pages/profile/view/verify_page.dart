@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,10 +8,9 @@ import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
-import 'package:wisdom/presentation/pages/profile/viewmodel/getting_pro_page.dart';
-import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../config/constants/constants.dart';
 import '../../../../core/di/app_locator.dart';
 import '../viewmodel/verify_page_viewmodel.dart';
 
@@ -24,11 +24,11 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
   TextEditingController editingController = TextEditingController();
 
   @override
-  Widget builder(BuildContext context, ProfilePageViewModel viewModel, Widget? child) {
+  Widget builder(BuildContext context, VerifyPageViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       appBar: CustomAppBar(
-        title: 'Verifikatsiya kodi',
+        title: 'verification_code'.tr(),
         onTap: () => viewModel.pop(),
         leadingIcon: Assets.icons.arrowLeft,
       ),
@@ -48,8 +48,9 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
                 padding: EdgeInsets.only(top: 16.h, bottom: 36.h),
                 child: RichText(
                   text: TextSpan(
-                      text: 'Verifikatsiya kodi ',
-                      style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                      text: 'verification_code'.tr(),
+                      style: AppTextStyle.font12W400Normal
+                          .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                       children: [
                         TextSpan(
                           text: phoneNumber.substring(4, phoneNumber.length),
@@ -58,8 +59,9 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
                           ),
                         ),
                         TextSpan(
-                          text: ' raqamiga sms tarzda yuborildi',
-                          style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                          text: 'code_sent_to'.tr(),
+                          style: AppTextStyle.font12W400Normal
+                              .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                         ),
                       ]),
                   textAlign: TextAlign.center,
@@ -117,7 +119,7 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
                           borderRadius: BorderRadius.circular(40.r),
                           child: Center(
                             child: Text(
-                              'Davom etish',
+                              'next'.tr(),
                               style: AppTextStyle.font14W500Normal,
                             ),
                           ),
@@ -125,16 +127,16 @@ class VerifyPage extends ViewModelBuilderWidget<VerifyPageViewModel> {
                       ),
                     ),
                     Text(
-                      'Agar siz 60 soniya ichida kodni olmagan bo\'lsangiz, Qayta yuborish tugmasini bosing!',
+                      'sent_info'.tr(),
                       textAlign: TextAlign.center,
                       style: AppTextStyle.font12W400Normal.copyWith(color: const Color(0xFF919399)),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 15.h, bottom: 10.h),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () => viewModel.onReSendPressed(),
                         child: Text(
-                          'Qayta yuborish',
+                          'resent'.tr(),
                           textAlign: TextAlign.center,
                           style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.gray),
                         ),

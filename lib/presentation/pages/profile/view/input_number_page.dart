@@ -11,6 +11,7 @@ import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 
+import '../../../../config/constants/constants.dart';
 import '../viewmodel/input_number_page_viewmodel.dart';
 
 class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
@@ -43,16 +44,16 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                Assets.icons.logoBlueText,
+                isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                 height: 52.h,
                 fit: BoxFit.scaleDown,
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.h, bottom: 36.h),
                 child: Text(
-                  'Iltimos davom etish uchun raqamingizni kiriting',
+                  'enter_phone'.tr(),
                   textAlign: TextAlign.center,
-                  style: AppTextStyle.font12W400Normal.copyWith(color: AppColors.darkGray),
+                  style: AppTextStyle.font12W400Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                 ),
               ),
               Container(
@@ -94,13 +95,13 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
                             if (editingController.text.length == 18) {
                               viewModel.onNextPressed(editingController.text);
                             } else {
-                              viewModel.callBackError('Something went wrong. Please check your number');
+                              viewModel.callBackError('invalid_phone_nuber'.tr());
                             }
                           }),
                           borderRadius: BorderRadius.circular(40.r),
                           child: Center(
                             child: Text(
-                              'Davom etish',
+                              'next'.tr(),
                               style: AppTextStyle.font14W500Normal,
                             ),
                           ),
