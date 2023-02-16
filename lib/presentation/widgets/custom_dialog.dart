@@ -28,7 +28,7 @@ showCustomDialog({
       titlePadding: EdgeInsets.only(top: 32.h, bottom: 8.h),
       contentPadding: EdgeInsets.only(bottom: 48.h, left: 24.w, right: 24.w),
       actionsPadding: EdgeInsets.only(bottom: 32.h, left: 24.w, right: 24.w),
-      backgroundColor: AppColors.darkBackground,
+      backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(16.0),

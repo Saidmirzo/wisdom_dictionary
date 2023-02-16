@@ -2,7 +2,6 @@ import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 
-import '../../../../core/di/app_locator.dart';
 import '../../../../domain/repositories/category_repository.dart';
 
 class SpeakingDetailPageViewModel extends BaseViewModel {
@@ -43,4 +42,5 @@ class SpeakingDetailPageViewModel extends BaseViewModel {
       localViewModel.changePageIndex(17);
     }
   }
+
 }

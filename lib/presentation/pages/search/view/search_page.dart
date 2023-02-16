@@ -8,6 +8,7 @@ import 'package:wisdom/presentation/components/search_clean_button.dart';
 import 'package:wisdom/presentation/components/search_history_item.dart';
 import 'package:wisdom/presentation/components/search_word_item.dart';
 import 'package:wisdom/presentation/pages/search/viewmodel/search_page_viewmodel.dart';
+import 'package:wisdom/presentation/widgets/bottom_nav_bar.dart';
 import 'package:wisdom/presentation/widgets/change_language_button.dart';
 
 import '../../../../config/constants/app_colors.dart';
@@ -23,6 +24,12 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
   @override
   void onViewModelReady(SearchPageViewModel viewModel) {
     viewModel.init();
+    if (viewModel.localViewModel.searchingText.isNotEmpty) {
+      viewModel.searchByWord(viewModel.localViewModel.searchingText);
+    }
+    if (viewModel.localViewModel.lastSearchedText.isNotEmpty) {
+      viewModel.searchByWord(viewModel.localViewModel.lastSearchedText);
+    }
     super.onViewModelReady(viewModel);
   }
 
@@ -32,11 +39,13 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
       onWillPop: () => viewModel.goBackToMain(),
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
-        backgroundColor:isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
+        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
           isSearch: true,
+          isLeading: false,
+          isTitle: false,
           focus: true,
           focusNode: viewModel.localViewModel.focusNode,
           title: "search_page".tr(),
@@ -146,8 +155,21 @@ class SearchPage extends ViewModelBuilderWidget<SearchPageViewModel> {
             ),
           ],
         ),
-        resizeToAvoidBottomInset: false,
         floatingActionButton: ChangeLanguageButton(viewModel),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        // to maintain float actions size
+        bottomNavigationBar: Visibility(
+          visible: false,
+          maintainSize: true,
+          maintainAnimation: true,
+          maintainState: true,
+          child: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.add), label: "as"),
+              BottomNavigationBarItem(icon: Icon(Icons.add), label: "as"),
+            ],
+          ),
+        ),
       ),
     );
   }

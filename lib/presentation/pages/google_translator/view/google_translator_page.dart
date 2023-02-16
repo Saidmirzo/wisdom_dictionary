@@ -134,8 +134,7 @@ class GoogleTranslatorPage extends ViewModelBuilderWidget<GoogleTranslatorPageVi
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () async {
-                            bottomController.text = await viewModel.translate(topController.text);
-                            viewModel.notifyListeners();
+                            viewModel.translate(topController.text, bottomController);
                           },
                           borderRadius: BorderRadius.circular(18.5),
                           child: SizedBox(

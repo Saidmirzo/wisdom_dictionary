@@ -14,6 +14,8 @@ abstract class WordEntityRepository {
 
   Future<void> saveWordBank(WordBankModel model);
 
+  Future<int> getWordBankCount();
+
   Future<void> deleteWorkBank(WordBankModel model);
 
   Future<void> getWordBankList(String text);

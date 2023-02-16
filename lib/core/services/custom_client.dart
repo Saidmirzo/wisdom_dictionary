@@ -22,7 +22,6 @@ class CustomClient extends JClient {
 
   @override
   Future updateToken() {
-    //   tokenModel = await locator<LocalViewModel>().updateToken();
     throw UnimplementedError();
   }
 }

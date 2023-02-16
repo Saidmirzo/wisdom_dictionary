@@ -21,6 +21,7 @@ class HomeRepositoryImpl extends HomeRepository {
 
   @override
   Future<TimelineModel> getRandomWords() async {
+
     var getDifference = await dbHelper.getDifference();
     var timeLineDifference = Difference(id: getDifference!.dId, word: getDifference!.dWord);
 
@@ -52,7 +53,7 @@ class HomeRepositoryImpl extends HomeRepository {
     var getSpeaking = await dbHelper.getSpeaking();
     var timeLineSpeaking = Speaking(id: getSpeaking!.id, word: getSpeaking.word);
 
-    var ad = Ad();
+    var ad;
     // if (await locator<NetWorkChecker>().isNetworkAvailable()) {
     //   var response = getLenta();
     //   if (response != null && response.ad != null) {
@@ -78,15 +79,19 @@ class HomeRepositoryImpl extends HomeRepository {
 
   // getting local ad from host
   @override
-  Future<Ad> getAd() async {
+  Future<Ad?> getAd() async {
     var response = await get(Urls.getLenta);
     if (response.statusCode == 200) {
       var model = TimelineModel.fromJson(jsonDecode(response.body));
-      response = await get(Uri.parse(Urls.baseUrl + model.ad!.link!));
-      if (response.statusCode == 200) {
-        _ad = Ad(id: model.ad?.id, image: model.ad?.image!, link: model.ad?.link);
+      if(model.ad != null) {
+        response = await get(Uri.parse(model.ad!.link!));
+        if (response.statusCode == 200) {
+          _ad = Ad(id: model.ad?.id, image: model.ad?.image!, link: model.ad?.link);
+        }
+        return _ad;
+      } else {
+        return null;
       }
-      return _ad;
     } else {
       throw VMException(response.body, callFuncName: 'getAd', response: response);
     }

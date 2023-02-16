@@ -26,7 +26,7 @@ class _ChangeLanguageButtonState extends State<ChangeLanguageButton> with Single
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 65.h),
+      padding: EdgeInsets.only(bottom: 0.h ,right: 10.w),
       child: AnimatedRotation(
         turns: turn,
         duration: const Duration(milliseconds: 500),

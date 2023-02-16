@@ -42,46 +42,32 @@ class ProfilePage extends ViewModelBuilderWidget<ProfilePageViewModel> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 144.h,
-                            margin: EdgeInsets.only(top: 80.h),
-                            padding: const EdgeInsets.symmetric(vertical: 32),
-                            decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(18.r),
-                                onTap: () {},
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Text(
-                                    viewModel.sharedPreferenceHelper.getString(Constants.KEY_PHONE, ""),
-                                    style: AppTextStyle.font18W500Normal
-                                        .copyWith(color: isDarkTheme ? AppColors.white : AppColors.blue, fontSize: 20),
-                                  ),
-                                ),
-                              ),
-                            ),
+                      CustomBanner(
+                        title: 'subscription_number'.tr(),
+                        contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
+                        child: Center(
+                          child: Text(
+                            viewModel.sharedPreferenceHelper.getString(Constants.KEY_PHONE, ""),
+                            style: AppTextStyle.font18W500Normal
+                                .copyWith(color: isDarkTheme ? AppColors.white : AppColors.blue, fontSize: 20),
                           ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: SvgPicture.asset(Assets.images.profile),
-                          )
-                        ],
+                        ),
                       ),
                       CustomBanner(
                         title: 'current_plan'.tr(),
                         contentPadding: const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
                         child: RichText(
                           text: TextSpan(
-                              text: 'current_plan'.tr()+'\n',
+                              text: 'current_plan'.tr() + '\n',
                               style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleGray),
                               children: [
                                 TextSpan(
                                   text: (viewModel.localViewModel.profileState == 1)
-                                      ? ((context.locale.toString() == "en_US" ? viewModel.tariffsModel.name!.en : viewModel.tariffsModel.name!.uz) ?? "Connect with developers").toUpperCase()
+                                      ? ((context.locale.toString() == "en_US"
+                                                  ? viewModel.tariffsModel.name!.en
+                                                  : viewModel.tariffsModel.name!.uz) ??
+                                              "Connect with developers")
+                                          .toUpperCase()
                                       : "not_purchased".tr(),
                                   style: TextStyle(
                                       color: viewModel.localViewModel.profileState == 1

@@ -51,10 +51,13 @@ class SearchHistoryItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(
-                        thirdText ?? "",
-                        style: AppTextStyle.font12W500Normal
-                            .copyWith(color: AppColors.lightGray),
+                      Visibility(
+                        visible: (thirdText ?? "").isNotEmpty,
+                        child: Text(
+                          thirdText ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                        ),
                       ),
                     ],
                   ),
@@ -83,8 +86,8 @@ class SearchHistoryItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w),
-              child: const Divider(
-                color: AppColors.borderWhite,
+              child: Divider(
+                color: isDarkTheme ? AppColors.darkForm : AppColors.borderWhite,
                 height: 1,
                 thickness: 0.5,
               ),

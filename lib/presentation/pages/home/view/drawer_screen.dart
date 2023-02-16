@@ -44,7 +44,7 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
             Padding(
               padding: EdgeInsets.only(left: 0, top: 40.h, bottom: 50.h),
               child: SvgPicture.asset(
-                isDarkTheme ? Assets.icons.logoWhiteText :Assets.icons.logoBlueText,
+                isDarkTheme ? Assets.icons.logoWhiteText : Assets.icons.logoBlueText,
                 fit: BoxFit.scaleDown,
                 height: 45.h,
                 width: 152.w,
@@ -55,7 +55,14 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
               child: DrawerMenuItem(
                 title: 'subscribe'.tr(),
                 imgAssets: Assets.icons.proVersion,
-                onTap: () => Navigator.of(context).pushNamed(Routes.gettingProPage),
+                onTap: () {
+                  var phone = viewModel.localViewModel.preferenceHelper.getString(Constants.KEY_PHONE,"");
+                  if(phone.isNotEmpty){
+                    Navigator.of(context).pushNamed(Routes.verifyPage, arguments: {'number': phone});
+                  } else {
+                    Navigator.of(context).pushNamed(Routes.gettingProPage);
+                  }
+                },
               ),
             ),
             Visibility(
@@ -74,8 +81,9 @@ class DrawerScreen extends ViewModelWidget<HomeViewModel> {
             DrawerMenuItem(
               title: 'settings'.tr(),
               imgAssets: Assets.icons.setting,
-              onTap: () => Navigator.of(context).pushNamed(Routes.settingPage).then(
-                    (value) => viewModel.notifyListeners(),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(Routes.settingPage).then(
+                        (value) => viewModel.notifyListeners(),
                   ),
             ),
             DrawerMenuItem(

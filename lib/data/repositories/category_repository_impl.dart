@@ -5,6 +5,7 @@ import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/data/model/catalog_view_model.dart';
 import 'package:wisdom/data/model/culture_model.dart';
+import 'package:wisdom/data/model/speaking_view_model.dart';
 import 'package:wisdom/data/model/word_with_collocation_model.dart';
 import 'package:wisdom/data/model/word_with_difference_model.dart';
 import 'package:wisdom/data/model/word_with_grammar_model.dart';
@@ -75,16 +76,6 @@ class CategoryRepositoryImpl extends CategoryRepository {
     if (response != null) {
       _metaphorModel =
           WordWithMetaphorModel(id: response.id, mId: response.mId, word: response.word, mBody: response.mBody);
-    }
-  }
-
-  @override
-  Future<void> getSpeakingDetail(int id) async {
-    var response = await get(Urls.getSpeakingView(id));
-    if (response.statusCode == 200) {
-      _spaekingModel = CatalogViewModel.fromJson(jsonDecode(response.body));
-    } else {
-      throw VMException(response.body, callFuncName: 'getSpeakingDetail', response: response);
     }
   }
 
@@ -168,28 +159,63 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<void> getSpeakingWordsList(String? categoryId, String? title, String? word) async {
+  Future<void> getSpeakingWordsList(String? categoryId, String? title, String? word, bool isInside) async {
     List<CatalogModel>? response = [];
-    if (categoryId== null) {
+    if (categoryId == null) {
       if (title != null) {
         response = await dbHelper.getTitleList("speaking", title);
       } else {
         response = await dbHelper.getCatalogsList("speaking");
       }
-    } else if(word == null) {
+    } else if (word == null) {
       if (title != null) {
         response = await dbHelper.getTitleList(categoryId, title);
       } else {
         response = await dbHelper.getTitleList(categoryId, null);
       }
     } else {
-      if (word != null) {
-        response = await dbHelper.getCatalogWordList(categoryId, word);
-      }
+      response = await dbHelper.getCatalogWordList(categoryId, word);
     }
     if (response != null) {
       _speakingWordsList = [];
+      if (isInside) {
+        var withTranslation = await findSpeakingInsideWords(response, categoryId!);
+        _speakingWordsList.clear();
+        _speakingWordsList.addAll(withTranslation);
+        return;
+      }
+      _speakingWordsList.clear();
       _speakingWordsList.addAll(response);
+    }
+  }
+
+  Future<List<CatalogModel>> findSpeakingInsideWords(List<CatalogModel> response, String parentId) async {
+    List<CatalogModel>? localData = await dbHelper.getSpeakingViewList(int.parse(parentId));
+    if (localData != null && localData.isNotEmpty) {
+      return localData;
+    } else {
+      for (var element in response) {
+        await getSpeakingDetail(element.id!);
+        if (_spaekingModel.body != null) {
+          await dbHelper.saveSpeakingView(SpeakingViewModel(
+              parentId: int.parse(parentId),
+              wordId: _spaekingModel.id,
+              word: _spaekingModel.word,
+              translation: _spaekingModel.body));
+          element.translate = _spaekingModel.body;
+        }
+      }
+      return response;
+    }
+  }
+
+  @override
+  Future<void> getSpeakingDetail(int id) async {
+    var response = await get(Urls.getSpeakingView(id));
+    if (response.statusCode == 200) {
+      _spaekingModel = CatalogViewModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw VMException(response.body, callFuncName: 'getSpeakingDetail', response: response);
     }
   }
 

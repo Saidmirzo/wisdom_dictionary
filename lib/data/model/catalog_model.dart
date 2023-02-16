@@ -7,6 +7,7 @@ import 'dart:convert';
 /// wordenid : 1
 /// wordenword : ""
 /// title : ""
+/// translate : ""
 
 CatalogModel catalogModelFromJson(String str) => CatalogModel.fromJson(json.decode(str));
 
@@ -21,6 +22,7 @@ class CatalogModel {
     int? wordenid,
     String? wordenword,
     String? title,
+    String? translate,
   }) {
     _tableId = tableId;
     _id = id;
@@ -29,6 +31,7 @@ class CatalogModel {
     _wordenid = wordenid;
     _wordenword = wordenword;
     _title = title;
+    _translate = translate;
   }
 
   CatalogModel.fromJson(dynamic json) {
@@ -39,6 +42,7 @@ class CatalogModel {
     _wordenid = json['wordenid'];
     _wordenword = json['wordenword'];
     _title = json['title'];
+    _translate = json['translate'];
   }
 
   int? _tableId;
@@ -48,6 +52,7 @@ class CatalogModel {
   int? _wordenid;
   String? _wordenword;
   String? _title;
+  String? _translate;
 
   CatalogModel copyWith({
     int? tableId,
@@ -57,6 +62,7 @@ class CatalogModel {
     int? wordenid,
     String? wordenword,
     String? title,
+    String? translate,
   }) =>
       CatalogModel(
         tableId: tableId ?? _tableId,
@@ -66,7 +72,12 @@ class CatalogModel {
         wordenid: wordenid ?? _wordenid,
         wordenword: wordenword ?? _wordenword,
         title: title ?? _title,
+        translate: translate ?? _translate,
       );
+
+  set tableId(int? value) {
+    _tableId = value;
+  }
 
   int? get tableId => _tableId;
 
@@ -82,6 +93,8 @@ class CatalogModel {
 
   String? get title => _title;
 
+  String? get translate => _translate;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['tableId'] = _tableId;
@@ -91,34 +104,35 @@ class CatalogModel {
     map['wordenid'] = _wordenid;
     map['wordenword'] = _wordenword;
     map['title'] = _title;
+    map['translate'] = _translate;
     return map;
-  }
-
-  set title(String? value) {
-    _title = value;
-  }
-
-  set wordenword(String? value) {
-    _wordenword = value;
-  }
-
-  set wordenid(int? value) {
-    _wordenid = value;
-  }
-
-  set word(String? value) {
-    _word = value;
-  }
-
-  set category(String? value) {
-    _category = value;
   }
 
   set id(int? value) {
     _id = value;
   }
 
-  set tableId(int? value) {
-    _tableId = value;
+  set category(String? value) {
+    _category = value;
+  }
+
+  set word(String? value) {
+    _word = value;
+  }
+
+  set wordenid(int? value) {
+    _wordenid = value;
+  }
+
+  set wordenword(String? value) {
+    _wordenword = value;
+  }
+
+  set title(String? value) {
+    _title = value;
+  }
+
+  set translate(String? value) {
+    _translate = value;
   }
 }

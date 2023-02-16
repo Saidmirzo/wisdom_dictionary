@@ -36,9 +36,8 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
         appBar: CustomAppBar(
           leadingIcon: Assets.icons.menu,
           onTap: () => ZoomDrawer.of(context)!.toggle(),
-          // isSearch: true,
           title: 'Word bank',
-          // onChange: (value) => viewModel.getWordBankList(value),
+          focus: false,
         ),
         // body: const EmptyJar(),
         body: viewModel.isSuccess(tag: viewModel.getWordBankListTag) &&
@@ -46,6 +45,7 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
             ? ListView.builder(
                 padding: const EdgeInsets.only(top: 16, bottom: 130),
                 physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: viewModel.wordEntityRepository.wordBankList.length,
                 itemBuilder: (context, index) {
                   var model = viewModel.wordEntityRepository.wordBankList[index];
@@ -68,7 +68,7 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {},
+              onTap: () => viewModel.goToExercisePage(),
               borderRadius: BorderRadius.circular(25.r),
               child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SvgPicture.asset(Assets.icons.exercise, height: 20.h, fit: BoxFit.scaleDown),
@@ -91,4 +91,5 @@ class WordBankPage extends ViewModelBuilderWidget<WordBankViewModel> {
   WordBankViewModel viewModelBuilder(BuildContext context) {
     return WordBankViewModel(context: context, wordEntityRepository: locator.get(), localViewModel: locator.get());
   }
+
 }

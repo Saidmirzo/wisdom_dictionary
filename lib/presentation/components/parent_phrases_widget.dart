@@ -61,23 +61,21 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                         child: SvgPicture.asset(viewModel.findRank(model.parentPhrases!.star!.toString())))
                     : const SizedBox.shrink(),
                 Flexible(
-                  child: SelectionArea(
-                    child: Text.rich(
-                      TextSpan(
-                        text: "$orderNum. ",
-                        style: AppTextStyle.font14W700Normal.copyWith(
-                            color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
-                            fontSize: viewModel.fontSize! - 2),
-                        children: [
-                          TextSpan(
-                            text: "${model.parentPhrases!.wordClassComment ?? ""} ",
-                            style: AppTextStyle.font14W400Normal.copyWith(
-                                color: isDarkTheme ? AppColors.lightGray : AppColors.paleGray,
-                                fontSize: viewModel.fontSize! - 2),
-                          ),
-                          viewModel.conductAndHighlightUzWords(null, null, model.parentPhrasesTranslate)
-                        ],
-                      ),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "$orderNum. ",
+                      style: AppTextStyle.font14W700Normal.copyWith(
+                          color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                          fontSize: viewModel.fontSize! - 2),
+                      children: [
+                        TextSpan(
+                          text: "${model.parentPhrases!.wordClassComment ?? ""} ",
+                          style: AppTextStyle.font14W400Normal.copyWith(
+                              color: isDarkTheme ? AppColors.lightGray : AppColors.paleGray,
+                              fontSize: viewModel.fontSize! - 2),
+                        ),
+                        viewModel.conductAndHighlightUzWords(null, null, model.parentPhrasesTranslate)
+                      ],
                     ),
                   ),
                 )
@@ -88,12 +86,10 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           Flexible(
             child: Padding(
               padding: EdgeInsets.only(left: 10.w),
-              child: SelectionArea(
-                child: Text(
-                  (viewModel.conductToStringParentPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml
-                      .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
-                ),
+              child: Text(
+                (viewModel.conductToStringParentPhrasesExamples(model.phrasesExample)),
+                style: AppTextStyle.font14W400ItalicHtml
+                    .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
               ),
             ),
           ),

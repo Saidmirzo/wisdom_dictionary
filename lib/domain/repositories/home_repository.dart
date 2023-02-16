@@ -4,7 +4,7 @@ import 'package:wisdom/data/model/timeline_model.dart';
 abstract class HomeRepository {
   Future<TimelineModel> getRandomWords();
 
-  Future<Ad> getAd();
+  Future<Ad?> getAd();
 
   Future<SubscribeCheckModel?> checkSubscription();
 

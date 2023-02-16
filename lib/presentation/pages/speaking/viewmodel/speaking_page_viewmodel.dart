@@ -25,23 +25,23 @@ class SpeakingPageViewModel extends BaseViewModel {
       if (localViewModel.isSubSub) {
         if (searchText != null && searchText.trim().isNotEmpty) {
           await categoryRepository.getSpeakingWordsList(
-              localViewModel.speakingCatalogModel.id.toString(), null, searchText.trim());
+              localViewModel.speakingCatalogModel.id.toString(), null, searchText.trim(),true);
         } else {
-          await categoryRepository.getSpeakingWordsList(localViewModel.speakingCatalogModel.id.toString(), null, null);
+          await categoryRepository.getSpeakingWordsList(localViewModel.speakingCatalogModel.id.toString(), null, null, true);
         }
       } else if (localViewModel.isTitle) {
         localViewModel.subId = localViewModel.speakingCatalogModel.id ?? 0;
         if (searchText != null && searchText.trim().isNotEmpty) {
           await categoryRepository.getSpeakingWordsList(
-              localViewModel.speakingCatalogModel.id.toString(), searchText.trim(), null);
+              localViewModel.speakingCatalogModel.id.toString(), searchText.trim(), null, false);
         } else {
-          await categoryRepository.getSpeakingWordsList(localViewModel.speakingCatalogModel.id.toString(), null, null);
+          await categoryRepository.getSpeakingWordsList(localViewModel.speakingCatalogModel.id.toString(), null, null, false);
         }
       } else {
         if (searchText != null && searchText.trim().isNotEmpty) {
-          await categoryRepository.getSpeakingWordsList(null, searchText.trim(), null);
+          await categoryRepository.getSpeakingWordsList(null, searchText.trim(), null, false);
         } else {
-          await categoryRepository.getSpeakingWordsList(null, null, null);
+          await categoryRepository.getSpeakingWordsList(null, null, null, false);
         }
       }
       if (categoryRepository.speakingWordsList.isNotEmpty) {
@@ -83,11 +83,13 @@ class SpeakingPageViewModel extends BaseViewModel {
       localViewModel.isSubSub = true;
       getSpeakingWordsList(null); // opening this page again but with another value
       localViewModel.notifyListeners();
-    } else if (!localViewModel.isFinal) {
-      localViewModel.isFromMain = false;
-      homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: catalogModel.word);
-      localViewModel.changePageIndex(10);
     }
+    // else
+    //   if (!localViewModel.isFinal) {
+    //   localViewModel.isFromMain = false;
+    //   homeRepository.timelineModel.speaking = Speaking(id: catalogModel.id, word: catalogModel.word);
+    //   localViewModel.changePageIndex(10);
+    // }
     // localViewModel.isFromMain = false;
   }
 }

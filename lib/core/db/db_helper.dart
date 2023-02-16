@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -17,6 +18,7 @@ import 'package:wisdom/data/model/parents_model.dart';
 import 'package:wisdom/data/model/phrases_example_model.dart';
 import 'package:wisdom/data/model/phrases_model.dart';
 import 'package:wisdom/data/model/phrases_translate_model.dart';
+import 'package:wisdom/data/model/speaking_view_model.dart';
 import 'package:wisdom/data/model/thesaurus_model.dart';
 import 'package:wisdom/data/model/word_and_parents_and_phrases_and_translate_model.dart';
 import 'package:wisdom/data/model/word_and_parents_and_phrases_parent_phrases_and_translate_model.dart';
@@ -49,6 +51,7 @@ class DBHelper {
   final int databaseVersion = 1;
   final String tableWordEntity = 'word_entity';
   final String tableWordBank = 'word_bank';
+  final String tableSpeakingView = 'speaking_view';
 
   // opens the database (and creates if it do not exist)
   Future<void> init() async {
@@ -92,6 +95,33 @@ class DBHelper {
     } catch (e) {
       log("saveWordToDB", error: e.toString());
     }
+  }
+
+  Future<void> saveSpeakingView(SpeakingViewModel speakingViewModel) async {
+    try {
+      if (database.isOpen) {
+        database.insert(tableSpeakingView, speakingViewModel.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    } catch (e) {
+      log("saveWordToDB", error: e.toString());
+    }
+  }
+
+  Future<List<CatalogModel>?> getSpeakingViewList(int parentId) async {
+    try {
+      if (database.isOpen) {
+        var response = await database.rawQuery("SELECT * FROM $tableSpeakingView WHERE parentId=$parentId");
+        var speakingViewList = List<CatalogModel>.from(response.map((e) {
+          var item = SpeakingViewModel.fromJson(e);
+          return CatalogModel(
+              id: item.wordId, word: item.word, translate: item.translation, category: item.parentId.toString());
+        }));
+        return speakingViewList;
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+    return null;
   }
 
   Future<WordWithGrammarModel?> getGrammar() async {
@@ -278,8 +308,8 @@ class DBHelper {
   Future<CatalogModel?> getSpeaking() async {
     try {
       if (database.isOpen) {
-        var response =
-            await database.rawQuery("SELECT id,word FROM catalogue WHERE word!='' ORDER BY random() LIMIT 1");
+        var response = await database.rawQuery(
+            "SELECT id,word FROM catalogue WHERE word!='' AND category != 'differences' ORDER BY random() LIMIT 1");
         var model = CatalogModel.fromJson(response.last);
         return model;
       }
@@ -309,6 +339,7 @@ class DBHelper {
         var response = await database.rawQuery("SELECT * FROM catalogue WHERE category='$categoryId' $newTitle");
         var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
         return model;
+        // TODO:
       }
     } catch (e) {
       log("getTitleList", error: e.toString());
@@ -316,30 +347,31 @@ class DBHelper {
     return null;
   }
 
+  Future<List<CatalogModel>?> getCatalogWordList(String categoryId, String query) async {
+    try {
+      if (database.isOpen) {
+        var response = await database.rawQuery(
+            "SELECT * FROM catalogue WHERE category= '$categoryId' AND word LIKE '${query.replaceAll("'", "''")}%'");
+        var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
+        return model;
+        // TODO:
+      }
+    } catch (e) {
+      log("getCatalogWordList", error: e.toString());
+    }
+    return null;
+  }
+
   Future<List<CatalogModel>?> getIfWordIsWordenList(String categoryId, String query) async {
     try {
       if (database.isOpen) {
-        var response = await database
-            .rawQuery("SELECT * FROM catalogue WHERE category= '$categoryId' AND wordenword LIKE '${query.replaceAll("'", "''")}%'");
+        var response = await database.rawQuery(
+            "SELECT * FROM catalogue WHERE category= '$categoryId' AND wordenword LIKE '${query.replaceAll("'", "''")}%'");
         var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
         return model;
       }
     } catch (e) {
       log("getIfWordIsWordenList", error: e.toString());
-    }
-    return null;
-  }
-
-  Future<List<CatalogModel>?> getCatalogWordList(String categoryId, String query) async {
-    try {
-      if (database.isOpen) {
-        var response =
-            await database.rawQuery("SELECT * FROM catalogue WHERE category= '$categoryId' AND word LIKE '${query.replaceAll("'", "''")}%'");
-        var model = List<CatalogModel>.from(response.map((e) => CatalogModel.fromJson(e)));
-        return model;
-      }
-    } catch (e) {
-      log("getCatalogWordList", error: e.toString());
     }
     return null;
   }
@@ -459,7 +491,7 @@ class DBHelper {
           ? List<ParentPhrasesTranslateModel>.from(
               responseParentPhrasesTranslate.map((e) => ParentPhrasesTranslateModel.fromJson(e)))
           : null;
-      if ((element.word != null && element.word!.isNotEmpty) ||
+      if ((element.word != null && element.word!.isNotEmpty) &&
           (element.wordClassComment != null && element.wordClassComment.isNotEmpty)) {
         _parentPhrasesWithAll
             .add(ParentPhrasesWithAll(element, wordPhraseParentPhrasesExample, wordPhraseParentPhrasesTranslate));
@@ -669,6 +701,16 @@ class DBHelper {
       }
     } catch (e) {
       log("saveToWordBank", error: e.toString());
+    }
+  }
+
+  Future<int> getWordBankCount() async {
+    try {
+      var result = await database.rawQuery("SELECT count(*) as count FROM $tableWordBank");
+      return result.first.values.first as int;
+    } catch (e) {
+      log("saveToWordBank", error: e.toString());
+      return 0;
     }
   }
 

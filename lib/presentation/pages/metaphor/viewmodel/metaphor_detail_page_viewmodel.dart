@@ -10,10 +10,12 @@ class MetaphorDetailPageViewModel extends BaseViewModel {
     required super.context,
     required this.homeRepository,
     required this.categoryRepository,
+    required this.localViewModel,
   });
 
   final HomeRepository homeRepository;
   final CategoryRepository categoryRepository;
+  final LocalViewModel localViewModel;
   final String getMetaphorDetailsTag = 'getMetaphorDetailsTag';
 
   String? getMetaphor() {
@@ -34,11 +36,11 @@ class MetaphorDetailPageViewModel extends BaseViewModel {
   }
 
   goBack() {
-    if(locator<LocalViewModel>().isFromMain) {
-      locator<LocalViewModel>().isFromMain = false;
-      locator<LocalViewModel>().changePageIndex(0);
+    if(localViewModel.isFromMain) {
+      localViewModel.isFromMain = false;
+      localViewModel.changePageIndex(0);
     } else {
-      locator<LocalViewModel>().changePageIndex(14);
+      localViewModel.changePageIndex(14);
     }
   }
 }

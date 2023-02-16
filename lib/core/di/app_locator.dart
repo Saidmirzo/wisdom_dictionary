@@ -2,6 +2,7 @@ import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_decoration.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
+import 'package:wisdom/core/services/ad_state.dart';
 import 'package:wisdom/core/services/custom_client.dart';
 import 'package:wisdom/core/services/local_notification_service.dart';
 import 'package:wisdom/core/utils/word_mapper.dart';
@@ -26,10 +27,11 @@ void setupLocator() {
   locator.registerSingleton<NetWorkChecker>(NetWorkChecker());
   locator.registerSingleton<WordMapper>(WordMapper());
   locator.registerSingleton<DBHelper>(DBHelper(locator.get()));
+  locator.registerSingleton<AdState>(AdState());
   locator.registerSingleton<LocalNotificationService>(LocalNotificationService());
   locator.registerSingleton<SharedPreferenceHelper>(SharedPreferenceHelper());
   locator.registerSingleton<CustomClient>(CustomClient(sharedPreferenceHelper: locator.get()));
-  locator.registerSingleton<LocalViewModel>(LocalViewModel(context: null, preferenceHelper: locator.get()));
+  locator.registerSingleton<LocalViewModel>(LocalViewModel(context: null, preferenceHelper: locator.get(), netWorkChecker: locator.get()));
   locator.registerLazySingleton<WordEntityRepository>(
       () => WordEntityRepositoryImpl(client: locator.get(), dbHelper: locator.get()));
   locator.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(locator.get(), locator.get()));

@@ -3,22 +3,7 @@ import 'package:flutter/material.dart';
 
 class LocalNotificationService {
   final AwesomeNotifications awesomeNotifications = AwesomeNotifications();
-  Future<bool> createNotification({
-    required int id,
-    required String title,
-    required String body,
-  }) async {
-    return awesomeNotifications.createNotification(
-      content: NotificationContent(
-        id: id,
-        channelKey: "channelKey",
-        groupKey: "channelGroupKey",
-        title: title,
-        body: body,
-      ),
-    );
-  }
-  
+
   Future<bool> scheduleNotification({
     required int id,
     required String title,

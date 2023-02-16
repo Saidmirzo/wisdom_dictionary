@@ -4,8 +4,8 @@
 	<dict>
 		<key>CFBundleLocalizations</key>
 		<array>
-				<string>en</string>
-				<string>uz</string>
+			<string>en</string>
+			<string>uz</string>
 		</array>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
@@ -51,6 +51,6 @@
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>UIStatusBarHidden</key>
-		<false/>
+		<true/>
 	</dict>
 </plist>

@@ -3,16 +3,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:provider/provider.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
+import 'package:wisdom/core/services/ad_state.dart';
 
 import 'app.dart';
-import 'config/theme/themes.dart';
 import 'core/di/app_locator.dart';
 import 'core/services/push_notifications_service.dart';
-import 'presentation/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +23,7 @@ void main() async {
       DeviceOrientation.portraitDown,
     ]);
     setupLocator();
+    await locator<AdState>().init();
     await locator<DBHelper>().init();
     await locator<SharedPreferenceHelper>().getInstance();
     await EasyLocalization.ensureInitialized();
@@ -45,7 +45,13 @@ void main() async {
         supportedLocales: const [Locale('en', 'US'), Locale('uz', 'UZ')],
         path: 'assets/translations',
         fallbackLocale: const Locale('en', 'US'),
-        child: const MyApp(),
+        child: MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (context) => MainProvider()),
+            ],
+            builder: (context, child) {
+              return MyApp();
+            }),
       ),
     );
   }, appVersion: '1.0.0');

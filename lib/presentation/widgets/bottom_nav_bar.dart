@@ -1,11 +1,9 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
-import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/constants.dart';
-import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/presentation/pages/home/viewmodel/home_viewmodel.dart';
 
 import '../../config/constants/assets.dart';
@@ -27,11 +25,11 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
           right: 0,
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.r),
-              color: isDarkTheme ? AppColors.darkBottomBar : AppColors.blue,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r)),
+              color: (isDarkTheme ? AppColors.darkBottomBar : AppColors.blue).withOpacity(0.95),
             ),
             padding: EdgeInsets.symmetric(horizontal: 30.w),
-            margin: const EdgeInsets.all(8),
+            // margin: const EdgeInsets.all(8),
             height: 60.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +43,7 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
                       viewModel.localViewModel.changePageIndex(0);
                     }),
                 Material(
-                  color: isDarkTheme ? AppColors.darkBottomBar : AppColors.blue,
+                  color: (isDarkTheme ? AppColors.darkBottomBar : AppColors.blue).withOpacity(0.1),
                   child: AddToCartIcon(
                     badgeOptions: const BadgeOptions(
                         active: true,
@@ -63,20 +61,6 @@ class HomeBottomNavBar extends ViewModelWidget<HomeViewModel> {
                         }),
                   ),
                 ),
-                // ValueListenableBuilder(
-                //   valueListenable: viewModel.localViewModel.badgeCount,
-                //   builder: (BuildContext context, value, Widget? child) {
-                //     return badge.Badge(
-                //       badgeContent: Text(
-                //         viewModel.localViewModel.badgeCount.value.toString(),
-                //         style: AppTextStyle.font12W400Normal.copyWith(fontSize: 10.sp, fontWeight: FontWeight.w600),
-                //       ),
-                //       ignorePointer: true,
-                //       position: badge.BadgePosition.topEnd(top: 1, end: 1),
-                //       child: ,
-                //     );
-                //   },
-                // ),
                 BottomNavButton(
                     isTabSelected: value == 2,
                     defIcon: Assets.icons.searchOutline,

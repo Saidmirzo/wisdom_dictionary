@@ -35,7 +35,7 @@ abstract class CategoryRepository {
 
   Future<void> getCultureWordsList(String? searchText);
 
-  Future<void> getSpeakingWordsList(String? categoryId, String? title, String? word);
+  Future<void> getSpeakingWordsList(String? categoryId, String? title, String? word, bool isInside);
 
   WordWithGrammarModel get grammarDetailModel;
 

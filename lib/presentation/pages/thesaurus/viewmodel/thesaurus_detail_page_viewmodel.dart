@@ -10,10 +10,12 @@ class ThesaurusDetailPageViewModel extends BaseViewModel {
     required super.context,
     required this.homeRepository,
     required this.categoryRepository,
+    required this.localViewModel,
   });
 
   final HomeRepository homeRepository;
   final CategoryRepository categoryRepository;
+  final LocalViewModel localViewModel;
   final String getThesaurusDetailsTag = 'getThesaurusDetails';
 
   String? getThesaurus() {

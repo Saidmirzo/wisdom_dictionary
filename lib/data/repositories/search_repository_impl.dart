@@ -53,8 +53,6 @@ class SearchRepositoryImpl extends SearchRepository {
     var searchPhraseDtoParentPhraseTranslate1List = mapper.mapWordDtoListToSearchUzParentPhraseTranslate(
         searchPhraseDtoParentPhraseTranslate1, searchText, "phrases");
 
-// TODO: ozbekcha sinoinim qo'shish
-
     _searchUzResult.clear();
     _searchUzResult.addAll(searchByWordUzList);
     _searchUzResult.addAll(searchWordUzParent1List);
@@ -70,6 +68,7 @@ class SearchRepositoryImpl extends SearchRepository {
   Future<List<SearchResultUzModel>> findReleatedWords(List<SearchResultUzModel> list) async {
     for (var element in list) {
       var sameWords = await dbHelper.wordsUz(element.id!);
+      sameWords.remove(element.word);
       element.same = sameWords.isNotEmpty ? sameWords : [""];
     }
     return list;

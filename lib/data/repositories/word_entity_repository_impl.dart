@@ -99,4 +99,9 @@ class WordEntityRepositoryImpl extends WordEntityRepository {
     _wordBankModel.remove(model);
     dbHelper.deleteWordBank(model);
   }
+
+  @override
+  Future<int> getWordBankCount() async {
+   return await dbHelper.getWordBankCount();
+  }
 }

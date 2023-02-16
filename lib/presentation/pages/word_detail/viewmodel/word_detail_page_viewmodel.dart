@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/data/model/parent_phrases_example_model.dart';
@@ -16,7 +19,10 @@ import 'package:wisdom/domain/repositories/word_entity_repository.dart';
 import '../../../../config/constants/app_colors.dart';
 import '../../../../config/constants/app_text_style.dart';
 import '../../../../config/constants/constants.dart';
+import '../../../../config/constants/urls.dart';
 import '../../../../core/utils/word_mapper.dart';
+import '../../../routes/routes.dart';
+import '../../../widgets/custom_dialog.dart';
 import '../../../widgets/loading_widget.dart';
 
 class WordDetailPageViewModel extends BaseViewModel {
@@ -49,7 +55,6 @@ class WordDetailPageViewModel extends BaseViewModel {
       () async {
         fontSize = preferenceHelper.getDouble(preferenceHelper.fontSize, 16);
         await wordEntityRepository.getRequiredWord(localViewModel.wordDetailModel.id ?? 0);
-        // TODO add link word thought
         if (wordEntityRepository.requiredWordWithAllModel.word != null) {
           await splitingToParentWithAllModel();
           setSuccess(tag: initTag);
@@ -87,7 +92,7 @@ class WordDetailPageViewModel extends BaseViewModel {
     }
   }
 
-  addToWordBankFromParent(ParentsWithAll model, String num, GlobalKey key) {
+  addToWordBankFromParent(ParentsWithAll model, String num, GlobalKey key) async {
     safeBlock(() async {
       int number = int.parse(num.isEmpty ? "0" : num);
       var wordBank = WordBankModel(
@@ -96,8 +101,9 @@ class WordDetailPageViewModel extends BaseViewModel {
           example: model.parents!.example,
           translation: conductToString(model.wordsUz),
           createdAt: DateTime.now().toString(),
-          number: number);
-      funAddToWordBank(wordBank, key);
+          number: number,
+          type: "word");
+      await funAddToWordBank(wordBank, key);
     }, callFuncName: 'addToWordBankFromParent', inProgress: false);
   }
 
@@ -110,6 +116,7 @@ class WordDetailPageViewModel extends BaseViewModel {
           example: model.phrasesExample![0].value,
           translation: conductToStringPhrasesTranslate(model.phrasesTranslate!),
           createdAt: DateTime.now().toString(),
+          type: "phrases",
           number: number);
       funAddToWordBank(wordBank, key);
     }, callFuncName: 'addToWordBankFromPhrase', inProgress: false);
@@ -124,24 +131,72 @@ class WordDetailPageViewModel extends BaseViewModel {
           example: model.phrasesExample![0].value,
           translation: conductToStringParentPhrasesTranslate(model.parentPhrasesTranslate!),
           createdAt: DateTime.now().toString(),
+          type: "phrases",
           number: number);
       funAddToWordBank(wordBank, key);
     }, callFuncName: 'addToWordBankFromParentPhrase', inProgress: false);
   }
 
-  funAddToWordBank(WordBankModel bankModel, GlobalKey key) {
+  addAllWords(GlobalKey globalKey) {
     safeBlock(() async {
-      int count = 0;
-      for (var item in wordEntityRepository.wordBankList) {
-        if (item.id == bankModel.id) {
-          count++;
-          break;
+      if (parentsWithAllList.isNotEmpty) {
+        var count = 0;
+        for (var element in parentsWithAllList) {
+          int dbCount = await wordEntityRepository.getWordBankCount();
+          if (dbCount > 29 && localViewModel.profileState != Constants.STATE_ACTIVE) {
+            break;
+          } else {
+            count++;
+            await addToWordBankFromParent(element, count.toString(), globalKey);
+          }
         }
       }
-      if (count == 0) {
-        localViewModel.runAddToCartAnimation(key);
-        localViewModel.changeBadgeCount(1);
-        await wordEntityRepository.saveWordBank(bankModel);
+    }, callFuncName: 'addAllWords', inProgress: false);
+  }
+
+  showCountOutOfBound() {
+    showCustomDialog(
+      context: context!,
+      icon: Assets.icons.inform,
+      iconColor: AppColors.accentLight,
+      iconBackgroundColor: AppColors.error,
+      title: "word_bank_add".tr(),
+      contentText: Padding(
+        padding: EdgeInsets.only(top: 20.h),
+        child: Text(
+          'word_bank_add_info'.tr(),
+          textAlign: TextAlign.center,
+          style: AppTextStyle.font14W600Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
+        ),
+      ),
+      positive: "buy_pro".tr(),
+      onPositiveTap: () {
+        navigateTo(Routes.gettingProPage);
+      },
+    );
+  }
+
+  funAddToWordBank(WordBankModel bankModel, GlobalKey? key) async {
+    safeBlock(() async {
+      int count = 0;
+      int dbCount = await wordEntityRepository.getWordBankCount();
+      if (dbCount > 29 && localViewModel.profileState != Constants.STATE_ACTIVE) {
+        showCountOutOfBound();
+        return;
+      } else {
+        for (var item in wordEntityRepository.wordBankList) {
+          if (item.id == bankModel.id) {
+            count++;
+            break;
+          }
+        }
+        if (count == 0) {
+          await wordEntityRepository.saveWordBank(bankModel);
+          if (key != null) {
+            localViewModel.runAddToCartAnimation(key);
+          }
+          localViewModel.changeBadgeCount(1);
+        }
       }
     }, callFuncName: 'funAddToWordBank', inProgress: false);
   }
@@ -300,7 +355,12 @@ class WordDetailPageViewModel extends BaseViewModel {
     if (localViewModel.isFromMain) {
       localViewModel.isFromMain = false;
       localViewModel.changePageIndex(0);
+    }
+    if (localViewModel.detailToFromBank) {
+      localViewModel.detailToFromBank = false;
+      localViewModel.changePageIndex(1);
     } else {
+      localViewModel.lastSearchedText = localViewModel.wordDetailModel.word ?? "";
       localViewModel.changePageIndex(2);
     }
     return false;
@@ -385,5 +445,19 @@ class WordDetailPageViewModel extends BaseViewModel {
       return false;
     }
     return false;
+  }
+
+  showPhotoView() {
+    showDialog(
+      context: context!,
+      builder: (context) {
+        return AlertDialog(
+          content: Image.network(
+            Urls.baseUrl + wordEntityRepository.requiredWordWithAllModel.word!.image!,
+            fit: BoxFit.scaleDown,
+          ),
+        );
+      },
+    );
   }
 }

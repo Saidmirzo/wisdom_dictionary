@@ -20,39 +20,33 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => MainProvider()),
-        ],
-        builder: (context, child) {
-          return ScreenUtilInit(
-            designSize: const Size(375, 812),
-            minTextAdapt: true,
-            splitScreenMode: true,
-            builder: (BuildContext context, Widget? child) {
-              Provider.of<MainProvider>(context, listen: false).loadTheme();
-              return Consumer<MainProvider>(
-                builder: (BuildContext context, provider, Widget? child) {
-                  return MaterialApp(
-                    title: 'Wisdom Dictionary',
-                    debugShowCheckedModeBanner: false,
-                    navigatorKey: MyApp.navigatorKey,
-                    localizationsDelegates: context.localizationDelegates,
-                    supportedLocales: context.supportedLocales,
-                    locale: context.locale,
-                    builder: (context, child) {
-                      return MediaQuery(
-                        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                        child: child!,
-                      );
-                    },
-                    onGenerateRoute: (setting) => Routes.generateRoutes(setting),
-                  );
-                },
-              );
-            },
-          );
-        });
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (BuildContext context, Widget? child) {
+        Provider.of<MainProvider>(context, listen: false).loadTheme();
+        return Consumer<MainProvider>(
+          builder: (BuildContext context, provider, Widget? child) {
+            return MaterialApp(
+              title: 'Wisdom Dictionary',
+              debugShowCheckedModeBanner: false,
+              navigatorKey: MyApp.navigatorKey,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              builder: (context, child) {
+                return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!,
+                );
+              },
+              onGenerateRoute: (setting) => Routes.generateRoutes(setting),
+            );
+          },
+        );
+      },
+    );
   }
 }
 

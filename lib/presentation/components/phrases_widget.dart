@@ -68,27 +68,25 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
                         child: SvgPicture.asset(viewModel.findRank(model.phrases!.pStar!.toString())))
                     : const SizedBox.shrink(),
                 Flexible(
-                  child: SelectionArea(
-                    child: Text.rich(
-                      TextSpan(
-                        text: (model.parentPhrasesWithAll != null && model.parentPhrasesWithAll!.isNotEmpty)
-                            ? "$orderNum. "
-                            : "",
-                        style: AppTextStyle.font14W700Normal.copyWith(
-                          color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
-                          fontSize: viewModel.fontSize! - 2,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "${model.phrases!.pWordClassComment ?? ""} ",
-                            style: AppTextStyle.font14W400Normal.copyWith(
-                              color: isDarkTheme ? AppColors.lightGray : AppColors.paleGray,
-                              fontSize: viewModel.fontSize! - 2,
-                            ),
-                          ),
-                          viewModel.conductAndHighlightUzWords(null, model.phrasesTranslate, null),
-                        ],
+                  child: Text.rich(
+                    TextSpan(
+                      text: (model.parentPhrasesWithAll != null && model.parentPhrasesWithAll!.isNotEmpty)
+                          ? "$orderNum. "
+                          : "",
+                      style: AppTextStyle.font14W700Normal.copyWith(
+                        color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray,
+                        fontSize: viewModel.fontSize! - 2,
                       ),
+                      children: [
+                        TextSpan(
+                          text: "${model.phrases!.pWordClassComment ?? ""} ",
+                          style: AppTextStyle.font14W400Normal.copyWith(
+                            color: isDarkTheme ? AppColors.lightGray : AppColors.paleGray,
+                            fontSize: viewModel.fontSize! - 2,
+                          ),
+                        ),
+                        viewModel.conductAndHighlightUzWords(null, model.phrasesTranslate, null),
+                      ],
                     ),
                   ),
                 )
@@ -99,12 +97,10 @@ class PhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           Flexible(
             child: Padding(
               padding: EdgeInsets.only(left: 10.w),
-              child: SelectionArea(
-                child: Text(
-                  (viewModel.conductToStringPhrasesExamples(model.phrasesExample)),
-                  style: AppTextStyle.font14W400ItalicHtml
-                      .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
-                ),
+              child: Text(
+                (viewModel.conductToStringPhrasesExamples(model.phrasesExample)),
+                style: AppTextStyle.font14W400ItalicHtml
+                    .copyWith(color: isDarkTheme ? AppColors.lightGray : null, fontSize: viewModel.fontSize! - 2),
               ),
             ),
           ),

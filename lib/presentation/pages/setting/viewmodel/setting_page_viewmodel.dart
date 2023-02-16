@@ -60,7 +60,7 @@ class SettingPageViewModel extends BaseViewModel {
         .scheduleNotification(
       id: 0,
       title: "Wisdom Dictionary",
-      body: "So'z eslatuvchi ${timeOfDay.hour} : ${timeOfDay.minute}",
+      body: "So'zlarni eslash vaqti bo'ldi",
       time: timeOfDay,
     )
         .then((value) {
@@ -90,18 +90,5 @@ class SettingPageViewModel extends BaseViewModel {
       log("top");
       log(e.toString());
     }
-    // await locator<LocalNotificationService>()
-    //     .createNotification(
-    //   id: 0,
-    //   title: "Wisdom Dictionary",
-    //   body: "So'z eslatuvchi har $currentRepeatHourValue soatda bildiriladi",
-    // ).then((value) {
-    //   showTopSnackBar(
-    //     Overlay.of(context!)!,
-    //     CustomSnackBar.success(
-    //       message: "So'z eslatuvchi har $currentRepeatHourValue soatga saqlandi",
-    //     ),
-    //   );
-    // });
   }
 }

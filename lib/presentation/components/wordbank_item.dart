@@ -6,6 +6,7 @@ import 'package:jbaza/jbaza.dart';
 import 'package:wisdom/config/constants/app_colors.dart';
 import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
+import 'package:wisdom/config/constants/constants.dart';
 import 'package:wisdom/data/model/word_bank_model.dart';
 import 'package:wisdom/presentation/pages/word_bank/viewmodel/wordbank_viewmodel.dart';
 
@@ -24,7 +25,12 @@ class WordBankItem extends ViewModelWidget<WordBankViewModel> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ExpandablePanel(
-            theme: const ExpandableThemeData(hasIcon: false),
+            theme: const ExpandableThemeData(
+              hasIcon: false,
+              tapHeaderToExpand: true,
+              tapBodyToCollapse: true,
+              tapBodyToExpand: true,
+            ),
             header: Padding(
               padding: EdgeInsets.only(left: 30.w, right: 25.w),
               child: Row(
@@ -35,33 +41,56 @@ class WordBankItem extends ViewModelWidget<WordBankViewModel> {
                   Flexible(
                     child: RichText(
                       text: TextSpan(
-                        style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.darkGray),
+                        style: AppTextStyle.font14W500Normal
+                            .copyWith(color: isDarkTheme ? AppColors.borderWhite : AppColors.darkGray),
                         text: model.word ?? "",
                         children: [
                           TextSpan(
                             text: '   ${model.number ?? "0"}',
-                            style: AppTextStyle.font14W400Normal.copyWith(color: AppColors.paleGray),
+                            style: AppTextStyle.font14W400Normal
+                                .copyWith(color: isDarkTheme ? AppColors.white : AppColors.paleGray),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 48.h,
-                    width: 48.h,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () => viewModel.deleteWordBank(model),
-                        borderRadius: BorderRadius.circular(24.r),
-                        child: SvgPicture.asset(
-                          Assets.icons.trash,
-                          height: 24.h,
-                          width: 24.h,
-                          fit: BoxFit.scaleDown,
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 48.h,
+                        width: 48.h,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => viewModel.goToDetail(model),
+                            borderRadius: BorderRadius.circular(24.r),
+                            child: SvgPicture.asset(
+                              Assets.icons.arrowCircleRight,
+                              height: 24.h,
+                              width: 24.h,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 48.h,
+                        width: 48.h,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => viewModel.deleteWordBank(model),
+                            borderRadius: BorderRadius.circular(24.r),
+                            child: SvgPicture.asset(
+                              Assets.icons.trash,
+                              height: 24.h,
+                              width: 24.h,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
@@ -81,8 +110,8 @@ class WordBankItem extends ViewModelWidget<WordBankViewModel> {
             padding: EdgeInsets.symmetric(
               horizontal: 50.w,
             ),
-            child: const Divider(
-              color: AppColors.borderWhite,
+            child: Divider(
+              color: isDarkTheme ? AppColors.darkForm : AppColors.borderWhite,
               height: 1,
               thickness: 0.5,
             ),

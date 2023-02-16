@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jbaza/jbaza.dart';
+import 'package:selectable/selectable.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
@@ -24,34 +25,60 @@ class SpeakingPage extends ViewModelBuilderWidget<SpeakingPageViewModel> {
 
   @override
   Widget builder(BuildContext context, SpeakingPageViewModel viewModel, Widget? child) {
-    return WillPopScope(
-      onWillPop: () => viewModel.goMain(),
-      child: Scaffold(
-        drawerEnableOpenDragGesture: false,
-        backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
-        appBar: CustomAppBar(
-          leadingIcon: Assets.icons.arrowLeft,
-          onTap: () => viewModel.goMain(),
-          isSearch: true,
-          onChange: (value) => viewModel.getSpeakingWordsList(value),
-          title: "speaking".tr(),
+    return Selectable(
+      popupMenuItems: [
+        SelectableMenuItem(
+            title: "Search",
+            isEnabled: (controller) => controller!.isTextSelected,
+            icon: Icons.search_rounded,
+            handler: (controller) {
+              if (controller != null && (controller.getSelection()!.text ?? "").isNotEmpty) {
+                viewModel.localViewModel.goByLink(controller.getSelection()!.text ?? "");
+              }
+              return true;
+            }),
+        SelectableMenuItem(type: SelectableMenuItemType.copy, icon: Icons.copy_outlined),
+        SelectableMenuItem(
+            title: "Share",
+            isEnabled: (controller) => controller!.isTextSelected,
+            icon: Icons.share_rounded,
+            handler: (controller) {
+              if (controller != null && (controller.getSelection()!.text ?? "").isNotEmpty) {
+                viewModel.localViewModel.shareWord(controller.getSelection()!.text!);
+              }
+              return true;
+            }),
+      ],
+      child: WillPopScope(
+        onWillPop: () => viewModel.goMain(),
+        child: Scaffold(
+          drawerEnableOpenDragGesture: false,
+          backgroundColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBackground,
+          appBar: CustomAppBar(
+            leadingIcon: Assets.icons.arrowLeft,
+            onTap: () => viewModel.goMain(),
+            isSearch: true,
+            onChange: (value) => viewModel.getSpeakingWordsList(value),
+            title: "speaking".tr(),
+          ),
+          body: viewModel.isSuccess(tag: viewModel.getSpeakingTag)
+              ? ListView.builder(
+                  itemCount: viewModel.categoryRepository.speakingWordsList.length,
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: 75.h),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var element = viewModel.categoryRepository.speakingWordsList[index];
+                    return CatalogItem(
+                      firstText:
+                          viewModel.localViewModel.isSubSub ? element.word ?? "unknown" : element.title ?? "unknown",
+                      translateText: viewModel.localViewModel.isSubSub ? element.translate : "",
+                      onTap: () => viewModel.goToNext(element),
+                    );
+                  },
+                )
+              : const Center(child: LoadingWidget()),
         ),
-        body: viewModel.isSuccess(tag: viewModel.getSpeakingTag)
-            ? ListView.builder(
-                itemCount: viewModel.categoryRepository.speakingWordsList.length,
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 75.h),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  var element = viewModel.categoryRepository.speakingWordsList[index];
-                  return CatalogItem(
-                    firstText:
-                        viewModel.localViewModel.isSubSub ? element.word ?? "unknown" : element.title ?? "unknown",
-                    onTap: () => viewModel.goToNext(element),
-                  );
-                },
-              )
-            : const Center(child: LoadingWidget()),
       ),
     );
   }

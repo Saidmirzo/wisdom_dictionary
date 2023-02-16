@@ -9,7 +9,7 @@ import 'package:wisdom/config/constants/app_text_style.dart';
 import 'package:wisdom/config/constants/assets.dart';
 import 'package:wisdom/core/di/app_locator.dart';
 import 'package:wisdom/presentation/components/pro_info.dart';
-import 'package:wisdom/presentation/pages/profile/viewmodel/getting_pro_page.dart';
+import 'package:wisdom/presentation/pages/profile/viewmodel/getting_pro_page_viewmodel.dart';
 import 'package:wisdom/presentation/routes/routes.dart';
 import 'package:wisdom/presentation/widgets/custom_app_bar.dart';
 

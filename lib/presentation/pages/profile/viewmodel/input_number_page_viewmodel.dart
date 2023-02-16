@@ -7,6 +7,7 @@ import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/profile_repository.dart';
 import 'package:wisdom/presentation/widgets/loading_widget.dart';
 
+import '../../../../config/constants/constants.dart';
 import '../../../routes/routes.dart';
 
 class InputNumberPageViewModel extends BaseViewModel {
@@ -28,7 +29,9 @@ class InputNumberPageViewModel extends BaseViewModel {
       () async {
         var status = await profileRepository
             .login(phoneNumber.replaceAll('+', '').replaceAll(' ', '').replaceAll('(', '').replaceAll(')', ''));
+        setSuccess();
         if (status) {
+          sharedPreferenceHelper.putString(Constants.KEY_PHONE, phoneNumber);
           navigateTo(Routes.verifyPage, arg: {'number': phoneNumber});
         }
       },

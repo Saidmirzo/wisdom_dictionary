@@ -10,10 +10,12 @@ class CultureDetailPageViewModel extends BaseViewModel {
     required super.context,
     required this.homeRepository,
     required this.categoryRepository,
+    required this.localViewModel,
   });
 
   final HomeRepository homeRepository;
   final CategoryRepository categoryRepository;
+  final LocalViewModel localViewModel;
   final String getCultureDetailsTag = 'getCultureDetails';
 
   String? getCulture() {
@@ -34,10 +36,10 @@ class CultureDetailPageViewModel extends BaseViewModel {
   }
 
   goBack() {
-    if (locator<LocalViewModel>().isFromMain) {
-      locator<LocalViewModel>().changePageIndex(0);
+    if (localViewModel.isFromMain) {
+      localViewModel.changePageIndex(0);
     } else {
-      locator<LocalViewModel>().changePageIndex(15);
+      localViewModel.changePageIndex(15);
     }
   }
 }

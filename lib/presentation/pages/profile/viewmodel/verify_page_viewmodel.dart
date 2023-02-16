@@ -54,6 +54,7 @@ class VerifyPageViewModel extends BaseViewModel {
             // Adding device id into firebase Messaging to send notification message;
             var tokenF = await FirebaseMessaging.instance.getToken();
             addDeviceToFirebase(verifyModel, tokenF);
+            setSuccess();
           }
         }
       },
@@ -85,6 +86,7 @@ class VerifyPageViewModel extends BaseViewModel {
             }
           }
         }
+        setSuccess();
       },
       callFuncName: 'addDeviceToFirebase',
       inProgress: true,

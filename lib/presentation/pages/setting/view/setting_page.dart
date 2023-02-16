@@ -24,6 +24,7 @@ import '../../../widgets/custom_app_bar.dart';
 // ignore: must_be_immutable
 class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
   SettingPage({super.key});
+
   TimeOfDay? timeOfDay = const TimeOfDay(hour: 0, minute: 0);
 
   @override
@@ -211,8 +212,9 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                       padding: EdgeInsets.only(left: 20.w, right: 16.w, top: 10.h),
                       child: Text(
                         "lorem_text".tr(),
-                        style: AppTextStyle.font14W500Normal
-                            .copyWith(fontSize: viewModel.fontSizeValue, color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                        style: AppTextStyle.font14W500Normal.copyWith(
+                            fontSize: viewModel.fontSizeValue,
+                            color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                       ),
                     )
                   ],
@@ -419,6 +421,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
 
   @override
   SettingPageViewModel viewModelBuilder(BuildContext context) {
-    return SettingPageViewModel(context: context, preferenceHelper: locator.get(), localViewModel: locator.get(), sharedPreferenceHelper: locator.get());
+    return SettingPageViewModel(
+        context: context,
+        preferenceHelper: locator.get(),
+        localViewModel: locator.get(),
+        sharedPreferenceHelper: locator.get());
   }
 }

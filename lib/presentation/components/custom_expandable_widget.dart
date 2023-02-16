@@ -80,7 +80,7 @@ class _CustomExpandableWidgetState extends State<CustomExpandableWidget> {
                     controller: expandableController,
                     expanded: Padding(
                       padding: EdgeInsets.only(top: 15.h, bottom: 20.h),
-                      child: widget.body,
+                      child: expandableController.value ? widget.body : const SizedBox.shrink(),
                     ),
                     theme: const ExpandableThemeData(
                       hasIcon: false,

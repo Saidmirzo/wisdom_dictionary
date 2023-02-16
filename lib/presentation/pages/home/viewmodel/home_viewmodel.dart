@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
@@ -11,6 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:wisdom/core/db/db_helper.dart';
 import 'package:wisdom/core/db/preference_helper.dart';
 import 'package:wisdom/core/domain/http_is_success.dart';
+import 'package:wisdom/core/services/ad_state.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 import 'package:wisdom/domain/repositories/home_repository.dart';
 
@@ -40,6 +42,7 @@ class HomeViewModel extends BaseViewModel {
 
   void getRandomDailyWords() {
     safeBlock(() async {
+      localViewModel.checkNetworkConnection();
       await homeRepository.getRandomWords();
       controller.add(SwipeRefreshState.hidden);
       setSuccess(tag: getDailyWordsTag);
@@ -49,8 +52,8 @@ class HomeViewModel extends BaseViewModel {
 
   void getAd() {
     safeBlock(() async {
-      Ad response = await homeRepository.getAd();
-      if (response.image != null) {
+      var response = await homeRepository.getAd();
+      if (response != null && response.image != null) {
         homeRepository.timelineModel.ad = response;
       }
       setSuccess(tag: getAdTag);
@@ -144,7 +147,7 @@ class HomeViewModel extends BaseViewModel {
         sharedPref.putInt(Constants.KEY_PROFILE_STATE, state);
         if (state != Constants.STATE_ACTIVE) {
           // Show google ads banner due to profile state;
-          setupAds();
+          await setupAds();
         }
         notifyListeners();
       },
@@ -152,5 +155,18 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
-  void setupAds() {}
+  setupAds() async {
+    localViewModel.createInterstitialAd();
+    var adState = locator<AdState>();
+    adState.initialization.then((status) {
+      localViewModel.banner = BannerAd(
+        adUnitId: adState.bannerId,
+        size: AdSize.mediumRectangle,
+        listener: adState.adListener,
+        request: const AdRequest(),
+      );
+    });
+  }
+
+
 }

@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="uz.usoft.waiodictionary">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -11,17 +12,26 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <!-- For apps with targetSDK=31 (Android 12) -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
-
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE"/>
         </intent>
     </queries>
 
+    <queries>
+        <package android:name="air.com.ssdsoftwaresolutions.clickuz" /> // your android package name
+        <package android:name="uz.dida.payme" /> // your android package name
+    </queries>
+
     <application
-            android:label="wisdom"
+            tools:replace="android:label"
+            android:label="Wisdom"
             android:name="${applicationName}"
+            android:requestLegacyExternalStorage="true"
             android:icon="@mipmap/ic_launcher">
+
+
 
         <activity
                 android:name=".MainActivity"
@@ -47,6 +57,10 @@
                 <action android:name="FLUTTER_NOTIFICATION_CLICK"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -57,6 +71,11 @@
         <meta-data
                 android:name="flutterEmbedding"
                 android:value="2"/>
+
+        <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-6651367008928070~9633903825" />
+
         <service
                 android:name="dev.fluttercommunity.plus.androidalarmmanager.AlarmService"
                 android:permission="android.permission.BIND_JOB_SERVICE"

@@ -10,59 +10,63 @@ class CatalogItem extends StatelessWidget {
   const CatalogItem({
     super.key,
     required this.firstText,
+    this.translateText,
     required this.onTap,
   });
 
   final String firstText;
+  final String? translateText;
   final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onTap(),
-      child: SizedBox(
-        height: 60.h,
+      child: Container(
+        constraints: BoxConstraints(minHeight: 60.h),
         width: double.infinity,
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 34.w, right: 78.w),
-                child: Text(
-                  firstText,
-                  style: AppTextStyle.font14W500Normal.copyWith(
-                    color: isDarkTheme ? AppColors.white : AppColors.darkGray,
-                    overflow: TextOverflow.fade,
+            Container(
+              constraints: BoxConstraints(minHeight: 58.h),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 34.w, bottom: 10.h, top: 10.h, right: 10.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        firstText,
+                        style: AppTextStyle.font14W500Normal.copyWith(
+                          color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                          overflow: TextOverflow.fade,
+                        ),
+                      ),
+                      Visibility(
+                        visible: (translateText ?? "").isNotEmpty,
+                        child: Flexible(
+                          child: Text(
+                            translateText ?? "",
+                            style: AppTextStyle.font12W400ItalicHtml.copyWith(color: AppColors.lightGray),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 20.w),
-                child: SizedBox(
-                  height: 48.h,
-                  width: 48.h,
-                  child: SvgPicture.asset(
-                    Assets.icons.arrowCircleRight,
-                    height: 24.h,
-                    width: 24.h,
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.w),
-                child: Divider(
-                  color: isDarkTheme ? AppColors.darkDivider : AppColors.borderWhite,
-                  height: 1,
-                  thickness: 0.5,
-                ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50.w),
+              child: Divider(
+                color: isDarkTheme ? AppColors.darkForm : AppColors.borderWhite,
+                height: 1,
+                thickness: 0.5,
               ),
             )
           ],

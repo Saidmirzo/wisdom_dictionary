@@ -67,8 +67,8 @@ class SearchWordItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w),
-              child: const Divider(
-                color: AppColors.borderWhite,
+              child: Divider(
+                color: isDarkTheme ? AppColors.darkForm : AppColors.borderWhite,
                 height: 1,
                 thickness: 0.5,
               ),

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:swipe_refresh/swipe_refresh.dart';
 import 'package:wisdom/config/constants/constants.dart';
@@ -11,6 +12,7 @@ import 'package:wisdom/data/model/recent_model.dart';
 import 'package:wisdom/presentation/pages/collocation/view/collocation_details_page.dart';
 import 'package:wisdom/presentation/pages/culture/view/culture_detail_page.dart';
 import 'package:wisdom/presentation/pages/difference/view/difference_detail_page.dart';
+import 'package:wisdom/presentation/pages/exercise/view/exercise_page.dart';
 import 'package:wisdom/presentation/pages/google_translator/view/google_translator_page.dart';
 import 'package:wisdom/presentation/pages/grammar/view/grammar_detail_page.dart';
 import 'package:wisdom/presentation/pages/grammar/view/grammar_page.dart';
@@ -60,6 +62,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
     CultureDetailPage(), // 16
     SpeakingPage(), // 17
     WordDetailPage(), // 18
+    ExercisePage(), // 19
   ];
 
   @override
@@ -92,9 +95,15 @@ class Home extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
+    viewModel.localViewModel.checkNetworkConnection();
     return WillPopScope(
       onWillPop: () {
-        return Future.value(false);
+        if(ZoomDrawer.of(context)!.isOpen()){
+          ZoomDrawer.of(context)!.toggle();
+          return Future.value(false);
+        }else {
+          return Future.value(true);
+        }
       },
       child: Scaffold(
         drawerEnableOpenDragGesture: false,
@@ -131,8 +140,10 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Container(
-                                              decoration: isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
-                                              child: viewModel.homeRepository.timelineModel.ad!.image != null
+                                              decoration: isDarkTheme
+                                                  ? AppDecoration.bannerDarkDecor
+                                                  : AppDecoration.bannerDecor,
+                                              child: viewModel.homeRepository.timelineModel.ad != null && viewModel.homeRepository.timelineModel.ad!.image != null
                                                   ? ClipRRect(
                                                       borderRadius: BorderRadius.circular(18.r),
                                                       child: Image.network(
@@ -182,10 +193,28 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.grammar!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith( color: isDarkTheme ? AppColors.white : AppColors.darkGray,),
+                                style: AppTextStyle.font16W500Normal.copyWith(
+                                  color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),
+                          ),
+                          // Google ads banner
+                          ValueListenableBuilder(
+                            valueListenable: viewModel.localViewModel.isNetworkAvailable,
+                            builder: (BuildContext context, value, Widget? child) {
+                              return viewModel.localViewModel.banner != null && value as bool
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 16.h),
+                                      decoration:
+                                          isDarkTheme ? AppDecoration.bannerDarkDecor : AppDecoration.bannerDecor,
+                                      height: viewModel.localViewModel.banner!.size.height * 1.0,
+                                      child: AdWidget(
+                                        ad: viewModel.localViewModel.banner!..load(),
+                                      ))
+                                  : const SizedBox.shrink();
+                            },
                           ),
                           CustomBanner(
                             title: 'differences'.tr(),
@@ -198,7 +227,9 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: RichText(
                                 text: TextSpan(
-                                  style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray,),
+                                  style: AppTextStyle.font16W500Normal.copyWith(
+                                    color: isDarkTheme ? AppColors.white : AppColors.darkGray,
+                                  ),
                                   text: viewModel.separateDifference(
                                       true, viewModel.homeRepository.timelineModel.difference!.word!),
                                   children: [
@@ -276,7 +307,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.thesaurus!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal
+                                    .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                               ),
                             ),
                           ),
@@ -307,7 +339,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.metaphor!.worden!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal
+                                    .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                               ),
                             ),
                           ),
@@ -322,7 +355,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             child: Center(
                               child: Text(
                                 viewModel.homeRepository.timelineModel.speaking!.word!,
-                                style: AppTextStyle.font16W500Normal.copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                                style: AppTextStyle.font16W500Normal
+                                    .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
                                 textAlign: TextAlign.center,
                               ),
                             ),

@@ -39,7 +39,7 @@ class WordMapper {
 
   ParentsWithAll wordWithAllToParentsWithAll(WordWithAll wordWithAll) => ParentsWithAll(
         ParentsModel(
-            id: 0,
+            id: wordWithAll.word!.id,
             wordId: wordWithAll.word!.id,
             word: wordWithAll.word!.word!,
             star: wordWithAll.word!.star,
