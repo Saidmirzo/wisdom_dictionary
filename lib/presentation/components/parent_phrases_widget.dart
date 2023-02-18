@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,7 +96,7 @@ class ParentPhrasesWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Synonyms
           CustomExpandableWidget(
-            title: "Synonyms",
+            title: "synonyms".tr(),
             viewModel: viewModel,
             containerColor: isDarkTheme ? AppColors.darkBackground : AppColors.lightBlue,
             body: HtmlWidget(

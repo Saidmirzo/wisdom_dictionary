@@ -724,10 +724,10 @@ class DBHelper {
     }
   }
 
-  Future<void> deleteWordBank(WordBankModel model) async {
+  Future<void> deleteWordBank(int id) async {
     try {
       if (database.isOpen) {
-        await database.delete(tableWordBank, where: "id = ?", whereArgs: [model.id]);
+        await database.delete(tableWordBank, where: "id = ?", whereArgs: [id]);
       }
     } catch (e) {
       log("deleteWordBank", error: e.toString());

@@ -1,14 +1,22 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:wisdom/data/model/exercise_model.dart';
 import 'package:wisdom/data/viewmodel/local_viewmodel.dart';
 
+import '../../../../config/constants/app_colors.dart';
+import '../../../../config/constants/app_text_style.dart';
+import '../../../../config/constants/assets.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../../data/model/word_bank_model.dart';
 import '../../../../domain/repositories/word_entity_repository.dart';
+import '../../../widgets/custom_dialog.dart';
 
 class ExercisePageViewModel extends BaseViewModel {
   ExercisePageViewModel({
@@ -23,7 +31,6 @@ class ExercisePageViewModel extends BaseViewModel {
 
   List<ExerciseModel> uzbList = [];
   List<ExerciseModel> englishList = [];
-  List<ExerciseFinalModel> finalList = [];
   List<WordBankModel> wordBankList = [];
   int minLength = 0;
 
@@ -33,8 +40,11 @@ class ExercisePageViewModel extends BaseViewModel {
   int listEngIndex = -1;
   int listUzIndex = -1;
 
+  int tryNumber = 3;
+
   init() {
     safeBlock(() async {
+      localViewModel.finalList = {};
       await getMinLength();
       await splitting();
       setSuccess(tag: gettingReadyTag);
@@ -43,9 +53,6 @@ class ExercisePageViewModel extends BaseViewModel {
 
   splitting() async {
     if (minLength > 10) minLength = 10;
-    for (int i = 0; i < minLength; i++) {
-      wordBankList.add(wordEntityRepository.wordBankList[i]);
-    }
     while (minLength > englishList.length) {
       var randomIndexEng = Random.secure().nextInt(wordBankList.length);
       var randomIndexUz = Random.secure().nextInt(wordBankList.length);
@@ -53,44 +60,77 @@ class ExercisePageViewModel extends BaseViewModel {
       var elementUz = wordBankList[randomIndexUz];
       if (await checkToSameEng(elementEng.word ?? "_") &&
           await checkToSameUz(elementUz.translation ?? "_") &&
-          englishList.length <= minLength &&
-          (randomIndexUz != randomIndexEng)) {
-        englishList.add(ExerciseModel(id: elementEng.id!, word: elementEng.word ?? ""));
-        uzbList.add(ExerciseModel(id: elementUz.id!, word: elementUz.translation ?? ""));
+          englishList.length <= minLength) {
+        englishList.add(ExerciseModel(
+            id: elementEng.id!,
+            word: elementEng.word ?? "",
+            wordClass: elementEng.wordClass!,
+            wordClassBody: elementEng.wordClassBody!,
+            translation: elementEng.translation!,
+            example: elementEng.example!));
+        uzbList.add(ExerciseModel(
+            id: elementUz.id!,
+            word: elementUz.translation ?? "",
+            wordClass: elementUz.wordClass!,
+            wordClassBody: elementUz.wordClassBody!,
+            translation: elementUz.translation!,
+            example: elementUz.example!));
       }
+    }
+  }
+
+  void textToSpeech(String text) {
+    if (text.isNotEmpty) {
+      FlutterTts tts = FlutterTts();
+      // await tts.setSharedInstance(true); // For IOS
+      tts.setLanguage('en-US');
+      tts.speak(text);
     }
   }
 
   void checkTheResult() async {
     if ((uzSelectedIndex == engSelectedIndex) && (engSelectedIndex != -1)) {
       notifyListeners();
+      textToSpeech("Correct");
+      var item = englishList[listEngIndex];
+      localViewModel.finalList
+          .add(ExerciseFinalModel(id: item.id, word: item.word, translation: item.translation, result: true));
       showTopSnackBar(
         Overlay.of(context!)!,
-        const CustomSnackBar.success(
-          message: "Correct!",
+        CustomSnackBar.success(
+          message: "correct".tr(),
         ),
       );
       Future.delayed(
-        Duration(milliseconds: 800),
+        const Duration(milliseconds: 800),
         () {
-
           englishList.removeAt(listEngIndex);
           uzbList.removeAt(listUzIndex);
+          if (englishList.isEmpty) localViewModel.changePageIndex(20);
           refreshClean();
         },
       );
     } else if (engSelectedIndex != -1 && uzSelectedIndex != -1) {
       notifyListeners();
+      tryNumber--;
+      if (tryNumber == 0) {
+        finishTheExercise();
+        return;
+      }
+      var item = englishList[listEngIndex];
+      localViewModel.finalList
+          .add(ExerciseFinalModel(id: item.id, word: item.word, translation: item.translation, result: false));
+      textToSpeech("Incorrect \n $tryNumber ${tryNumber != 1 ? "tries" : "try"} left");
+
       showTopSnackBar(
         Overlay.of(context!)!,
-        const CustomSnackBar.error(
-          message: "Incorrect!",
+        CustomSnackBar.error(
+          message: "${"inCorrect".tr()}\n${"$tryNumber ${tryNumber != 1 ? "tries" : "try"}".tr()} ${"left".tr()}",
         ),
       );
       Future.delayed(
-        Duration(milliseconds: 800),
+        const Duration(milliseconds: 800),
         () {
-
           refreshClean();
         },
       );
@@ -120,22 +160,92 @@ class ExercisePageViewModel extends BaseViewModel {
     return Future.value(true);
   }
 
+  Future<bool> checkToSameBank(String word) {
+    for (var element in wordBankList) {
+      if (element.word == word) return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
   getMinLength() async {
-    for (var element in wordEntityRepository.wordBankList) {
-      if (await checkToSameEng(element.word ?? "!")) {
-        englishList.add(ExerciseModel(id: element.id!, word: element.word!));
+    minLength = 0;
+    for (int i = 0; i < wordEntityRepository.wordBankList.length; i++) {
+      if (await checkToSameBank(wordEntityRepository.wordBankList[i].word!)) {
+        wordBankList.add(wordEntityRepository.wordBankList[i]);
+        minLength++;
       }
     }
-    minLength = englishList.length;
-    englishList.clear();
+    wordBankList.clear();
+    if (minLength > 10) minLength = 10;
+    while (minLength > wordBankList.length) {
+      var randomInt = Random.secure().nextInt(minLength);
+      if (await checkToSameBank(wordEntityRepository.wordBankList[randomInt].word!)) {
+        wordBankList.add(wordEntityRepository.wordBankList[randomInt]);
+      }
+    }
   }
 
   goBack() {
-    localViewModel.changePageIndex(1);
+    // Navigation bardan chiqishda dialog qo'yish kerak
+    if (localViewModel.finalList.isNotEmpty) {
+      showCustomDialog(
+        context: context!,
+        icon: Assets.icons.inform,
+        iconColor: AppColors.accentLight,
+        iconBackgroundColor: AppColors.error,
+        title: "finish".tr(),
+        contentText: Padding(
+          padding: EdgeInsets.only(top: 20.h),
+          child: Text(
+            'finish_text'.tr(),
+            textAlign: TextAlign.center,
+            style:
+                AppTextStyle.font14W600Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
+          ),
+        ),
+        positive: "dialogYes".tr(),
+        onPositiveTap: () => finishTheExercise(),
+        negative: "dialogNo".tr(),
+      );
+    } else {
+      localViewModel.changePageIndex(1);
+    }
+  }
+
+  void finishTheExercise() {
+    for (var item in englishList) {
+      localViewModel.finalList
+          .add(ExerciseFinalModel(id: item.id, word: item.word, translation: item.translation, result: false));
+    }
+    localViewModel.changePageIndex(20);
   }
 
   goToFinish() {
-    // Go to finish
-    localViewModel.changePageIndex(1);
+    if (englishList.isNotEmpty) {
+      showCustomDialog(
+        context: context!,
+        icon: Assets.icons.inform,
+        iconColor: AppColors.accentLight,
+        iconBackgroundColor: AppColors.error,
+        title: "finish".tr(),
+        contentText: Padding(
+          padding: EdgeInsets.only(top: 20.h),
+          child: Text(
+            'finish_text'.tr(),
+            textAlign: TextAlign.center,
+            style:
+                AppTextStyle.font14W600Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
+          ),
+        ),
+        positive: "dialogYes".tr(),
+        onPositiveTap: () {
+          pop(ctx: context!);
+          finishTheExercise();
+        },
+        negative: "dialogNo".tr(),
+      );
+    } else {
+      localViewModel.changePageIndex(20);
+    }
   }
 }

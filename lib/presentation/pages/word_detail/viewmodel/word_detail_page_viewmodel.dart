@@ -102,6 +102,8 @@ class WordDetailPageViewModel extends BaseViewModel {
           translation: conductToString(model.wordsUz),
           createdAt: DateTime.now().toString(),
           number: number,
+          wordClass: wordEntityRepository.requiredWordWithAllModel.word!.wordClasswordClass??"",
+          wordClassBody: wordEntityRepository.requiredWordWithAllModel.word!.wordClassBody,
           type: "word");
       await funAddToWordBank(wordBank, key);
     }, callFuncName: 'addToWordBankFromParent', inProgress: false);
@@ -117,6 +119,8 @@ class WordDetailPageViewModel extends BaseViewModel {
           translation: conductToStringPhrasesTranslate(model.phrasesTranslate!),
           createdAt: DateTime.now().toString(),
           type: "phrases",
+          wordClass: "",
+          wordClassBody: "",
           number: number);
       funAddToWordBank(wordBank, key);
     }, callFuncName: 'addToWordBankFromPhrase', inProgress: false);
@@ -132,6 +136,8 @@ class WordDetailPageViewModel extends BaseViewModel {
           translation: conductToStringParentPhrasesTranslate(model.parentPhrasesTranslate!),
           createdAt: DateTime.now().toString(),
           type: "phrases",
+          wordClass: "",
+          wordClassBody: "",
           number: number);
       funAddToWordBank(wordBank, key);
     }, callFuncName: 'addToWordBankFromParentPhrase', inProgress: false);
@@ -355,8 +361,7 @@ class WordDetailPageViewModel extends BaseViewModel {
     if (localViewModel.isFromMain) {
       localViewModel.isFromMain = false;
       localViewModel.changePageIndex(0);
-    }
-    if (localViewModel.detailToFromBank) {
+    } else if (localViewModel.detailToFromBank) {
       localViewModel.detailToFromBank = false;
       localViewModel.changePageIndex(1);
     } else {

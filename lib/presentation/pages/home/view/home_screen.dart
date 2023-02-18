@@ -12,6 +12,7 @@ import 'package:wisdom/data/model/recent_model.dart';
 import 'package:wisdom/presentation/pages/collocation/view/collocation_details_page.dart';
 import 'package:wisdom/presentation/pages/culture/view/culture_detail_page.dart';
 import 'package:wisdom/presentation/pages/difference/view/difference_detail_page.dart';
+import 'package:wisdom/presentation/pages/exercise/view/exercise_final_page.dart';
 import 'package:wisdom/presentation/pages/exercise/view/exercise_page.dart';
 import 'package:wisdom/presentation/pages/google_translator/view/google_translator_page.dart';
 import 'package:wisdom/presentation/pages/grammar/view/grammar_detail_page.dart';
@@ -63,6 +64,7 @@ class HomeScreen extends ViewModelWidget<HomeViewModel> {
     SpeakingPage(), // 17
     WordDetailPage(), // 18
     ExercisePage(), // 19
+    ExerciseFinalPage(), // 20
   ];
 
   @override
@@ -183,7 +185,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             },
                           ),
                           CustomBanner(
-                            title: 'grammar_label'.tr(),
+                            title: 'grammar'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -281,15 +283,8 @@ class Home extends ViewModelWidget<HomeViewModel> {
                                         image: AssetImage(Assets.images.noInternet),
                                         height: 200.h,
                                         fit: BoxFit.cover,
-                                        color: AppColors.error,
+                                        // color: AppColors.error,
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 15.h),
-                                        child: Text(
-                                          "no_internet".tr(),
-                                          style: AppTextStyle.font16W500Normal.copyWith(color: AppColors.error),
-                                        ),
-                                      )
                                     ],
                                   );
                                 },
@@ -313,7 +308,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             ),
                           ),
                           CustomBanner(
-                            title: 'collocation_label'.tr(),
+                            title: 'collocations'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {
@@ -329,7 +324,7 @@ class Home extends ViewModelWidget<HomeViewModel> {
                             ),
                           ),
                           CustomBanner(
-                            title: 'metaphor_label'.tr(),
+                            title: 'metaphor'.tr(),
                             isInkWellEnable: true,
                             contentPadding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 15.w),
                             onTap: () {

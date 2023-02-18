@@ -69,7 +69,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
       ],
       child: WillPopScope(
         onWillPop: () async {
-          if(textSelectionControls.isTextSelected){
+          if (textSelectionControls.isTextSelected) {
             textSelectionControls.deselect();
           } else {
             viewModel.goBackToSearch();
@@ -141,14 +141,14 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                                   "",
                                               style: AppTextStyle.font14W500Normal.copyWith(
                                                   color: isDarkTheme ? AppColors.white : AppColors.darkGray,
-                                                  fontSize: (viewModel.fontSize! - 2.0)),
+                                                  fontSize: (viewModel.fontSize! - 2)),
                                             ),
                                             Flexible(
                                               child: Padding(
                                                 padding: EdgeInsets.only(left: 5.w),
                                                 child: HtmlWidget(
                                                   "  ${viewModel.wordEntityRepository.requiredWordWithAllModel.word!.wordClassBody ?? ""}",
-                                                  textStyle: TextStyle(
+                                                  textStyle: AppTextStyle.font14W400NormalHtml.copyWith(
                                                       color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
                                                 ),
                                               ),
@@ -274,9 +274,9 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                             Flexible(
                                               child: Padding(
                                                 padding: EdgeInsets.only(left: 5.w),
-                                                child: HtmlWidget(
+                                                child: Text(
                                                   "  ${viewModel.wordEntityRepository.requiredWordWithAllModel.word!.wordClassBody ?? ""}",
-                                                  textStyle: TextStyle(
+                                                  style: AppTextStyle.font14W400NormalHtml.copyWith(
                                                       color: AppColors.paleGray, fontSize: viewModel.fontSize! - 2),
                                                 ),
                                               ),
@@ -298,7 +298,7 @@ class WordDetailPage extends ViewModelBuilderWidget<WordDetailPageViewModel> {
                                             width: 66.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(9.r),
-                                              color: AppColors.lightBlue,
+                                              // color: AppColors.lightBlue,
                                             ),
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.circular(9.r),

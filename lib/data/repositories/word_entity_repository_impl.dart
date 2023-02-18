@@ -96,12 +96,12 @@ class WordEntityRepositoryImpl extends WordEntityRepository {
 
   @override
   Future<void> deleteWorkBank(WordBankModel model) async {
-    _wordBankModel.remove(model);
-    dbHelper.deleteWordBank(model);
+    dbHelper.deleteWordBank(model.id!);
+    if (model.createdAt != null) _wordBankModel.remove(model);
   }
 
   @override
   Future<int> getWordBankCount() async {
-   return await dbHelper.getWordBankCount();
+    return await dbHelper.getWordBankCount();
   }
 }

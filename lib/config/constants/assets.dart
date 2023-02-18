@@ -112,6 +112,10 @@ class _Icons extends _AssetsHolder {
   String get info => '$basePath/info.svg';
 
   String get inform => '$basePath/inform.svg';
+
+  String get tick => '$basePath/tick.svg';
+
+  String get cross => '$basePath/cros.svg';
 }
 
 class _Images extends _AssetsHolder {

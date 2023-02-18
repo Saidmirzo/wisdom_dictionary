@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,7 +104,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Synonyms
           CustomExpandableWidget(
-            title: "Synonyms",
+            title: "synonyms".tr(),
             body: HtmlWidget(
               (model.parents!.synonyms ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml
@@ -114,7 +115,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Antonym
           CustomExpandableWidget(
-            title: "Antonyms",
+            title: "antonims".tr(),
             body: HtmlWidget(
               (model.parents!.anthonims ?? "").replaceAll("<br>", "").replaceAll("<p>", "").replaceAll("</p>", "<br>"),
               textStyle: AppTextStyle.font12W400ItalicHtml
@@ -125,7 +126,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Grammar
           CustomExpandableWidget(
-            title: "Grammar",
+            title: "grammar".tr(),
             body: HtmlWidget(
               (model.grammar != null ? model.grammar!.first.body ?? "" : "")
                   .replaceAll("<br>", "")
@@ -139,7 +140,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           //Difference
           CustomExpandableWidget(
-            title: "Difference",
+            title: "difference".tr(),
             body: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -168,7 +169,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Collocations
           CustomExpandableWidget(
-            title: "Collocations",
+            title: "collocations".tr(),
             body: HtmlWidget(
               (model.collocation != null ? model.collocation!.first.body ?? "" : "")
                   .replaceAll("<br>", "")
@@ -182,7 +183,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Thesaurus
           CustomExpandableWidget(
-            title: "Thesaurus",
+            title: "thesaurus".tr(),
             body: HtmlWidget(
               (model.thesaurus != null ? model.thesaurus!.first.body ?? "" : "")
                   .replaceAll("<br>", "")
@@ -196,7 +197,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Metaphors
           CustomExpandableWidget(
-            title: "Metaphor",
+            title: "metaphor".tr(),
             body: HtmlWidget(
               (model.metaphor != null ? model.metaphor!.first.body ?? "" : "")
                   .replaceAll("<br>", "")
@@ -210,7 +211,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Culture
           CustomExpandableWidget(
-            title: "Culture",
+            title: "culture".tr(),
             body: HtmlWidget(
               (model.culture != null ? model.culture!.first.body ?? "" : "")
                   .replaceAll("<br>", "")
@@ -224,7 +225,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // More examples
           CustomExpandableWidget(
-            title: "More Examples",
+            title: "more_example".tr(),
             body: HtmlWidget(
               (model.parents!.moreExamples != null ? model.parents!.moreExamples ?? "" : "")
                   .replaceAll("<br>", "")
@@ -238,7 +239,7 @@ class ParentWidget extends ViewModelWidget<WordDetailPageViewModel> {
           ),
           // Phrases and Idioms
           CustomExpandableWidget(
-            title: "Phrases and Idioms",
+            title: "words_phrases".tr(),
             viewModel: viewModel,
             isExpanded: viewModel.hasToBeExpanded(model.phrasesWithAll),
             body: (model.phrasesWithAll != null && model.phrasesWithAll!.isNotEmpty)

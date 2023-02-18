@@ -33,33 +33,35 @@ class SearchHistoryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 34.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          style: AppTextStyle.font14W500Normal
-                              .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
-                          text: firstText,
-                          children: [
-                            TextSpan(
-                                text: '   $secondText',
-                                style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleBlue)),
-                          ],
+                Flexible(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 34.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            style: AppTextStyle.font14W500Normal
+                                .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                            text: firstText,
+                            children: [
+                              TextSpan(
+                                  text: '   $secondText',
+                                  style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleBlue)),
+                            ],
+                          ),
                         ),
-                      ),
-                      Visibility(
-                        visible: (thirdText ?? "").isNotEmpty,
-                        child: Text(
-                          thirdText ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                        Visibility(
+                          visible: (thirdText ?? "").isNotEmpty,
+                          child: Text(
+                            thirdText ?? "",
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.font12W500Normal.copyWith(color: AppColors.lightGray),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Padding(

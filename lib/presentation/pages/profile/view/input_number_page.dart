@@ -23,7 +23,7 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
   }
 
   var maskFormatter = MaskTextInputFormatter(
-      mask: '+998(##) ### ## ##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
+      mask: '(##) ### ## ##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
   TextEditingController editingController = TextEditingController();
 
@@ -54,7 +54,8 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
                   child: Text(
                     'enter_phone'.tr(),
                     textAlign: TextAlign.center,
-                    style: AppTextStyle.font12W400Normal.copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
+                    style: AppTextStyle.font12W400Normal
+                        .copyWith(color: isDarkTheme ? AppColors.lightGray : AppColors.darkGray),
                   ),
                 ),
                 Container(
@@ -78,9 +79,10 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
                             style: AppTextStyle.font16W400Normal.copyWith(color: AppColors.blue),
                             inputFormatters: [maskFormatter],
                             decoration: InputDecoration(
-                              hintText: '+998(--) --- -- --',
+                              hintText: '(--) --- -- --',
                               hintStyle: AppTextStyle.font16W400Normal.copyWith(color: AppColors.blue),
                               border: InputBorder.none,
+                              prefixText: "+998"
                             ),
                           ),
                         ),
@@ -94,7 +96,7 @@ class InputNumberPage extends ViewModelBuilderWidget<InputNumberPageViewModel> {
                           child: InkWell(
                             onTap: (() {
                               if (editingController.text.length == 18) {
-                                viewModel.onNextPressed(editingController.text);
+                                viewModel.onNextPressed("+998${editingController.text}");
                               } else {
                                 viewModel.callBackError('invalid_phone_nuber'.tr());
                               }

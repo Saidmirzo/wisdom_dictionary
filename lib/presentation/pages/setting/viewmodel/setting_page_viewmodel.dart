@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:jbaza/jbaza.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -59,15 +60,15 @@ class SettingPageViewModel extends BaseViewModel {
     await locator<LocalNotificationService>()
         .scheduleNotification(
       id: 0,
-      title: "Wisdom Dictionary",
-      body: "So'zlarni eslash vaqti bo'ldi",
+      title: "notif_name".tr(),
+      body: "notif_text".tr(),
       time: timeOfDay,
     )
         .then((value) {
       showTopSnackBar(
         Overlay.of(context!)!,
-        const CustomSnackBar.success(
-          message: "So'z eslatuvchi saqlandi",
+        CustomSnackBar.success(
+          message: "reminder_save".tr(),
         ),
       );
     });

@@ -16,7 +16,7 @@ class ChangeLanguageButton extends StatefulWidget {
 }
 
 class _ChangeLanguageButtonState extends State<ChangeLanguageButton> with SingleTickerProviderStateMixin {
-  double turn = 0;
+  double turn = 1;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _ChangeLanguageButtonState extends State<ChangeLanguageButton> with Single
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 0.h ,right: 10.w),
+      padding: EdgeInsets.only(bottom: 0.h, right: 10.w),
       child: AnimatedRotation(
         turns: turn,
         duration: const Duration(milliseconds: 500),
@@ -44,9 +44,9 @@ class _ChangeLanguageButtonState extends State<ChangeLanguageButton> with Single
               onTap: () {
                 setState(() {
                   if (turn == 0) {
-                    turn += 1;
-                  } else {
                     turn -= 1;
+                  } else {
+                    turn += 1;
                   }
                 });
               },
@@ -54,7 +54,7 @@ class _ChangeLanguageButtonState extends State<ChangeLanguageButton> with Single
               child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SvgPicture.asset(
                   widget.viewModel.searchLangMode == 'en' ? Assets.icons.enToUz : Assets.icons.uzToEn,
-                  height: 20.h,
+                  height: 30.h,
                   color: AppColors.white,
                   fit: BoxFit.scaleDown,
                 ),

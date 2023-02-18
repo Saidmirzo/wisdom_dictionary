@@ -158,10 +158,10 @@ class SettingPage extends ViewModelBuilderWidget<SettingPageViewModel> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: viewModel.localViewModel.profileState != 1,
-                child: const Locked(),
-              ),
+              // Visibility(
+              //   visible: viewModel.localViewModel.profileState != 1,
+              //   child: const Locked(),
+              // ),
             ],
           ),
           // Change word size

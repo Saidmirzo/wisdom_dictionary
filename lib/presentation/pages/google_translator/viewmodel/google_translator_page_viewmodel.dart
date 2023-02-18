@@ -69,7 +69,7 @@ class GoogleTranslatorPageViewModel extends BaseViewModel {
               }
               setSuccess();
             } else {
-              callBackError("Not internet connection");
+              callBackError("no_internet".tr());
               setSuccess();
             }
           },
@@ -103,7 +103,7 @@ class GoogleTranslatorPageViewModel extends BaseViewModel {
               localViewModel.preferenceHelper.putInt(Constants.KEY_TRANSLATE_COUNT, 0);
               pop();
             } else {
-              callBackError('Not internet connection');
+              callBackError('no_internet'.tr());
             }
           },
         );

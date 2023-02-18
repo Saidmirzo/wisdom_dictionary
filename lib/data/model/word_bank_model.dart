@@ -6,6 +6,7 @@ import 'dart:convert';
 /// example : ""
 /// created_at : ""
 /// word_class : ""
+/// word_class_body : ""
 /// type : ""
 
 WordBankModel wordBankModelFromJson(String str) => WordBankModel.fromJson(json.decode(str));
@@ -19,6 +20,7 @@ class WordBankModel {
       String? example, 
       String? createdAt, 
       String? wordClass, 
+      String? wordClassBody, 
       String? type,}){
     _id = id;
     _word = word;
@@ -27,6 +29,7 @@ class WordBankModel {
     _example = example;
     _createdAt = createdAt;
     _wordClass = wordClass;
+    _wordClassBody = wordClassBody;
     _type = type;
 }
 
@@ -38,6 +41,7 @@ class WordBankModel {
     _example = json['example'];
     _createdAt = json['created_at'];
     _wordClass = json['word_class'];
+    _wordClassBody = json['word_class_body'];
     _type = json['type'];
   }
   int? _id;
@@ -47,6 +51,7 @@ class WordBankModel {
   String? _example;
   String? _createdAt;
   String? _wordClass;
+  String? _wordClassBody;
   String? _type;
 WordBankModel copyWith({  int? id,
   String? word,
@@ -55,6 +60,7 @@ WordBankModel copyWith({  int? id,
   String? example,
   String? createdAt,
   String? wordClass,
+  String? wordClassBody,
   String? type,
 }) => WordBankModel(  id: id ?? _id,
   word: word ?? _word,
@@ -63,6 +69,7 @@ WordBankModel copyWith({  int? id,
   example: example ?? _example,
   createdAt: createdAt ?? _createdAt,
   wordClass: wordClass ?? _wordClass,
+  wordClassBody: wordClassBody ?? _wordClassBody,
   type: type ?? _type,
 );
   int? get id => _id;
@@ -72,6 +79,7 @@ WordBankModel copyWith({  int? id,
   String? get example => _example;
   String? get createdAt => _createdAt;
   String? get wordClass => _wordClass;
+  String? get wordClassBody => _wordClassBody;
   String? get type => _type;
 
   Map<String, dynamic> toJson() {
@@ -83,6 +91,7 @@ WordBankModel copyWith({  int? id,
     map['example'] = _example;
     map['created_at'] = _createdAt;
     map['word_class'] = _wordClass;
+    map['word_class_body'] = _wordClassBody;
     map['type'] = _type;
     return map;
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:jbaza/jbaza.dart';
@@ -55,6 +56,8 @@ class VerifyPageViewModel extends BaseViewModel {
             var tokenF = await FirebaseMessaging.instance.getToken();
             addDeviceToFirebase(verifyModel, tokenF);
             setSuccess();
+          } else {
+            callBackError("error_code_entered".tr());
           }
         }
       },

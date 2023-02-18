@@ -10,6 +10,8 @@ import 'package:wisdom/data/model/catalog_model.dart';
 import 'package:wisdom/data/model/recent_model.dart';
 import 'package:wisdom/data/model/word_bank_model.dart';
 
+import '../model/exercise_model.dart';
+
 class LocalViewModel extends BaseViewModel {
   LocalViewModel({required super.context, required this.preferenceHelper, required this.netWorkChecker});
 
@@ -34,8 +36,12 @@ class LocalViewModel extends BaseViewModel {
 
   ValueNotifier<int> badgeCount = ValueNotifier<int>(0);
 
+  Set<ExerciseFinalModel> finalList = {};
+
   bool isFromMain = false;
   bool detailToFromBank = false;
+
+
 
   bool isTitle = false;
   bool isSubSub = false;

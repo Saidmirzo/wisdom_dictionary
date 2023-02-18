@@ -44,10 +44,21 @@ class ExercisePage extends ViewModelBuilderWidget<ExercisePageViewModel> {
                     padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
                     child: Align(
                       child: Flexible(
-                        child: Text(
-                          "exercise_title".tr(),
-                          style: AppTextStyle.font16W700Normal
-                              .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                        child: Text.rich(
+                          TextSpan(
+                            text: "exercise_title".tr(),
+                            style: AppTextStyle.font16W700Normal
+                                .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                            children: [
+                              TextSpan(
+                                text:
+                                    ("\n${"${viewModel.tryNumber} ${"inCorrect".tr().toLowerCase()} ${viewModel.tryNumber != 1 ? "tries" : "try"}".tr()} ${"left".tr()}"),
+                                style: AppTextStyle.font16W700Normal
+                                    .copyWith(color: viewModel.tryNumber < 3 ? AppColors.accentLight : Colors.green),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -73,8 +84,9 @@ class ExercisePage extends ViewModelBuilderWidget<ExercisePageViewModel> {
                                 isEven: index.isEven,
                                 model: model,
                                 onTap: (id) {
-                                  viewModel.listEngIndex= index;
+                                  viewModel.listEngIndex = index;
                                   viewModel.engSelectedIndex = id;
+                                  viewModel.textToSpeech(model.word);
                                   viewModel.checkTheResult();
                                 },
                               );
@@ -96,7 +108,7 @@ class ExercisePage extends ViewModelBuilderWidget<ExercisePageViewModel> {
                                 isEven: index.isEven,
                                 model: model,
                                 onTap: (id) {
-                                  viewModel.listUzIndex= index;
+                                  viewModel.listUzIndex = index;
                                   viewModel.uzSelectedIndex = id;
                                   viewModel.checkTheResult();
                                 },
@@ -107,24 +119,71 @@ class ExercisePage extends ViewModelBuilderWidget<ExercisePageViewModel> {
                       ],
                     ),
                   ),
-                  // Container(
-                  //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.r), color: AppColors.blue),
-                  //   height: 45.h,
-                  //   margin: EdgeInsets.only(top: 15.h, bottom: 12.h, right: 10.w, left: 10.w),
-                  //   child: Material(
-                  //     color: Colors.transparent,
-                  //     child: InkWell(
-                  //       onTap: () => viewModel.checkTheResult(),
-                  //       borderRadius: BorderRadius.circular(40.r),
-                  //       child: Center(
-                  //         child: Text(
-                  //           'exercise_check'.tr(),
-                  //           style: AppTextStyle.font14W500Normal,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  (viewModel.engSelectedIndex != -1)
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15.w),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text.rich(
+                                TextSpan(
+                                  text: viewModel.englishList[viewModel.listEngIndex].word,
+                                  children: [
+                                    (viewModel.uzSelectedIndex == viewModel.engSelectedIndex)
+                                        ? TextSpan(
+                                            text: " - ${viewModel.englishList[viewModel.listEngIndex].translation}",
+                                          )
+                                        : const TextSpan(),
+                                  ],
+                                ),
+                                style: AppTextStyle.font16W500Normal
+                                    .copyWith(color: isDarkTheme ? AppColors.white : AppColors.darkGray),
+                                textAlign: TextAlign.center,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5.h),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        "[${viewModel.englishList[viewModel.listEngIndex].wordClassBody}]" ?? "",
+                                        style: AppTextStyle.font14W400NormalHtml.copyWith(color: AppColors.gray),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    GestureDetector(
+                                        onTap: () => viewModel
+                                            .textToSpeech(viewModel.englishList[viewModel.listEngIndex].word ?? ""),
+                                        child: SvgPicture.asset(Assets.icons.sound, color: AppColors.blue)),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5.h),
+                                child: Text(
+                                  viewModel.wordBankList[viewModel.listEngIndex].wordClass ?? "",
+                                  style: AppTextStyle.font14W500Normal.copyWith(color: Colors.green),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5.h),
+                                child: Text(
+                                  viewModel.wordBankList[viewModel.listEngIndex].example ?? "",
+                                  style: AppTextStyle.font14W500Normal.copyWith(color: AppColors.paleGray),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                 ],
               )
             : const LoadingWidget(),
